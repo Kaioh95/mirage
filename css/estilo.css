@@ -1,0 +1,198 @@
+/* ************************** Giovanna ************************** */
+* {
+    margin: 0;
+    padding: 0;
+}
+body {
+    background-color: #072227;
+    display: block;               
+}
+.topo{
+    background-color: #171544;
+    display: inline-flex;
+    width: 100%;
+    height: 50px;
+    margin: auto;
+    padding: 15px; 
+    justify-content: center;          
+}
+.font{
+    font-family:'Comics Sans MS', cursive ,'Irish Grover';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 100%;
+    line-height: 29px;
+}
+
+.elementos-topo{
+    padding-right: 30px;
+}
+
+#logo{
+    padding-right: 30px;
+}
+
+.logo{
+    display: inline-flex;
+    color: #F80707;
+}
+
+p{
+    text-align: center;
+    padding: 10px;
+    font-family: cursive;
+    font-size: 100%;
+    line-height: 29px;
+    padding-left: 10px;
+}
+
+.pesquisar{
+    border: 3px solid rgba(174, 254, 255, 0.4);
+    width: 734px;
+    background-color: rgba(174, 254, 255, 0.4);
+    height: 43px;
+    border-radius: 50px;
+    padding-left: 30px;
+}
+
+.btn-pesquisar{
+    left: -7%;
+    top: 3px;
+    display: inline-block;
+    position: relative;
+    background-color: rgba(174, 254, 255, 0.6);
+    color: #AEFEFF;
+    height: 43px;
+    width: 55px;
+    border-radius: 50px;
+    border: none;
+    outline: none;
+    overflow: hidden;
+}
+
+.btn-pesquisar:hover {
+    background-color: rgba(174, 254, 255, 0.8);
+}
+
+.barra-de-busca{
+    padding-left: 0px;
+    display: inline-flex;
+}
+
+.login-area{ /* Kaio Henrique */
+    margin-left: 20px;
+    padding-top: none;
+    display: inline-flex;
+    justify-content: center; 
+}
+
+#in{
+    background-color: #35858B;
+    font-size: 20px;
+    padding: 0px;
+    border-radius: 20px;
+    border: none;
+    outline: none;
+    overflow: hidden;
+    color: aliceblue;
+}
+#in:hover {
+    background-color: #346568;
+}
+
+#up{
+    background-color: #34C642;
+    font-size: 20px;
+    padding: 0px;
+    border-radius: 20px;
+    border: none;
+    outline: none;
+    overflow: hidden;
+    color: aliceblue;
+    margin-left: 20px;
+}
+#up:hover {
+    background-color: #2da339;
+}
+
+
+.menu{
+    background-color: #1E5359;
+    margin-top: 30px;
+    padding: 10px;
+    display: inline-flex;
+    width: 100%;
+    justify-content: center;
+}
+
+.categorias-menu{
+    height: 135px;
+    width: 147px;
+    background-color: #AEFEFF;
+    border-radius: 15px;
+    margin-left: 45px;
+    margin-right: 45px;
+}
+
+.nome-categoria{
+    background-color: #35858B;
+    border-radius: 10px;
+    margin-top: 90px;
+}
+
+/* ************************** Giovanna ************************** */
+
+/* ************************** Kaio Henrique ************************** */
+
+.painel-posts{
+    display: inline-flex;
+    width: 100%;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.grid-coluna{
+    width: 240px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.cartao-post{
+    width: 240px;
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    margin-bottom: 15px;
+    border-radius: 5px;
+}
+
+.link-post{
+    color: inherit;
+    text-decoration: none;
+}
+
+.conteudo-post{
+}
+
+.meta-dados-post{
+    height: 40px;
+    padding: 10px;
+    background-color: #35858B;
+}
+
+.titulo-post{
+    color: #AEFEFF;
+
+}
+
+.info-post{
+    display: inline-flex;
+    justify-content: center;
+    width: 95%;
+    color: #AEFEFF;
+    margin: 5px;
+}
+
+/* ************************** Kaio Henrique ************************** */
