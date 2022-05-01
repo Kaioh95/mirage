@@ -10,11 +10,9 @@ body {
 .topo{
     background-color: #171544;
     display: inline-flex;
-    width: 100%;
-    height: 50px;
-    margin: auto;
-    padding: 15px; 
-    justify-content: center;          
+    width: 100vw;
+    height: 88px;
+    justify-content: center;         
 }
 .font{
     font-family:'Comics Sans MS', cursive ,'Irish Grover';
@@ -26,6 +24,7 @@ body {
 
 .elementos-topo{
     padding-right: 30px;
+    margin-top: 13px;
 }
 
 #logo{
@@ -35,24 +34,26 @@ body {
 .logo{
     display: inline-flex;
     color: #F80707;
+    margin-top: 15px;
 }
 
-p{
-    text-align: center;
-    padding: 10px;
+label{
     font-family: cursive;
-    font-size: 100%;
     line-height: 29px;
-    padding-left: 10px;
 }
 
-.pesquisar{
+.pesquisar, select:focus, textarea:focus{
     border: 3px solid rgba(174, 254, 255, 0.4);
-    width: 734px;
+    width: 795px;
     background-color: rgba(174, 254, 255, 0.4);
     height: 43px;
     border-radius: 50px;
     padding-left: 30px;
+    outline: 0;
+}
+
+.pesquisar::placeholder{
+    color: rgba(255, 255, 255, 0.7);
 }
 
 .btn-pesquisar{
@@ -60,7 +61,8 @@ p{
     top: 3px;
     display: inline-block;
     position: relative;
-    background-color: rgba(174, 254, 255, 0.6);
+    background-color: transparent;
+    cursor: pointer;
     color: #AEFEFF;
     height: 43px;
     width: 55px;
@@ -70,56 +72,60 @@ p{
     overflow: hidden;
 }
 
-.btn-pesquisar:hover {
+/* .btn-pesquisar:hover {
     background-color: rgba(174, 254, 255, 0.8);
-}
+} */
 
 .barra-de-busca{
-    padding-left: 0px;
+    padding-left: 125px;
     display: inline-flex;
+    margin-top: 20px;
 }
 
 .login-area{ /* Kaio Henrique */
     margin-left: 20px;
-    padding-top: none;
-    display: inline-flex;
-    justify-content: center; 
+    margin-top: 17px;
+    justify-content: center;
 }
 
-#in{
+#button-sing-in{
     background-color: #35858B;
     font-size: 20px;
-    padding: 0px;
     border-radius: 20px;
     border: none;
     outline: none;
     overflow: hidden;
     color: aliceblue;
+    height: 55px;
+    width: 137px;
+    cursor: pointer;
 }
-#in:hover {
+#button-sing-in:hover {
     background-color: #346568;
 }
 
-#up{
+#button-sing-up{
     background-color: #34C642;
     font-size: 20px;
-    padding: 0px;
     border-radius: 20px;
     border: none;
     outline: none;
     overflow: hidden;
     color: aliceblue;
-    margin-left: 20px;
+    margin-left: 25px;
+    height: 55px;
+    width: 137px;
+    cursor: pointer;
 }
-#up:hover {
-    background-color: #2da339;
+#button-sing-up:hover {
+    background-color: #24842d;
 }
 
 
 .menu{
     background-color: #1E5359;
     margin-top: 30px;
-    padding: 10px;
+    padding: 15px;
     display: inline-flex;
     width: 100%;
     justify-content: center;
@@ -129,15 +135,26 @@ p{
     height: 135px;
     width: 147px;
     background-color: #AEFEFF;
-    border-radius: 15px;
+    border-radius: 20px;
     margin-left: 45px;
     margin-right: 45px;
 }
 
-.nome-categoria{
+.button-name-category{
+    width: 147px;
+    height: 46.5px;
+    color: #AEFEFF;
+    font-size: 20px;
     background-color: #35858B;
-    border-radius: 10px;
-    margin-top: 90px;
+    margin-top: 95px;
+    cursor: pointer;
+    border: none;
+    border-radius: 20px;
+    
+}
+
+.button-name-category:hover{
+    background-color: #346568;
 }
 
 /* ************************** Giovanna ************************** */

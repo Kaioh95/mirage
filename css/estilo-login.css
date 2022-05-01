@@ -45,6 +45,11 @@ input, select:focus, textarea:focus{
     border-color: #072227;
     outline: 0;
     font-family: cursive;
+    padding-left: 15px;
+}
+
+#user::placeholder{
+    margin-left: 50px;
 }
 
 #sing-in{
