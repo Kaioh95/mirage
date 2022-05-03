@@ -82,12 +82,14 @@ label{
     padding-left: 125px;
     display: inline-flex;
     margin-top: 20px;
+    width: 50%;
 }
 
 .login-area{ /* Kaio Henrique */
     margin-left: 20px;
     margin-top: 17px;
     justify-content: center;
+    width: 20%;
 }
 
 #button-sign-in{
@@ -99,7 +101,7 @@ label{
     overflow: hidden;
     color: aliceblue;
     height: 55px;
-    width: 137px;
+    width: 40%;
     cursor: pointer;
 }
 #button-sign-in:hover {
@@ -116,7 +118,7 @@ label{
     color: aliceblue;
     margin-left: 25px;
     height: 55px;
-    width: 137px;
+    width: 40%;
     cursor: pointer;
 }
 #button-sign-up:hover {
@@ -196,7 +198,7 @@ label{
 }
 
 .meta-dados-post{
-    height: 40px;
+    height: 0%;
     padding: 10px;
     background-color: #35858B;
 }
