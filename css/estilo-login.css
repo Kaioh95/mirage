@@ -56,9 +56,12 @@ input, select:focus, textarea:focus{
     background-color: #35858B;
     border-color: #35858B;
     height: 55px;
-    width: 137px;
+    width: 25%;
+    border: none;
+    outline: none;
     border-radius: 20px;
     margin-top: 28px;
     margin-left: 409px;
     font-family: cursive;
+    font-size: 20px;
 }

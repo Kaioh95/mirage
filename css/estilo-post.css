@@ -1,0 +1,185 @@
+/* ************************** Giovanna ************************** */
+* {
+    margin: 0;
+    padding: 0;
+}
+body {
+    overflow-x: hidden;
+    background-color: #072227;
+    overflow-y:auto;
+    display: block;               
+}
+.topo{
+    background-color: #171544;
+    display: inline-flex;
+    width: 100vw;
+    height: 88px;
+    justify-content: center;         
+}
+.font{
+    font-family:'Comics Sans MS', cursive ,'Irish Grover';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 100%;
+    line-height: 29px;
+}
+
+.elementos-topo{
+    padding-right: 30px;
+    margin-top: 13px;
+}
+
+#logo{
+    padding-right: 30px;
+}
+
+.logo{
+    display: inline-flex;
+    color: #F80707;
+    margin-top: 15px;
+}
+
+label{
+    font-family: cursive;
+    line-height: 29px;
+}
+
+.pesquisar, select:focus, textarea:focus{
+    border: 3px solid rgba(174, 254, 255, 0.4);
+    width: 795px;
+    background-color: rgba(174, 254, 255, 0.4);
+    height: 43px;
+    border-radius: 50px;
+    padding-left: 30px;
+    outline: 0;
+}
+
+.pesquisar::placeholder{
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.btn-pesquisar{
+    left: -7%;
+    top: 3px;
+    display: inline-block;
+    position: relative;
+    background-color: transparent;
+    cursor: pointer;
+    color: #AEFEFF;
+    height: 43px;
+    width: 55px;
+    border-radius: 50px;
+    border: none;
+    outline: none;
+    overflow: hidden;
+}
+
+/* .btn-pesquisar:hover {
+    background-color: rgba(174, 254, 255, 0.8);
+} */
+
+.barra-de-busca{
+    padding-left: 125px;
+    display: inline-flex;
+    margin-top: 20px;
+    width: 50%;
+}
+
+.login-area{ /* Kaio Henrique */
+    margin-left: 20px;
+    margin-top: 17px;
+    justify-content: center;
+    width: 20%;
+}
+
+#button-sign-in{
+    background-color: #35858B;
+    font-size: 20px;
+    border-radius: 20px;
+    border: none;
+    outline: none;
+    overflow: hidden;
+    color: aliceblue;
+    height: 55px;
+    width: 40%;
+    cursor: pointer;
+}
+#button-sign-in:hover {
+    background-color: #346568;
+}
+
+#button-sign-up{
+    background-color: #34C642;
+    font-size: 20px;
+    border-radius: 20px;
+    border: none;
+    outline: none;
+    overflow: hidden;
+    color: aliceblue;
+    margin-left: 25px;
+    height: 55px;
+    width: 40%;
+    cursor: pointer;
+}
+#button-sign-up:hover {
+    background-color: #24842d;
+}
+
+/* ************************** Giovanna ************************** */
+
+/* ************************** Kaio Henrique ************************** */
+
+.painel-posts{
+    display: inline-flex;
+    width: 100%;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.grid-coluna{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.cartao-post{
+    width: 100%;
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    margin-bottom: 15px;
+    border-radius: 5px;
+}
+
+.link-post{
+    color: inherit;
+    text-decoration: none;
+}
+
+.conteudo-post{
+}
+
+.meta-dados-post{
+    height: 0%;
+    padding: 10px;
+    background-color: #35858B;
+}
+
+.titulo-post{
+    color: #AEFEFF;
+    font-size: 25px;
+    display: inline-flex;
+    justify-content: center;
+}
+
+.info-post{
+    display: inline-flex;
+    justify-content: center;
+    width: 95%;
+    color: #AEFEFF;
+    margin: 5px;
+}
+
+/* ************************** Kaio Henrique ************************** */
