@@ -14,54 +14,63 @@ body {
     margin-top: 10%;
     margin-left: auto;
     margin-right: auto;
+    box-sizing: border-box;
 }
 
 .login-sup{
-    margin-left: 45%;
-    display: inline-flex;
     margin-block-end: 46px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
+#logo-nome{
+    margin-left: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "Audiowide", sans-serif;
+    color: #F80707;
 }
 
 .login-inf{
     background-color: rgba(53, 133, 139, 0.5);
-    height: 320px;
-    width: 600px;
-    border-radius: 20px;
-}
-
-#logo-nome{
-    padding-left: 14px;
-    padding-top: 18px;
+    height: 220px;
+    border-radius: 10px;
+    padding: 30px 40px;
+    position: relative;
 }
 
 input, select:focus, textarea:focus{
-    width: 500px;
-    height: 70px;
-    margin-top: 30px;
-    margin-left: 40px;
-    border-radius: 20px;
+    width: 400px;
+    height: 50px;
+    margin-bottom: 30px;
+    border-radius: 10px;
     background-color: #072227;
     border-color: #072227;
     outline: 0;
-    font-family: cursive;
+    font-family:'Comics Sans MS', cursive ,'Irish Grover';
+    font-size: 20px;
+}
+
+#user{
     padding-left: 15px;
 }
 
-#user::placeholder{
-    margin-left: 50px;
+#password{
+    padding-left: 15px;
 }
 
 #sign-in{
     background-color: #35858B;
     border-color: #35858B;
     height: 55px;
-    width: 25%;
+    width: 100px;
     border: none;
     outline: none;
-    border-radius: 20px;
-    margin-top: 28px;
-    margin-left: 409px;
-    font-family: cursive;
+    border-radius: 10px;
+    position: absolute;
+    right: 40px;
+    font-family:'Comics Sans MS', cursive ,'Irish Grover';
     font-size: 20px;
 }

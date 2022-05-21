@@ -1,4 +1,4 @@
-/* ************************** Giovanna ************************** */
+
 * {
     margin: 0;
     padding: 0;
@@ -7,17 +7,22 @@ body {
     overflow-x: hidden;
     background-color: #072227;
     overflow-y:auto;
-    display: block;               
+    display: block;         
 }
 .topo{
     background-color: #171544;
-    display: inline-flex;
-    width: 100vw;
-    height: 88px;
-    justify-content: center;         
+    display: flex;
+    width: 100%;
+    height: 45px;
+    padding: 15px;
+    margin: 0 auto;
+    justify-content: space-between;
+    text-align: center;
+    position: sticky;
+    position: -webkit-sticky;
 }
 .font{
-    font-family:'Comics Sans MS', cursive ,'Irish Grover';
+    font-family: Arial, Helvetica, sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 100%;
@@ -25,8 +30,11 @@ body {
 }
 
 .elementos-topo{
-    padding-right: 30px;
-    margin-top: 13px;
+    font-family: "Audiowide", sans-serif;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #logo{
@@ -36,7 +44,7 @@ body {
 .logo{
     display: inline-flex;
     color: #F80707;
-    margin-top: 15px;
+    margin-right: 10px;
 }
 
 label{
@@ -45,13 +53,16 @@ label{
 }
 
 .pesquisar, select:focus, textarea:focus{
-    border: 3px solid rgba(174, 254, 255, 0.4);
-    width: 795px;
-    background-color: rgba(174, 254, 255, 0.4);
-    height: 43px;
-    border-radius: 50px;
-    padding-left: 30px;
-    outline: 0;
+    background-color: transparent;
+    width: 100%;
+    max-width: 550px;
+    height: auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 13px 0px 0px 10px;
+    outline: 0 none;
+    border: none;
 }
 
 .pesquisar::placeholder{
@@ -59,10 +70,10 @@ label{
 }
 
 .btn-pesquisar{
-    left: -7%;
-    top: 3px;
-    display: inline-block;
-    position: relative;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    position: absolute;
     background-color: transparent;
     cursor: pointer;
     color: #AEFEFF;
@@ -78,30 +89,41 @@ label{
     background-color: rgba(174, 254, 255, 0.8);
 } */
 
+.form-buscar{
+    display: block;
+    margin-top: 0em;
+}
+
 .barra-de-busca{
-    padding-left: 125px;
-    display: inline-flex;
-    margin-top: 20px;
-    width: 50%;
+    max-width: 550px;
+    align-items: center;
+    justify-content: space-around;
+    flex: 1;
+    border: 3px solid rgba(174, 254, 255, 0.4);
+    background-color: rgba(174, 254, 255, 0.4);
+    border-radius: 15px;
+    position: relative;
+    float: right;
 }
 
 .login-area{ /* Kaio Henrique */
-    margin-left: 20px;
-    margin-top: 17px;
-    justify-content: center;
+    justify-content: space-around;
     width: 20%;
+    margin: 0 25px;
+    display: flex;
 }
 
 #button-sign-in{
     background-color: #35858B;
     font-size: 20px;
-    border-radius: 20px;
+    border-radius: 10px;
     border: none;
     outline: none;
     overflow: hidden;
     color: aliceblue;
-    height: 55px;
-    width: 40%;
+    margin-top: 5px;
+    height: 35px;
+    min-width: 100px;
     cursor: pointer;
 }
 #button-sign-in:hover {
@@ -111,35 +133,33 @@ label{
 #button-sign-up{
     background-color: #34C642;
     font-size: 20px;
-    border-radius: 20px;
+    border-radius: 10px;
     border: none;
     outline: none;
     overflow: hidden;
     color: aliceblue;
-    margin-left: 25px;
-    height: 55px;
-    width: 40%;
+    margin-top: 5px;
+    height: 35px;
+    min-width: 100px;
     cursor: pointer;
 }
 #button-sign-up:hover {
     background-color: #24842d;
 }
 
-/* ************************** Giovanna ************************** */
-
-/* ************************** Kaio Henrique ************************** */
-
 .painel-posts{
-    display: inline-flex;
+    display: flex;
     width: 100%;
     justify-content: center;
     margin-top: 30px;
+    padding: 15px;
 }
 
 .grid-coluna{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    width: 595px;
+    margin-left: 10px;
+    margin-right: 10px;
+    box-sizing: border-box;
 }
 
 .cartao-post{
@@ -149,8 +169,36 @@ label{
     overflow: hidden;
     margin: 0;
     padding: 0;
-    margin-bottom: 15px;
     border-radius: 5px;
+}
+
+.dono-post{
+    display: flex;
+    align-items: center;
+    margin: 15px 0px;
+}
+
+#nome-dono-post{
+    margin-left: 15px;
+    display: flex;
+    align-items: center;
+    font-family: sans-serif;
+    font-size: 25px;
+    color: #F80707;
+}
+
+.titulo-post{
+    display: flex;
+    justify-content: space-between;
+    font-size: 18px;
+}
+
+.view-count{
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    padding: 0;
+    margin: 0 0.25em;
 }
 
 .link-post{
@@ -159,27 +207,124 @@ label{
 }
 
 .conteudo-post{
-}
-
-.meta-dados-post{
-    height: 0%;
-    padding: 10px;
-    background-color: #35858B;
+    background-color: rgba(0,0,0,.1);
+    max-width: 100%;
+    min-height: 140px;
+    display: flex;
+    justify-content: center;
+    border-radius: 5px;
+    margin-bottom: 20px;
 }
 
 .titulo-post{
     color: #AEFEFF;
-    font-size: 25px;
-    display: inline-flex;
-    justify-content: center;
+    margin-bottom: 10px;
 }
 
 .info-post{
     display: inline-flex;
-    justify-content: center;
-    width: 95%;
+    justify-content: space-between;
     color: #AEFEFF;
-    margin: 5px;
+    width: 220px;
 }
 
-/* ************************** Kaio Henrique ************************** */
+.info-icon-count{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 20px;
+    font-size: 20px;
+    color: #AEFEFF;
+    font-family: Arial, Helvetica, sans-serif;
+    font-style: normal;
+}
+
+.info-count{
+    padding: 0;
+    margin: 0 0.8em;
+}
+
+.form-comentario{
+    width: 99%;
+    border: 1px solid grey;
+    border-radius: 8px;
+}
+
+textarea, select:focus, textarea:focus{
+    background-color: rgba(0,0,0,.2);
+    color: antiquewhite;
+    padding: 15px;
+    min-height: 90px;
+    width: 95%;
+    border-radius: 8px 8px 0 0;
+    font-size: 15px;
+    border: 0px
+}
+
+.novo-comentario{
+    width: 100%;
+    background-color: rgba(0,0,0,.2);
+    color: antiquewhite;
+}
+
+.comentario-area-botao{
+    padding: 15px;
+    display: flex;
+    justify-content: end;
+}
+
+.botao-comentario{
+    background-color: #34C642;
+    font-size: 15px;
+    border-radius: 6px;
+    border: none;
+    outline: none;
+    overflow: hidden;
+    color: aliceblue;
+    height: 35px;
+    min-width: 100px;
+    cursor: pointer;
+}
+
+.contagem-comentario{
+    width: 99%;
+    margin-top: 10px;
+    border-bottom: 1px solid grey;
+    padding: 15px 15px 15px 0;
+    font-size: 20px;
+    color: #AEFEFF;
+    font-family: Arial, Helvetica, sans-serif;
+    font-style: normal;
+}
+
+.lista-comentarios{
+    width: 99%;
+    font-size: 20px;
+    color: #AEFEFF;
+    font-family: Arial, Helvetica, sans-serif;
+    font-style: normal;
+}
+
+.meta-comentario{
+    padding: 15px 8px;
+    border-bottom: 1px solid grey;
+}
+
+.dono-comentario{
+    display: flex;
+    align-items: center;
+    font-family: sans-serif;
+    font-size: 13px;
+    color: #F80707;
+}
+
+.nome-dono-comentario{
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+}
+
+.texto-comentario{
+    display: block;
+    margin-top: 10px;
+}

@@ -5,8 +5,9 @@
     <head>
         <title>Mirage</title>
         <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="css/estilo.css">
-        <link rel="stylesheet" hrep="css/conteudo.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Audiowide">
     </head>
 
     <body>
@@ -15,18 +16,20 @@
 
             <div class="logo">
                 <a href="index.html">             
-                <img id="logo" src="imagens/logo.png">
+                <img id="logo" height="44" src="imagens/logo.png">
                 </a>
                 
                 <label class="elementos-topo">Mirage</label>
             </div>
 
             <div class="barra-de-busca">
-                <input class="pesquisar" type="buscar" placeholder="Search for imager and @users" style="color: aliceblue;">
-                
-                <button class="btn-pesquisar">
-                    <ion-icon style="width: 30px; height: 30px;" name="search-outline"></ion-icon>
-                </button>
+                <form class="form-buscar" action="/search">
+                    <input class="pesquisar" type="text" name="buscar" placeholder="Search for imager and @users" style="color: aliceblue;">
+                    
+                    <button type="submit" class="btn-pesquisar">
+                        <ion-icon style="width: 30px; height: 30px;" name="search-outline"></ion-icon>
+                    </button>
+                </form>
             </div>
             
             <div class="login-area" >
@@ -64,21 +67,24 @@
                 <div class="cartao-post">
                     <a class="link-post" draggable="false" href="post.html">
                     <div class="conteudo-post">
-                        <img src="imagens/bird.jpg">
+                        <img src="imagens/bird.jpg" width="240" height="170">
                     </div>
                     <div class="meta-dados-post">
                         <div class="titulo-post"> Título do Post</div>
                         <div class="info-post">
-                            <div>
-                                <ion-icon style="margin-right: 8px;" name="heart-outline"></ion-icon>90
+                            <div class="info-icon-count">
+                                <ion-icon name="heart-outline"></ion-icon>
+                                <div class="info-count">90</div>
                             </div>
 
-                            <div style="margin: 0 10% 0 10%;">
-                            <ion-icon style="margin-right: 8px;" name="chatbubble-outline"></ion-icon>120
+                            <div class="info-icon-count">
+                                <ion-icon name="chatbubble-outline"></ion-icon>
+                                <div class="info-count">120</div>
                             </div>
 
-                            <div>
-                            <ion-icon style="margin-right: 8px;" name="eye-outline"></ion-icon>999
+                            <div class="info-icon-count">
+                                <ion-icon name="eye-outline"></ion-icon>
+                                <div class="info-count">999</div>
                             </div>
                         </div>
                     </div>
@@ -88,49 +94,24 @@
                 <div class="cartao-post">
                     <a class="link-post" draggable="false" href="post.html">
                     <div class="conteudo-post">
-                        <img src="imagens/catMeme.jpg">
+                        <img src="imagens/catMeme.jpg" width="240" height="322">
                     </div>
                     <div class="meta-dados-post">
                         <div class="titulo-post"> Título do Post</div>
                         <div class="info-post">
-                            <div>
-                                <ion-icon style="margin-right: 8px;" name="heart-outline"></ion-icon>90
+                            <div class="info-icon-count">
+                                <ion-icon name="heart-outline"></ion-icon>
+                                <div class="info-count">90</div>
                             </div>
 
-                            <div style="margin: 0 10% 0 10%;">
-                            <ion-icon style="margin-right: 8px;" name="chatbubble-outline"></ion-icon>120
+                            <div class="info-icon-count">
+                                <ion-icon name="chatbubble-outline"></ion-icon>
+                                <div class="info-count">120</div>
                             </div>
 
-                            <div>
-                            <ion-icon style="margin-right: 8px;" name="eye-outline"></ion-icon>999
-                            </div>
-                        </div>
-                    </div>
-                    </a>
-                </div>
-
-            </div>
-            
-            <div class="grid-coluna">
-                
-                <div class="cartao-post">
-                    <a class="link-post" draggable="false" href="post.html">
-                    <div class="conteudo-post">
-                        <img src="imagens/cat-dog.jpg">
-                    </div>
-                    <div class="meta-dados-post">
-                        <div class="titulo-post"> Título do Post</div>
-                        <div class="info-post">
-                            <div>
-                                <ion-icon style="margin-right: 8px;" name="heart-outline"></ion-icon>90
-                            </div>
-
-                            <div style="margin: 0 10% 0 10%;">
-                            <ion-icon style="margin-right: 8px;" name="chatbubble-outline"></ion-icon>120
-                            </div>
-
-                            <div>
-                            <ion-icon style="margin-right: 8px;" name="eye-outline"></ion-icon>999
+                            <div class="info-icon-count">
+                                <ion-icon name="eye-outline"></ion-icon>
+                                <div class="info-count">999</div>
                             </div>
                         </div>
                     </div>
@@ -144,21 +125,24 @@
                 <div class="cartao-post">
                     <a class="link-post" draggable="false" href="post.html">
                     <div class="conteudo-post">
-                        <img src="imagens/cat.jpg">
+                        <img src="imagens/cat-dog.jpg" width="240" height="240">
                     </div>
                     <div class="meta-dados-post">
                         <div class="titulo-post"> Título do Post</div>
                         <div class="info-post">
-                            <div>
-                                <ion-icon style="margin-right: 8px;" name="heart-outline"></ion-icon>90
+                            <div class="info-icon-count">
+                                <ion-icon name="heart-outline"></ion-icon>
+                                <div class="info-count">90</div>
                             </div>
 
-                            <div style="margin: 0 10% 0 10%;">
-                            <ion-icon style="margin-right: 8px;" name="chatbubble-outline"></ion-icon>120
+                            <div class="info-icon-count">
+                                <ion-icon name="chatbubble-outline"></ion-icon>
+                                <div class="info-count">120</div>
                             </div>
 
-                            <div>
-                            <ion-icon style="margin-right: 8px;" name="eye-outline"></ion-icon>999
+                            <div class="info-icon-count">
+                                <ion-icon name="eye-outline"></ion-icon>
+                                <div class="info-count">999</div>
                             </div>
                         </div>
                     </div>
@@ -172,21 +156,55 @@
                 <div class="cartao-post">
                     <a class="link-post" draggable="false" href="post.html">
                     <div class="conteudo-post">
-                        <img src="imagens/catLol.jpg">
+                        <img src="imagens/cat.jpg" width="240" height="224">
                     </div>
                     <div class="meta-dados-post">
                         <div class="titulo-post"> Título do Post</div>
                         <div class="info-post">
-                            <div>
-                                <ion-icon style="margin-right: 8px;" name="heart-outline"></ion-icon>90
+                            <div class="info-icon-count">
+                                <ion-icon name="heart-outline"></ion-icon>
+                                <div class="info-count">90</div>
                             </div>
 
-                            <div style="margin: 0 10% 0 10%;">
-                            <ion-icon style="margin-right: 8px;" name="chatbubble-outline"></ion-icon>120
+                            <div class="info-icon-count">
+                                <ion-icon name="chatbubble-outline"></ion-icon>
+                                <div class="info-count">120</div>
                             </div>
 
-                            <div>
-                            <ion-icon style="margin-right: 8px;" name="eye-outline"></ion-icon>999
+                            <div class="info-icon-count">
+                                <ion-icon name="eye-outline"></ion-icon>
+                                <div class="info-count">999</div>
+                            </div>
+                        </div>
+                    </div>
+                    </a>
+                </div>
+
+            </div>
+            
+            <div class="grid-coluna">
+                
+                <div class="cartao-post">
+                    <a class="link-post" draggable="false" href="post.html">
+                    <div class="conteudo-post">
+                        <img src="imagens/catLol.jpg" width="240" height="124">
+                    </div>
+                    <div class="meta-dados-post">
+                        <div class="titulo-post"> Título do Post</div>
+                        <div class="info-post">
+                            <div class="info-icon-count">
+                                <ion-icon name="heart-outline"></ion-icon>
+                                <div class="info-count">90</div>
+                            </div>
+
+                            <div class="info-icon-count">
+                                <ion-icon name="chatbubble-outline"></ion-icon>
+                                <div class="info-count">120</div>
+                            </div>
+
+                            <div class="info-icon-count">
+                                <ion-icon name="eye-outline"></ion-icon>
+                                <div class="info-count">999</div>
                             </div>
                         </div>
                     </div>
@@ -196,21 +214,24 @@
                 <div class="cartao-post">
                     <a class="link-post" draggable="false" href="post.html">
                     <div class="conteudo-post">
-                        <img src="imagens/dog.jpg">
+                        <img src="imagens/dog.jpg" width="240" height="137">
                     </div>
                     <div class="meta-dados-post">
                         <div class="titulo-post"> Título do Post</div>
                         <div class="info-post">
-                            <div>
-                                <ion-icon style="margin-right: 8px;" name="heart-outline"></ion-icon>90
+                            <div class="info-icon-count">
+                                <ion-icon name="heart-outline"></ion-icon>
+                                <div class="info-count">90</div>
                             </div>
 
-                            <div style="margin: 0 10% 0 10%;">
-                            <ion-icon style="margin-right: 8px;" name="chatbubble-outline"></ion-icon>120
+                            <div class="info-icon-count">
+                                <ion-icon name="chatbubble-outline"></ion-icon>
+                                <div class="info-count">120</div>
                             </div>
 
-                            <div>
-                            <ion-icon style="margin-right: 8px;" name="eye-outline"></ion-icon>999
+                            <div class="info-icon-count">
+                                <ion-icon name="eye-outline"></ion-icon>
+                                <div class="info-count">999</div>
                             </div>
                         </div>
                     </div>

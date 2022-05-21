@@ -7,17 +7,22 @@ body {
     overflow-x: hidden;
     background-color: #072227;
     overflow-y:auto;
-    display: block;               
+    display: block;         
 }
 .topo{
     background-color: #171544;
-    display: inline-flex;
-    width: 100vw;
-    height: 88px;
-    justify-content: center;         
+    display: flex;
+    width: 100%;
+    height: 45px;
+    padding: 15px;
+    margin: 0 auto;
+    justify-content: space-between;
+    text-align: center;
+    position: sticky;
+    position: -webkit-sticky;
 }
 .font{
-    font-family:'Comics Sans MS', cursive ,'Irish Grover';
+    font-family: Arial, Helvetica, sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 100%;
@@ -25,8 +30,11 @@ body {
 }
 
 .elementos-topo{
-    padding-right: 30px;
-    margin-top: 13px;
+    font-family: "Audiowide", sans-serif;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #logo{
@@ -36,7 +44,7 @@ body {
 .logo{
     display: inline-flex;
     color: #F80707;
-    margin-top: 15px;
+    margin-right: 10px;
 }
 
 label{
@@ -45,13 +53,16 @@ label{
 }
 
 .pesquisar, select:focus, textarea:focus{
-    border: 3px solid rgba(174, 254, 255, 0.4);
-    width: 795px;
-    background-color: rgba(174, 254, 255, 0.4);
-    height: 43px;
-    border-radius: 50px;
-    padding-left: 30px;
-    outline: 0;
+    background-color: transparent;
+    width: 100%;
+    max-width: 550px;
+    height: auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 13px 0px 0px 10px;
+    outline: 0 none;
+    border: none;
 }
 
 .pesquisar::placeholder{
@@ -59,10 +70,10 @@ label{
 }
 
 .btn-pesquisar{
-    left: -7%;
-    top: 3px;
-    display: inline-block;
-    position: relative;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    position: absolute;
     background-color: transparent;
     cursor: pointer;
     color: #AEFEFF;
@@ -78,30 +89,41 @@ label{
     background-color: rgba(174, 254, 255, 0.8);
 } */
 
+.form-buscar{
+    display: block;
+    margin-top: 0em;
+}
+
 .barra-de-busca{
-    padding-left: 125px;
-    display: inline-flex;
-    margin-top: 20px;
-    width: 50%;
+    max-width: 550px;
+    align-items: center;
+    justify-content: space-around;
+    flex: 1;
+    border: 3px solid rgba(174, 254, 255, 0.4);
+    background-color: rgba(174, 254, 255, 0.4);
+    border-radius: 15px;
+    position: relative;
+    float: right;
 }
 
 .login-area{ /* Kaio Henrique */
-    margin-left: 20px;
-    margin-top: 17px;
-    justify-content: center;
+    justify-content: space-around;
     width: 20%;
+    margin: 0 25px;
+    display: flex;
 }
 
 #button-sign-in{
     background-color: #35858B;
     font-size: 20px;
-    border-radius: 20px;
+    border-radius: 10px;
     border: none;
     outline: none;
     overflow: hidden;
     color: aliceblue;
-    height: 55px;
-    width: 40%;
+    margin-top: 5px;
+    height: 35px;
+    min-width: 100px;
     cursor: pointer;
 }
 #button-sign-in:hover {
@@ -111,14 +133,14 @@ label{
 #button-sign-up{
     background-color: #34C642;
     font-size: 20px;
-    border-radius: 20px;
+    border-radius: 10px;
     border: none;
     outline: none;
     overflow: hidden;
     color: aliceblue;
-    margin-left: 25px;
-    height: 55px;
-    width: 40%;
+    margin-top: 5px;
+    height: 35px;
+    min-width: 100px;
     cursor: pointer;
 }
 #button-sign-up:hover {
@@ -139,7 +161,7 @@ label{
     height: 135px;
     width: 147px;
     background-color: #AEFEFF;
-    border-radius: 20px;
+    border-radius: 15px;
     margin-left: 45px;
     margin-right: 45px;
 }
@@ -170,6 +192,7 @@ label{
     width: 100%;
     justify-content: center;
     margin-top: 30px;
+    padding: 15px;
 }
 
 .grid-coluna{
@@ -205,15 +228,25 @@ label{
 
 .titulo-post{
     color: #AEFEFF;
-
+    margin-bottom: 10px;
 }
 
 .info-post{
     display: inline-flex;
-    justify-content: center;
-    width: 95%;
+    justify-content: space-between;
     color: #AEFEFF;
-    margin: 5px;
+    width: 220px;
+}
+
+.info-icon-count{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.info-count{
+    padding: 0;
+    margin: 0 0.25em;
 }
 
 /* ************************** Kaio Henrique ************************** */
