@@ -249,4 +249,22 @@ label{
     margin: 0 0.25em;
 }
 
+.btn-add-post{
+    position: fixed;
+    right: 50px;
+    bottom: 50px;
+    border-radius: 50px;
+    border: 0;
+    
+    background-color: #35858B;
+    border: none;
+    outline: none;
+    overflow: hidden;
+    color: aliceblue;
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+    z-index: 1;
+}
+
 /* ************************** Kaio Henrique ************************** */

@@ -286,6 +286,10 @@ textarea, select:focus, textarea:focus{
     cursor: pointer;
 }
 
+.botao-comentario:hover {
+    background-color: #24842d;
+}
+
 .contagem-comentario{
     width: 99%;
     margin-top: 10px;
@@ -310,6 +314,11 @@ textarea, select:focus, textarea:focus{
     border-bottom: 1px solid grey;
 }
 
+.meta-comentario:hover{
+    background-color: rgba(0,0,0,.2);
+    border-radius: 10px;
+}
+
 .dono-comentario{
     display: flex;
     align-items: center;
@@ -327,4 +336,22 @@ textarea, select:focus, textarea:focus{
 .texto-comentario{
     display: block;
     margin-top: 10px;
+}
+
+.btn-add-post{
+    position: fixed;
+    right: 50px;
+    bottom: 50px;
+    border-radius: 50px;
+    border: 0;
+    
+    background-color: #35858B;
+    border: none;
+    outline: none;
+    overflow: hidden;
+    color: aliceblue;
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+    z-index: 1;
 }
