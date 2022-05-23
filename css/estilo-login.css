@@ -39,6 +39,7 @@ body {
     border-radius: 10px;
     padding: 30px 40px;
     position: relative;
+    box-shadow: 12px 16px 10px #000000;
 }
 
 input, select:focus, textarea:focus{

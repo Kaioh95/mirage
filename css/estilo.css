@@ -164,6 +164,7 @@ label{
     border-radius: 15px;
     margin-left: 45px;
     margin-right: 45px;
+    box-shadow: 6px 5px 5px #000000;
 }
 
 .button-name-category{
@@ -188,7 +189,7 @@ label{
 /* ************************** Kaio Henrique ************************** */
 
 .painel-posts{
-    display: inline-flex;
+    display: flex;
     width: 100%;
     justify-content: center;
     margin-top: 30px;
@@ -210,6 +211,7 @@ label{
     padding: 0;
     margin-bottom: 15px;
     border-radius: 5px;
+    box-shadow: 12px 16px 10px #000000;
 }
 
 .link-post{
@@ -229,6 +231,7 @@ label{
 .titulo-post{
     color: #AEFEFF;
     margin-bottom: 10px;
+    text-shadow: 4px 4px 8px #000000;
 }
 
 .info-post{
@@ -266,5 +269,6 @@ label{
     cursor: pointer;
     z-index: 1;
 }
+
 
 /* ************************** Kaio Henrique ************************** */
