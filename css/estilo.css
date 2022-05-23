@@ -7,10 +7,13 @@ body {
     overflow-x: hidden;
     background-color: #072227;
     overflow-y:auto;
-    display: block;         
+    display: block;
+    background: url(../img/ruido.png),
+                linear-gradient(50deg, #072227, #7c26f8);
+    background-attachment: fixed;
 }
 .topo{
-    background-color: #171544;
+    background: rgba(0,0,0,0.6);
     display: flex;
     width: 100%;
     height: 45px;
@@ -18,8 +21,11 @@ body {
     margin: 0 auto;
     justify-content: space-between;
     text-align: center;
-    position: sticky;
+    position: fixed;
     position: -webkit-sticky;
+    z-index: 1;
+    top: 0;
+    left: 0;
 }
 .font{
     font-family: Arial, Helvetica, sans-serif;
@@ -150,11 +156,12 @@ label{
 
 .menu{
     background-color: #1E5359;
-    margin-top: 30px;
+    margin-top: 100px;
     padding: 15px;
     display: inline-flex;
     width: 100%;
     justify-content: center;
+    background: linear-gradient(50deg, #363062, #072227);
 }
 
 .categorias-menu{
@@ -170,9 +177,9 @@ label{
 .button-name-category{
     width: 147px;
     height: 46.5px;
-    color: #AEFEFF;
+    color: #E9D5CA;
     font-size: 20px;
-    background-color: #35858B;
+    background-color: #363062;
     margin-top: 95px;
     cursor: pointer;
     border: none;
@@ -181,7 +188,7 @@ label{
 }
 
 .button-name-category:hover{
-    background-color: #346568;
+    background-color: #4D4C7D;
 }
 
 /* ************************** Giovanna ************************** */
@@ -225,11 +232,11 @@ label{
 .meta-dados-post{
     height: 0%;
     padding: 10px;
-    background-color: #35858B;
+    background-color: #363062;
 }
 
 .titulo-post{
-    color: #AEFEFF;
+    color: #E9D5CA;
     margin-bottom: 10px;
     text-shadow: 4px 4px 8px #000000;
 }
@@ -237,7 +244,7 @@ label{
 .info-post{
     display: inline-flex;
     justify-content: space-between;
-    color: #AEFEFF;
+    color: #E9D5CA;
     width: 220px;
 }
 
@@ -259,7 +266,7 @@ label{
     border-radius: 50px;
     border: 0;
     
-    background-color: #35858B;
+    background-color: #34C642;
     border: none;
     outline: none;
     overflow: hidden;
@@ -268,6 +275,10 @@ label{
     height: 60px;
     cursor: pointer;
     z-index: 1;
+}
+
+.btn-add-post:hover{
+    background-color: #24842d;
 }
 
 

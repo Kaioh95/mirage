@@ -6,6 +6,9 @@
 body {
     background-color: #072227;
     display: block;
+    background: url(../img/ruido.png),
+                linear-gradient(50deg, #072227, #7c26f8);
+    background-attachment: fixed;
 }
 
 .login{
@@ -34,7 +37,7 @@ body {
 }
 
 .login-inf{
-    background-color: rgba(53, 133, 139, 0.5);
+    background-color: #4D4C7D;
     height: 220px;
     border-radius: 10px;
     padding: 30px 40px;
@@ -47,8 +50,8 @@ input, select:focus, textarea:focus{
     height: 50px;
     margin-bottom: 30px;
     border-radius: 10px;
-    background-color: #072227;
-    border-color: #072227;
+    background-color: #363062;
+    border-color: #363062;
     outline: 0;
     font-family:'Comics Sans MS', cursive ,'Irish Grover';
     font-size: 20px;
@@ -63,7 +66,7 @@ input, select:focus, textarea:focus{
 }
 
 #sign-in{
-    background-color: #35858B;
+    background-color: #827397;
     border-color: #35858B;
     height: 55px;
     width: 100px;
@@ -74,4 +77,8 @@ input, select:focus, textarea:focus{
     right: 40px;
     font-family:'Comics Sans MS', cursive ,'Irish Grover';
     font-size: 20px;
+}
+
+#sign-in:hover{
+    background-color: #363062;
 }
