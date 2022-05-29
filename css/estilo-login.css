@@ -1,14 +1,26 @@
+:root{
+    --cor-primaria: rgba(28, 12, 91, 1);
+    --cor-secundaria: rgba(145, 107, 191, 0.5);
+    --cor-terciaria: #504382;;
+    --cor-fundo: rgba(218, 212, 241, 0.5);
+    --cor-texto: #1C0C5B;
+}
 *{
-    padding: none;
-    margin: none;
+    padding: 0;
+    margin: 0;
 }
 
 body {
-    background-color: #072227;
+    background-color: var(--cor-fundo, rgba(218, 212, 241, 0.5));
     display: block;
-    background: url(../img/ruido.png),
-                linear-gradient(50deg, #072227, #7c26f8);
     background-attachment: fixed;
+}
+
+.font{
+    font-family: 'Inter', Arial, Helvetica;
+    color: var(--cor-fundo, rgba(218, 212, 241, 0.5));
+    font-style: normal;
+    font-weight: 400;
 }
 
 .login{
@@ -17,32 +29,33 @@ body {
     margin-top: 10%;
     margin-left: auto;
     margin-right: auto;
+    position: relative;
     box-sizing: border-box;
 }
 
 .login-sup{
-    margin-block-end: 46px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    top: -46px;
+    left: 25%;
+    right: 25%;
+    position: absolute;
+    z-index: 1;
 }
 
-#logo-nome{
-    margin-left: 15px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: "Audiowide", sans-serif;
-    color: #F80707;
+.login-sup>a{
+    display: inline-block;
+    line-height: 0;
 }
 
 .login-inf{
-    background-color: #4D4C7D;
-    height: 220px;
+    background-color: var(--cor-primaria, #1C0C5B);
     border-radius: 10px;
     padding: 30px 40px;
     position: relative;
     box-shadow: 12px 16px 10px #000000;
+}
+
+#form-login{
+    position: relative;
 }
 
 input, select:focus, textarea:focus{
@@ -50,35 +63,51 @@ input, select:focus, textarea:focus{
     height: 50px;
     margin-bottom: 30px;
     border-radius: 10px;
-    background-color: #363062;
-    border-color: #363062;
+    background-color: var(--cor-secundaria, rgba(145, 107, 191, 0.5));
+    border-color: var(--cor-secundaria, rgba(145, 107, 191, 0.5));
     outline: 0;
-    font-family:'Comics Sans MS', cursive ,'Irish Grover';
+    font-family:'Inter', Arial, Helvetica;
     font-size: 20px;
+}
+
+#email{
+    padding-left: 15px;
+    font-family: 'Inter', Arial, Helvetica;
+    color: rgba(255, 255, 255, 1);
 }
 
 #user{
     padding-left: 15px;
+    font-family: 'Inter', Arial, Helvetica;
+    color: rgba(255, 255, 255, 1);
 }
 
 #password{
     padding-left: 15px;
+    font-family: 'Inter', Arial, Helvetica;
+    color: rgba(255, 255, 255, 1);
+}
+
+#area-botao{
+    display: flex;
+    justify-content: end;
 }
 
 #sign-in{
-    background-color: #827397;
-    border-color: #35858B;
+    background-color: var(--cor-secundaria, rgba(145, 107, 191, 0.5));
     height: 55px;
     width: 100px;
     border: none;
     outline: none;
+    margin: 0;
     border-radius: 10px;
-    position: absolute;
-    right: 40px;
-    font-family:'Comics Sans MS', cursive ,'Irish Grover';
+    font-family: 'Inter', Arial, Helvetica;
+    color: rgba(255, 255, 255, 1);
     font-size: 20px;
+    cursor: pointer;
+    transition: all 0.3s;
 }
 
 #sign-in:hover{
-    background-color: #363062;
+    background-color: var(--cor-primaria, #1C0C5B);
 }
