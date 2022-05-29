@@ -207,7 +207,7 @@ hr{
 
 /* ************************** Kaio Henrique ************************** */
 
-.painel-posts{
+#painel-posts{
     display: flex;
     width: 100%;
     justify-content: center;
