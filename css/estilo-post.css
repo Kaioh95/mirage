@@ -9,6 +9,7 @@
 * {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 body {
     overflow-x: hidden;
@@ -22,8 +23,8 @@ body {
     background: var(--cor-terciaria, #504382);
     display: flex;
     width: 100%;
-    height: 45px;
-    padding: 15px 40px 15px 40px;
+    height: 75px;
+    padding: 15px 20px 15px 20px;
     margin: 0 auto;
     justify-content: space-between;
     text-align: center;
@@ -123,7 +124,7 @@ label{
 .login-area{ /* Kaio Henrique */
     justify-content: space-around;
     width: 24%;
-    margin: 0 30px;
+    margin: 0 15px;
     display: flex;
 }
 
@@ -168,8 +169,8 @@ label{
     content: "";
     height: 21px;
     width: 21px;
-    left: 2px;
-    bottom: 2px;
+    left: 1px;
+    bottom: 1px;
     background-color: rgba(255, 255, 255, 1);
     border-radius: 50%;
     -webkit-transition: .4s;
@@ -199,6 +200,7 @@ input:checked + .slider:before{
     padding: 10px 10px;
     color: rgba(255, 255, 255, 1);
     min-width: 100px;
+    height: 46px;
     cursor: pointer;
 
     transition: all 0.3s;
@@ -271,6 +273,12 @@ input:checked + .slider:before{
     height: 50px;
 }
 
+#avatar-dono-post>h2{
+    margin: 0 !important;
+    font-family: 'Times New Roman', Times, serif !important;
+    font-weight: bold !important;
+}
+
 #nome-dono-post{
     margin-left: 15px;
     display: flex;
@@ -286,6 +294,13 @@ input:checked + .slider:before{
     color: var(--cor-texto, #1C0C5B);
     font-family: 'Inter', Arial, Helvetica;
     margin-bottom: 10px;
+}
+
+.titulo-post>h2{
+    margin: 0 !important;
+    font-family: 'Inter', Arial, Helvetica !important;
+    font-weight: bold !important;
+    font-size: 25px;
 }
 
 .view-count{
@@ -315,7 +330,7 @@ input:checked + .slider:before{
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin-bottom: 5px;
+    margin-bottom: 0;
     font-size: 20px;
     color: var(--cor-texto, #1C0C5B);
     font-family: 'Inter', Arial, Helvetica;
@@ -418,6 +433,12 @@ input:checked + .slider:before{
     color: var(--cor-texto, #1C0C5B);
 }
 
+.dono-comentario>a{
+    font-family: Arial, Helvetica, sans-serif !important;
+    color: var(--cor-texto) !important;
+    text-decoration: none !important;
+}
+
 .avatar-dono-comentario{
     display: flex;
     align-items: center;
@@ -426,6 +447,14 @@ input:checked + .slider:before{
     border-radius: 50px;
     width: 25px;
     height: 25px;
+}
+
+.avatar-dono-comentario>h3{
+    margin: 0 !important;
+    font-family: 'Times New Roman', Times, serif !important;
+    font-weight: bold !important;
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.7);
 }
 
 .nome-dono-comentario{

@@ -10,7 +10,6 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
-        <script src="js/post.js"></script>
     </head>
 
     <body>
@@ -38,12 +37,12 @@
             
             <div class="login-area" >
                 <div id="tema">
-                    <ion-icon name="sunny-outline"></ion-icon>
+                    <ion-icon name="sunny-outline" style="width: 16px; height: 16px;"></ion-icon>
                     <label class="switch" for="toggle-tema">
                         <input type="checkbox" id="toggle-tema" name="toggle-tema">
                         <span class="slider"></span>
                     </label>
-                    <ion-icon name="moon-outline"></ion-icon>
+                    <ion-icon name="moon-outline" style="width: 16px; height: 16px;"></ion-icon>
                 </div>
 
                 <a href="login.html"><button id="button-sign-in">Sign In</button></a>
@@ -66,7 +65,7 @@
                         <label id="nome-dono-post">Dono do Post</label>
                     </div>
                     
-                    <div class="titulo-post"> 
+                    <div id="titulo-post" class="titulo-post"> 
                         <h2>Título do Post</h2>
                         <div class="info-icon-count view-count">
                             <div class="info-count">999 Views</div> 
@@ -137,6 +136,6 @@
 
         <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
         <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-        <script src="js/mirage.js"></script>
+        <script src="js/post.js"></script>
     </body>
 </html>
