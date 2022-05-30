@@ -5,6 +5,9 @@ var imagens = ["bird.jpg","cat-dog.jpg","cat.jpg",
             "skCat.jpg" ]
 var r = document.querySelector(':root')
 
+document.addEventListener("DOMContentLoaded", onDocumentLoad);
+function onDocumentLoad(){ajustarNumeroColunas();}
+
 const toggleTema = document.getElementById("toggle-tema")
 toggleTema.onclick = () => {
     if (toggleTema.checked){
@@ -75,8 +78,8 @@ function adicionarCartaoPosts(numeroColunas){
     img.src = `image/${pathImg}`
     
     let imgLargura = 240
-    let proporcaoTamanho = Math.floor(240/img.width) 
-    let imgAltura = proporcaoTamanho * img.height
+    let proporcaoTamanho = 240/img.width 
+    let imgAltura = Math.floor(proporcaoTamanho * img.height)
 
     const innerString = `
         <a class="link-post" draggable="false" href="post.html?pathImg=${pathImg}">
