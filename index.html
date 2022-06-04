@@ -13,10 +13,28 @@
     </head>
 
     <body onresize="ajustarNumeroColunas()">
-        <button class="btn-add-post">
+        <button onclick="document.getElementById('modal-new-post').style.display='block'" class="btn-add-post">
             <ion-icon style="width: 30px; height: 30px;" 
                 name="add-outline"></ion-icon>
         </button>
+
+        <div id="modal-new-post" class="modal">
+            <div class="modal-content" style="max-width: 600px;">
+                <div class="modal-div-center">
+                    <span onclick="document.getElementById('modal-new-post').style.display='none'" title="Fechar modal">&times;</span>
+                </div>
+                <div class="modal-div-imagem">
+                    <img id="imagem-modal" src="icons/Imagem.png" alt="imagem-exemplo">
+                    <form class="form-upload">
+                    <label class="input-personalizado">
+                        <span class="botao-selecionar" style="color: rgba(255, 255, 255, 1);">Selecione um arquivo</span>
+                        <input type="file" class="input-file" accept="image/*">
+                    </label>
+                    </form>         
+                </div>
+            </div>
+        </div>
+    
         <!-- ************************** Giovanna ************************** -->
         <div class="topo" >
 
