@@ -5,20 +5,24 @@
     --cor-fundo: rgba(218, 212, 241, 0.5);
     --cor-texto: #1C0C5B;
 }
+
 *{
     padding: 0;
     margin: 0;
 }
 
 body {
-    background-color: var(--cor-fundo, rgba(218, 212, 241, 0.5));
-    display: block;
-    background-attachment: fixed;
+    background-color: var(--cor-fundo, #DFDCEB);
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }
 
 .font{
     font-family: 'Inter', Arial, Helvetica;
-    color: var(--cor-fundo, rgba(218, 212, 241, 0.5));
     font-style: normal;
     font-weight: 400;
 }
@@ -26,7 +30,6 @@ body {
 .login{
     height: auto;
     width: 500px;
-    margin-top: 10%;
     margin-left: auto;
     margin-right: auto;
     position: relative;
@@ -34,7 +37,7 @@ body {
 }
 
 .login-sup{
-    top: -46px;
+    top: -35px;
     left: 25%;
     right: 25%;
     position: absolute;
@@ -48,10 +51,10 @@ body {
 
 .login-inf{
     background-color: var(--cor-primaria, #1C0C5B);
-    border-radius: 10px;
+    border-radius: 20px;
     padding: 30px 40px;
     position: relative;
-    box-shadow: 12px 16px 10px #000000;
+    box-shadow: 9px 9px 20px rgba(0, 0, 0, 0.21);
 }
 
 #form-login{
@@ -61,7 +64,7 @@ body {
 input, select:focus, textarea:focus{
     width: 400px;
     height: 50px;
-    margin-bottom: 30px;
+    margin-bottom: 25px;
     border-radius: 10px;
     background-color: var(--cor-secundaria, rgba(145, 107, 191, 0.5));
     border-color: var(--cor-secundaria, rgba(145, 107, 191, 0.5));
@@ -76,16 +79,28 @@ input, select:focus, textarea:focus{
     color: rgba(255, 255, 255, 1);
 }
 
+#email::placeholder{
+    color: rgba(255, 255, 255, 0.55);
+}
+
 #user{
     padding-left: 15px;
     font-family: 'Inter', Arial, Helvetica;
     color: rgba(255, 255, 255, 1);
 }
 
+#user::placeholder{
+    color: rgba(255, 255, 255, 0.55);
+}
+
 #password{
     padding-left: 15px;
     font-family: 'Inter', Arial, Helvetica;
     color: rgba(255, 255, 255, 1);
+}
+
+#password::placeholder{
+    color: rgba(255, 255, 255, 0.55);
 }
 
 #area-botao{
