@@ -240,10 +240,16 @@ input:checked + .slider:before{
     width: 147px;
     background-color: var(--cor-secundaria, rgba(145, 107, 191, 0.5));
     border-radius: 10px;
-    margin-left: 45px;
-    margin-right: 45px;
+    margin: 30px;
     box-shadow: 9px 9px 20px rgba(0, 0, 0, 0.21);
     text-align: center;
+}
+
+@media screen and (max-width:612px){
+    #menu{
+        overflow:auto;
+        justify-content: start;
+    }
 }
 
 .button-name-category{
