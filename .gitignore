@@ -1,6 +1,2 @@
 backend/node_modules
 backend/.env
-backend/public/images/users/*.png
-backend/public/images/users/*.jpg
-backend/public/images/users/*.jpeg
-backend/public/images/users/*.gif
