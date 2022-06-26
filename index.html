@@ -19,18 +19,35 @@
         </button>
 
         <div id="modal-new-post" class="modal">
-            <div class="modal-content" style="max-width: 600px;">
+            <div class="modal-content">
                 <div class="modal-div-center">
                     <span onclick="document.getElementById('modal-new-post').style.display='none'" title="Fechar modal">&times;</span>
                 </div>
                 <div class="modal-div-imagem">
-                    <img id="imagem-modal" src="icons/Imagem.png" alt="imagem-exemplo">
+                    <div class="imagem-container">
+                        <img id="imagem-modal" src="icons/Imagem.png" alt="imagem-exemplo">
+                    </div>
                     <form class="form-upload">
                     <label class="input-personalizado">
                         <span class="botao-selecionar" style="color: rgba(255, 255, 255, 1);">Selecione um arquivo</span>
-                        <input type="file" class="input-file" accept="image/*">
+                        <input type="file" id="input" class="input-file" accept="image/*">
                     </label>
-                    </form>         
+                    </form>
+                </div>
+                <hr class="linha-vertical">
+                <div class="container-descricao">
+                    <Form class="form-descricao">
+                        <label style="color: #1C0C5B; margin-left: 8px;">Titulo do post</label>
+                        <input class="input-modal" type="text" style="padding: 15px;">
+
+                        <label style="color: #1C0C5B; margin-left: 8px;">Marcações</label>
+                        <input class="input-modal" type="text" style="padding: 15px;"> 
+
+                        <label style="color: #1C0C5B; margin-left: 8px;">Descrição</label>
+                        <input class="input-modal"  type="text" style="padding: 15px;"> 
+
+                        <button type="submit" id="btn-postar">Postar</button>
+                    </Form>
                 </div>
             </div>
         </div>
@@ -46,7 +63,7 @@
 
             <div class="barra-de-busca">
                 <form class="form-buscar" action="/search">
-                    <input class="pesquisar" type="text" name="buscar" placeholder="Search for images and @users" style="color: rgba(255, 255, 255, 0.55); padding: 15px;">
+                    <input class="pesquisar" type="text" name="buscar" placeholder="Search for images and @users" style="color: aliceblue; padding: 15px;">
                     
                     <button type="submit" class="btn-pesquisar">
                         <ion-icon style="width: 24px; height: 24px;" name="search-outline"></ion-icon>
@@ -282,6 +299,7 @@
         <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
         <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
         <script src="js/mirage.js"></script>
+        <script src="js/modal-post.js"></script>
         <!-- ************************** Kaio Henrique ************************** -->
     </body>
 </html>
