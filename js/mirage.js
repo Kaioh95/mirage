@@ -55,6 +55,11 @@ function ajustarNumeroColunas(){
         adicionarCartaoPosts(numeroColunas)
     }
 
+    let menu = document.getElementById("login-menu-dropdown");
+    if(largura>860){
+        menu.style.display = null;
+    }
+
 }
 
 function adicionarColunas(numeroColunas, painel){
@@ -75,7 +80,7 @@ function adicionarCartaoPosts(numeroColunas){
     
     let elementoColuna = document.getElementById("coluna"+coluna)
     let img = new Image()
-    img.src = `image/${pathImg}`
+    img.src = `imagens/${pathImg}`
     
     let imgLargura = 240
     let proporcaoTamanho = 240/img.width 
@@ -113,6 +118,18 @@ function adicionarCartaoPosts(numeroColunas){
     cartaoPost.id = `cartaoPost${ii}`
     cartaoPost.innerHTML = innerString
     elementoColuna.appendChild(cartaoPost)
+    }
+
+}
+
+function loginDropDown() {
+    let menu = document.getElementById("login-menu-dropdown");
+
+    if(menu.style.display === 'block'){
+        menu.style.display = 'none'
+    }
+    else{
+        menu.style.display = 'block'
     }
 }
 

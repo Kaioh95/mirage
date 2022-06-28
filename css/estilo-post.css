@@ -58,7 +58,6 @@ body {
 
 .logo{
     display: inline-flex;
-    color: #F80707;
     margin-right: 10px;
 }
 
@@ -101,10 +100,6 @@ label{
     overflow: hidden;
 }
 
-/* .btn-pesquisar:hover {
-    background-color: rgba(174, 254, 255, 0.8);
-} */
-
 .form-buscar{
     display: block;
     margin-top: 0em;
@@ -126,6 +121,12 @@ label{
     width: 24%;
     margin: 0 15px;
     display: flex;
+}
+
+.login-dropdown{
+    display: none;
+    color: white;
+    padding: 10px 16px;
 }
 
 #tema{
@@ -488,5 +489,43 @@ input:checked + .slider:before{
 }
 
 .btn-add-post:hover{
+    box-shadow: 9px 9px 20px rgba(0, 0, 0, 0.21);
     background-color: #4D4C7D;
+}
+
+@media screen and (max-width:860px){
+    .login-dropdown{
+        display: block;
+    }
+
+    .login-area {
+        display: none;
+        position: absolute;
+        background-color: var(--cor-terciaria, #504382);
+        width: fit-content;
+        top: 75px;
+        right: 0;
+        margin: 0;
+        padding: 10px;
+    }
+
+    .login-area a{
+        text-decoration: none;
+    }
+
+    #button-sign-in{
+        display: block;
+        margin: 10px;
+    }
+
+    #tema {
+        justify-content: space-around;
+        width: auto;
+    }
+
+    #button-sign-up{
+        display: block;
+        margin: 10px;
+    }
+
 }

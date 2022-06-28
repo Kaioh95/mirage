@@ -53,3 +53,22 @@ toggleTema.onclick = () => {
         r.style.setProperty('--cor-texto', '#1C0C5B')
     }
 }
+
+function loginDropDown() {
+    let menu = document.getElementById("login-menu-dropdown");
+
+    if(menu.style.display === 'block'){
+        menu.style.display = 'none'
+    }
+    else{
+        menu.style.display = 'block'
+    }
+}
+
+function ajustaElementos(){
+    let menu = document.getElementById("login-menu-dropdown");
+    let largura = window.innerWidth;
+    if(largura>860){
+        menu.style.display = null;
+    }
+}

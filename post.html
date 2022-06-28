@@ -12,7 +12,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
     </head>
 
-    <body>
+    <body onresize="ajustaElementos()">
         <button class="btn-add-post">
             <ion-icon style="width: 30px; height: 30px;" name="add-outline"></ion-icon>
         </button>
@@ -27,7 +27,7 @@
 
             <div class="barra-de-busca">
                 <form class="form-buscar" action="/search">
-                    <input class="pesquisar" type="text" name="buscar" placeholder="Search for images and @users" style="color: rgba(255, 255, 255, 0.55); padding: 15px;">
+                    <input class="pesquisar" type="text" name="buscar" placeholder="Search for images and @users" style="color: aliceblue; padding: 15px;">
                     
                     <button type="submit" class="btn-pesquisar">
                         <ion-icon style="width: 24px; height: 24px;" name="search-outline"></ion-icon>
@@ -35,7 +35,7 @@
                 </form>
             </div>
             
-            <div class="login-area" >
+            <div class="login-area" id="login-menu-dropdown">
                 <div id="tema">
                     <ion-icon name="sunny-outline" style="width: 16px; height: 16px;"></ion-icon>
                     <label class="switch" for="toggle-tema">
@@ -49,6 +49,9 @@
 
                 <a href="signup.html"><button id="button-sign-up">Sign Up</button></a>
             </div>
+            <a id="icon-login-menu" href="javascript:void(0);" class="login-dropdown" onclick="loginDropDown()">
+                <ion-icon name="menu-outline" style="width: 24px; height: 24px;"></ion-icon>
+            </a>
 
         </div>
 

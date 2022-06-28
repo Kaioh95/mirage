@@ -20,11 +20,16 @@ body {
 }
 .topo{
     background: var(--cor-terciaria, #504382);
-    display: grid;
+    display: flex;
     width: 100%;
-    height: auto;
+    height: 75px;
     padding: 15px 20px 15px 20px;
     margin: 0 auto;
+    justify-content: space-between;
+    text-align: center;
+    position: fixed;
+    position: -webkit-sticky;
+    z-index: 1;
     top: 0;
     left: 0;
 }
@@ -52,8 +57,7 @@ body {
 
 .logo{
     display: inline-flex;
-    margin-left: auto;
-    margin-right: auto;
+    margin-right: 10px;
 }
 
 label{
@@ -100,11 +104,7 @@ label{
 }
 
 .barra-de-busca{
-    min-width: 250px;
-    width: 50%;
-    margin: 5px;
-    margin-left: auto;
-    margin-right: auto;
+    max-width: 620px;
     align-items: center;
     justify-content: space-around;
     flex: 1;
@@ -115,14 +115,20 @@ label{
 }
 
 .login-area{ /* Kaio Henrique */
+    justify-content: space-around;
+    width: 24%;
+    margin: 0 15px;
     display: flex;
-    position: absolute;
-    right: 35px;
+}
+
+.login-dropdown{
+    display: none;
+    color: white;
+    padding: 10px 16px;
 }
 
 #tema{
     display: flex;
-    margin-right: 15px;
     align-items: center;
     justify-content: space-between;
     width: 100px;
@@ -217,7 +223,7 @@ input:checked + .slider:before{
 }
 
 .menu{
-    margin-top: 25px;
+    margin-top: 90px;
     padding: 15px;
     display: inline-flex;
     width: 100%;
@@ -471,16 +477,43 @@ hr{
         overflow:auto;
         justify-content: start;
     }
-    .login-area {
-        display: flex;
-        position: inherit;
-        justify-content: end;
-        margin-left: auto;
-        margin-right: auto;
-        right: 35px;
-    }
+    
     .modal-content{
         display: grid;
     }  
+
+    .login-dropdown{
+        display: block;
+    }
+
+    .login-area {
+        display: none;
+        position: absolute;
+        background-color: var(--cor-terciaria, #504382);
+        width: fit-content;
+        top: 75px;
+        right: 0;
+        margin: 0;
+        padding: 10px;
+    }
+    
+    .login-area a{
+        text-decoration: none;
+    }
+
+    #button-sign-in{
+        display: block;
+        margin: 10px;
+    }
+
+    #tema {
+        justify-content: space-around;
+        width: auto;
+    }
+
+    #button-sign-up{
+        display: block;
+        margin: 10px;
+    }
 
 }
