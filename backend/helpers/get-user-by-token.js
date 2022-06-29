@@ -7,8 +7,13 @@ const getUserByToken = async (token) => {
         return res.status(401).json({ error: "Acesso negado!" });
     }
 
-    const decoded = jwt.verify(token, "nossosecret");
+    try{
+        const decoded = jwt.verify(token, 'nossosecret')
+    } catch(error){
+        return res.status(400).json({msg: "Token inválido!"});
+    }
 
+    const decoded = jwt.verify(token, 'nossosecret')
     const userId = decoded.id;
     
     const user = await User.findOne({ _id: userId });

@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken')
 const User = require('../models/User')
 
 // helpers
+const checkToken = require('../helpers/check-token')
 const getUserByToken = require('../helpers/get-user-by-token')
 const getToken = require('../helpers/get-token')
 const createUserToken = require('../helpers/create-user-token')
@@ -146,8 +147,12 @@ module.exports = class UserController{
 
         if(req.headers.authorization){
             const token = getToken(req)
+            try{
+                const decoded = jwt.verify(token, 'nossosecret')
+            } catch(error){
+                return res.status(400).json({msg: "Token inválido!"});
+            }
             const decoded = jwt.verify(token, 'nossosecret')
-
             currentUser = await User.findById(decoded.id)
 
             if(!currentUser){
@@ -165,6 +170,11 @@ module.exports = class UserController{
 
     static async editUserNameImg(req, res){
         const token = getToken(req)
+        try{
+            const decoded = jwt.verify(token, 'nossosecret')
+        } catch(error){
+            return res.status(400).json({msg: "Token inválido!"});
+        }
         const user = await getUserByToken(token)
         
         const name = req.body.name

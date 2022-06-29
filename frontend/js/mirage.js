@@ -3,26 +3,41 @@ var numeroColunas
 var imagens = ["bird.jpg","cat-dog.jpg","cat.jpg",
             "catLol.jpg","catMeme.jpg","dog.jpg",
             "skCat.jpg" ]
-var r = document.querySelector(':root')
 
 document.addEventListener("DOMContentLoaded", onDocumentLoad);
-function onDocumentLoad(){ajustarNumeroColunas();}
 
-const toggleTema = document.getElementById("toggle-tema")
-toggleTema.onclick = () => {
-    if (toggleTema.checked){
-        r.style.setProperty('--cor-primaria', '#1C0C5B')
-        r.style.setProperty('--cor-secundaria', '#2C2F49')
-        r.style.setProperty('--cor-terciaria', '#13132C')
-        r.style.setProperty('--cor-fundo', '#08041C')
-        r.style.setProperty('--cor-texto', '#9F94F5')
+function onDocumentLoad(){
+    ajustarNumeroColunas();
+    changeTheme();
+    let btnlogout = document.getElementById('button-log-out')
+    if(btnlogout){
+        btnlogout.onclick = () => {logout()}
     }
-    else{
-        r.style.setProperty('--cor-primaria', 'rgba(28, 12, 91, 1)')
-        r.style.setProperty('--cor-secundaria', 'rgba(145, 107, 191, 0.5)')
-        r.style.setProperty('--cor-terciaria', '#504382')
-        r.style.setProperty('--cor-fundo', 'rgba(218, 212, 241, 0.5)')
-        r.style.setProperty('--cor-texto', '#1C0C5B')
+}
+
+function logout(){
+    localStorage.removeItem('token')
+    window.location = "index.html"
+}
+
+function changeTheme(){
+    let r = document.querySelector(':root')
+    const toggleTema = document.getElementById("toggle-tema")
+    toggleTema.onclick = () => {
+        if (toggleTema.checked){
+            r.style.setProperty('--cor-primaria', '#1C0C5B')
+            r.style.setProperty('--cor-secundaria', '#2C2F49')
+            r.style.setProperty('--cor-terciaria', '#13132C')
+            r.style.setProperty('--cor-fundo', '#08041C')
+            r.style.setProperty('--cor-texto', '#9F94F5')
+        }
+        else{
+            r.style.setProperty('--cor-primaria', 'rgba(28, 12, 91, 1)')
+            r.style.setProperty('--cor-secundaria', 'rgba(145, 107, 191, 0.5)')
+            r.style.setProperty('--cor-terciaria', '#504382')
+            r.style.setProperty('--cor-fundo', 'rgba(218, 212, 241, 0.5)')
+            r.style.setProperty('--cor-texto', '#1C0C5B')
+        }
     }
 }
 
@@ -132,4 +147,3 @@ function loginDropDown() {
         menu.style.display = 'block'
     }
 }
-

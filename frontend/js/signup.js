@@ -1,5 +1,5 @@
-//import FetchService from './service/FetchService';
-//const fetchService = new FetchService();
+import FetchService from './service/FetchService.js';
+const fetchService = new FetchService();
 
 const signForm = document.querySelector("#form-signup");
 if(signForm){
@@ -20,39 +20,16 @@ async function submitSignForm(e, form){
 
     const headers = buildHeaders();
 
-    const response = await performPostHttpRequest(url, headers, jsonSignFormData);
+    const response = await fetchService.performPostHttpRequest(url, headers, jsonSignFormData);
     console.log(response)
 
-    if(response){
+    if(response.token){
+        localStorage.setItem('token', response.token)
         window.location = "index.html"
     }
     else
         alert(response.msg)
 
-}
-
-async function performPostHttpRequest(url, headers, body){
-    const rawResponse = await fetch(url, {
-        mode: 'no-cors',
-        method: "POST",
-        headers: headers,
-        body: JSON.stringify(body)
-    });
-    const content = await rawResponse.json();
-    return content;
-}
-
-async function performPostHttpRequestt(url, body){
-    let request = new XMLHttpRequest()
-    request.open("POST", url, true)
-    request.setRequestHeader("Content-type", "application/json")
-    request.send(JSON.stringify(body))
-
-    request.onload = function(){
-        console.log(this.responseText)
-    }
-
-    return request.responseText
 }
 
 function buildHeaders(authorization = null){
