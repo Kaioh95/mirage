@@ -6,7 +6,6 @@ const Post = require('../models/Post')
 const checkToken = require('../helpers/check-token')
 const getUserByToken = require('../helpers/get-user-by-token')
 const getToken = require('../helpers/get-token')
-const createUserToken = require('../helpers/create-user-token')
 const { imageUpload } = require('../helpers/image-upload')
 const ObjectId = require('mongoose').Types.ObjectId
 
@@ -70,6 +69,132 @@ module.exports = class PostController{
             res.status(500).json({msg: error})
         }
 
+    }
+
+    static async getPostById(req, res){
+        const id = req.params.id
+
+        if(!ObjectId.isValid(id)){
+            res.status(422).json({msg: "ID inválido"})
+            return
+        }
+
+        const post = await Post.findById(id)
+
+        if(!post){
+            res.status(422).json({msg: "Post não encontrado"})
+            return
+        }
+
+        res.status(200).json({ post })
+    }
+
+    static async getLastFiftyPosts(req, res){
+        const posts = await Post.find().sort('-createdAt').limit(50)
+        res.status(200).json({ posts: posts, })
+    }
+
+    static async getAllPosts(req, res){
+        const posts = await Post.find().sort('-createdAt')
+        res.status(200).json({ posts: posts, })
+    }
+
+    static async deletePost(req, res){
+        const token = getToken(req)
+        try{
+            const decoded = jwt.verify(token, 'nossosecret')
+        } catch(error){
+            return res.status(400).json({msg: "Token inválido!"});
+        }
+
+        const id = req.params.id
+
+        if (!ObjectId.isValid(id)) {
+            res.status(422).json({ msg: 'ID inválido!' })
+            return
+        }
+
+        const post = await Post.findById({ _id: id})
+
+        if(!post){
+            res.status(422).json({ msg: 'Post não encontrado!' })
+            return
+        }
+
+        try{
+            await Post.deleteOne({ _id: id })
+            res.status(200).json({ msg: 'Post removido com sucesso!' })
+        } catch(error){
+            res.status(500).json({ error: error })
+        }
+    }
+
+    static async editPost(req, res){
+        const token = getToken(req)
+        try{
+            const decoded = jwt.verify(token, 'nossosecret')
+        } catch(error){
+            return res.status(400).json({msg: "Token inválido!"});
+        }
+
+        const title = req.body.title
+        const tags = req.body.tags
+        const description = req.body.description
+        const id = req.params.id
+
+        if(!ObjectId.isValid(id)){
+            res.status(422).json({msg: "ID inválido"})
+            return
+        }
+
+        const post = await Post.findById(id)
+        
+        let image = ''
+        if(req.file){
+            image = req.file.filename
+        }
+        else{
+            res.status(422).json({msg: 'A imagem é obrigatória'})
+            return
+        }
+
+        if(!title){
+            res.status(422).json({msg: 'O título é obrigatório'})
+            return
+        }
+
+        if(tags && tags.split(',') > 5){
+            res.status(422).json({msg: 'Insira no máximo 5 tags'})
+            return
+        }
+
+        if(description && description.length > 256){
+            res.status(422).json({msg: 'A descrição deve ter no máximo 256 caracteres'})
+            return
+        }
+
+        let arrayTags = tags.split(',').map(element => element.trim())
+        const user = await getUserByToken(token)
+
+        post.title = title
+        post.tags = arrayTags
+        post.description = description
+        post.image = image
+        post.user = user
+
+        try{
+            const updatedPost = await Post.findOneAndUpdate(
+                { _id: post._id },
+                { $set: post },
+                { new: true },
+            )
+            res.json({
+                msg: 'Post atualizado com sucesso!',
+                data: updatedPost,
+            })
+        } catch(error) {
+            res.status(500).json({ msg: error })
+        }
     }
 
 }

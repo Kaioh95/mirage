@@ -16,9 +16,11 @@ app.use(express.static('public'))
 // Rotas
 const UserRoutes = require('./routes/UserRoutes')
 const PostRoutes = require('./routes/PostRoutes')
+const PostInfoRoutes = require('./routes/PostInfoRoutes')
 
 app.use('/users', UserRoutes)
 app.use('/posts', PostRoutes)
+app.use('/post-info', PostInfoRoutes)
 
 app.listen(5000)
 
