@@ -4,11 +4,11 @@ const { Schema } = mongoose
 const PostInfo = mongoose.model('PostInfo',
     new Schema({
         post_id: {
-            type: String,
+            type: mongoose.Types.ObjectId,
             require: true,
         },
         user_id: {
-            type: String,
+            type: mongoose.Types.ObjectId,
             require: true,
         },
         like: {

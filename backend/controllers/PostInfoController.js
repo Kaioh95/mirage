@@ -35,8 +35,8 @@ module.exports = class PostIndoController{
 
         try{
             const newPostInfo = new PostInfo({
-                post_id: post_id,
-                user_id: user._id,
+                post_id: ObjectId(post_id),
+                user_id: ObjectId(user._id),
                 like: like,
             })
             await newPostInfo.save()
@@ -95,16 +95,16 @@ module.exports = class PostIndoController{
             return
         }
 
-        const postInfo = await PostInfo.find({post_id: post_id})
+        const postInfo = await PostInfo.findOne({user_id: user._id, post_id: post_id})
         if(!postInfo){
             res.status(422).json({msg: "informações de Post não encontradas!"})
         }
         postInfo.like = like
-        postInfo.user_id = user._id
 
         try{
+            //const updatedPostInfo = await PostInfo.findByIdAndUpdate(postInfo._id, postInfo)
             const updatedPostInfo = await PostInfo.findOneAndUpdate(
-                { post_id: postInfo.post_id },
+                { _id: postInfo._id },
                 { $set: postInfo },
                 { new: true },
             )
@@ -126,7 +126,7 @@ module.exports = class PostIndoController{
         }
 
         try{
-            await PostInfo.deleteOne({ post_id: post_id })
+            await PostInfo.deleteMany({ post_id: post_id })
             res.status(200).json({ msg: 'Post Info removido com sucesso!' })
         } catch(error){
             res.status(500).json({ error: error })
