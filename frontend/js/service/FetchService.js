@@ -10,6 +10,13 @@ export default class FetchService {
         }
         return headers
     }
+
+    buildHeadersFile(authorization = null){
+        const headers = {
+            "Authorization": (authorization)? authorization : "Bearer TOKEN_MISSING"
+        }
+        return headers
+    }
     
     buildJsonFormData(form){
         const jsonFormData = { };
@@ -47,6 +54,25 @@ export default class FetchService {
                 method: "POST",
                 headers: headers,
                 body: JSON.stringify(body)
+            });
+            const content = await rawResponse.json();
+            return content;
+        }
+        catch(err) {
+            console.error(`Error at fetch POST: ${err}`);
+            throw err;
+        }
+    }
+
+    async performPostHttpRequestFile(fetchLink, headers, body) {
+        if(!fetchLink || !headers || !body) {
+            throw new Error("One or more POST request parameters was not passed.");
+        }
+        try {
+            const rawResponse = await fetch(fetchLink, {
+                method: "POST",
+                headers: headers,
+                body: body
             });
             const content = await rawResponse.json();
             return content;

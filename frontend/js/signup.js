@@ -32,4 +32,3 @@ async function submitSignForm(e, form){
 
 }
 
-

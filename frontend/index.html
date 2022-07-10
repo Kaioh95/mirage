@@ -27,27 +27,27 @@
                     <div class="imagem-container">
                         <img id="imagem-modal" src="icons/Imagem.png" alt="imagem-exemplo">
                     </div>
-                    <form class="form-upload">
-                    <label class="input-personalizado">
-                        <span class="botao-selecionar" style="color: rgba(255, 255, 255, 1);">Selecione um arquivo</span>
-                        <input type="file" id="input" class="input-file" accept="image/*">
-                    </label>
+                    <form class="form-upload" enctype="multipart/form-data">
+                        <label class="input-personalizado">
+                            <span class="botao-selecionar" style="color: rgba(255, 255, 255, 1);">Selecione um arquivo</span>
+                            <input type="file" id="input-post-image" class="input-file" required accept="image/*">
+                        </label>
                     </form>
                 </div>
                 <hr class="linha-vertical">
                 <div class="container-descricao">
-                    <Form class="form-descricao">
+                    <form id="create-post-form" class="form-descricao" enctype="multipart/form-data" action="">
                         <label style="color: #1C0C5B; margin-left: 8px;">Titulo do post</label>
-                        <input class="input-modal" type="text" style="padding: 15px;">
+                        <input class="input-modal" name="title" type="text" required style="padding: 15px;">
 
                         <label style="color: #1C0C5B; margin-left: 8px;">Marcações</label>
-                        <input class="input-modal" type="text" style="padding: 15px;"> 
+                        <input class="input-modal" name="tags" type="text" placeholder="pets, memes, games" style="padding: 15px;"> 
 
                         <label style="color: #1C0C5B; margin-left: 8px;">Descrição</label>
-                        <input class="input-modal"  type="text" style="padding: 15px;"> 
+                        <input class="input-modal" name="description" type="text" style="padding: 15px;"> 
 
                         <button type="submit" id="btn-postar">Postar</button>
-                    </Form>
+                    </form>
                 </div>
             </div>
         </div>
@@ -125,7 +125,7 @@
         <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
         <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
         <script type="module" src="js/mirage.js"></script>
-        <script src="js/modal-post.js"></script>
+        <script type="module" src="js/modal-post.js"></script>
         <script type="module" src="js/logUser.js"></script>
         <!-- ************************** Kaio Henrique ************************** -->
     </body>
