@@ -3,6 +3,22 @@ export default class FetchService {
 
     }
 
+    buildHeaders(authorization = null){
+        const headers = {
+            "Content-type": "application/json",
+            "Authorization": (authorization)? authorization : "Bearer TOKEN_MISSING"
+        }
+        return headers
+    }
+    
+    buildJsonFormData(form){
+        const jsonFormData = { };
+        for(const pair of new FormData(form)){
+            jsonFormData[pair[0]] = pair[1];
+        }
+        return jsonFormData;
+    }
+
     async performGetHttpRequest(fetchLink, headers, query=null) {
         if(!fetchLink || !headers) {
             throw new Error("One or more GET request parameters was not passed.");
@@ -59,4 +75,43 @@ export default class FetchService {
             throw err;
         }
     }
+
+    async performPatchHttpRequest(fetchLink, headers, body) {
+        if(!fetchLink || !headers || !body) {
+            throw new Error("One or more POST request parameters was not passed.");
+        }
+        try {
+            const rawResponse = await fetch(fetchLink, {
+                method: "PATCH",
+                headers: headers,
+                body: JSON.stringify(body)
+            });
+            const content = await rawResponse.json();
+            return content;
+        }
+        catch(err) {
+            console.error(`Error at fetch PATCH: ${err}`);
+            throw err;
+        }
+    }
+
+    async performDeleteHttpRequest(fetchLink, headers, body) {
+        if(!fetchLink || !headers || !body) {
+            throw new Error("One or more POST request parameters was not passed.");
+        }
+        try {
+            const rawResponse = await fetch(fetchLink, {
+                method: "DELETE",
+                headers: headers,
+                body: JSON.stringify(body)
+            });
+            const content = await rawResponse.json();
+            return content;
+        }
+        catch(err) {
+            console.error(`Error at fetch DELETE: ${err}`);
+            throw err;
+        }
+    }
+
 }

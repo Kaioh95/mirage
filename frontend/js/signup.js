@@ -16,9 +16,9 @@ async function submitSignForm(e, form){
     btnSubmit.disable = true;
     setTimeout(() => btnSubmit.disable = false, 3000);
 
-    const jsonSignFormData = buildJsonFormData(form);
+    const jsonSignFormData = fetchService.buildJsonFormData(form);
 
-    const headers = buildHeaders();
+    const headers = fetchService.buildHeaders();
 
     const response = await fetchService.performPostHttpRequest(url, headers, jsonSignFormData);
     console.log(response)
@@ -32,19 +32,4 @@ async function submitSignForm(e, form){
 
 }
 
-function buildHeaders(authorization = null){
-    const headers = {
-        "Content-type": "application/json",
-        "Authorization": (authorization)? authorization : "Bearer TOKEN_MISSING"
-    }
-    return headers
-}
-
-function buildJsonFormData(form){
-    const jsonFormData = { };
-    for(const pair of new FormData(form)){
-        jsonFormData[pair[0]] = pair[1];
-    }
-    return jsonFormData;
-}
 
