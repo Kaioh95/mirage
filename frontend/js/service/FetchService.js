@@ -104,7 +104,7 @@ export default class FetchService {
 
     async performPutHttpRequest(fetchLink, headers, body) {
         if(!fetchLink || !headers || !body) {
-            throw new Error("One or more POST request parameters was not passed.");
+            throw new Error("One or more PUT request parameters was not passed.");
         }
         try {
             const rawResponse = await fetch(fetchLink, {
@@ -123,7 +123,7 @@ export default class FetchService {
 
     async performPatchHttpRequest(fetchLink, headers, body) {
         if(!fetchLink || !headers || !body) {
-            throw new Error("One or more POST request parameters was not passed.");
+            throw new Error("One or more PATCH request parameters was not passed.");
         }
         try {
             const rawResponse = await fetch(fetchLink, {
@@ -140,9 +140,28 @@ export default class FetchService {
         }
     }
 
+    async performPatchHttpRequestNoBody(fetchLink, headers, body=null) {
+        if(!fetchLink || !headers) {
+            throw new Error("One or more PATCH request parameters was not passed.");
+        }
+        try {
+            const rawResponse = await fetch(fetchLink, {
+                method: "PATCH",
+                headers: headers,
+                body: body
+            });
+            const content = await rawResponse.json();
+            return content;
+        }
+        catch(err) {
+            console.error(`Error at fetch PATCH: ${err}`);
+            throw err;
+        }
+    }
+
     async performDeleteHttpRequest(fetchLink, headers, body) {
         if(!fetchLink || !headers || !body) {
-            throw new Error("One or more POST request parameters was not passed.");
+            throw new Error("One or more DELETE request parameters was not passed.");
         }
         try {
             const rawResponse = await fetch(fetchLink, {

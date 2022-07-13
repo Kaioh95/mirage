@@ -11,6 +11,7 @@ router.post(
 );
 router.get("/views-likes/:id", PostInfoController.countPostViewsLikes)
 router.get("/views-likes-user/:id", PostInfoController.countUserViewLikes)
+router.get("/views-likes-by-user/:id", verifyToken, PostInfoController.getPostInfoByUser)
 router.patch(
     "/edit/:id",
     verifyToken,   

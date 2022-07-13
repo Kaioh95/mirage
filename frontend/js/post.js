@@ -6,6 +6,12 @@ document.addEventListener("DOMContentLoaded", onDocumentLoad);
 window.addEventListener("resize", ajustaElementos);
 
 async function onDocumentLoad(){
+    let dropDownMenu = document.getElementById('icon-login-menu')
+    dropDownMenu.onclick = function(){loginDropDown()}
+
+    let likeBtn = document.getElementById('like-btn')
+    likeBtn.onclick = function(){darLike()}
+
     let url = "http://localhost:5000/posts/post/";
     let urlPostImage = "http://localhost:5000/images/posts/"
 
@@ -33,6 +39,32 @@ async function onDocumentLoad(){
 
     await atualizaView(queryValues["post"])
     await atualizaInfoPost(response, queryValues["post"])
+    await atualizaInfoByUser(queryValues["post"])
+}
+
+async function darLike(){
+    let likeBtn = document.getElementById('like-btn')
+    let likesAtual = document.getElementById("likes-atual");
+    let numLikes = parseInt(likesAtual.textContent.trim().slice(" ")[0], 10)
+
+    let url = "http://localhost:5000/post-info/edit/";
+    let queryValues = getQueryStrings();
+
+    const token = localStorage.getItem('token')
+    if(!token){
+        return null
+    }
+    const headers = fetchService.buildHeaders(`Bearer ${token}`);
+    const response = await fetchService.performPatchHttpRequestNoBody(url+queryValues["post"], headers);
+    
+    if(response.data.like){
+        likesAtual.innerHTML = `${numLikes+1} Likes`
+        likeBtn.name = "heart"
+    }
+    else{
+        likesAtual.innerHTML = `${numLikes-1} Likes`
+        likeBtn.name = "heart-outline"
+    }
 }
 
 async function atualizaView(post_id){
@@ -59,11 +91,30 @@ async function atualizaInfoPost(response, post_id){
     let viewsAtual = document.getElementById("views-atual");
     let likesAtual = document.getElementById("likes-atual");
 
-    avatarDonoPost.innerHTML = `<h2>${response.post.user.name.charAt(0)}</h2>`
+    avatarDonoPost.innerHTML = `<h2>${response.post.user.name.charAt(0).toUpperCase()}</h2>`
     nomeDonoPost.innerHTML = response.post.user.name
     tituloAtual.innerHTML = response.post.title
     viewsAtual.innerHTML = `${responseInfo.views} Views`
     likesAtual.innerHTML = `${responseInfo.likes} Likes`
+}
+
+async function atualizaInfoByUser(post_id){
+    let likeBtn = document.getElementById('like-btn')
+    let urlPostInfoByUser = "http://localhost:5000/post-info/views-likes-by-user/"
+
+    const token = localStorage.getItem('token')
+    if(!token){
+        return null
+    }
+    const hdUser = fetchService.buildHeaders(`Bearer ${token}`)
+    const resUser = await fetchService.performGetHttpRequest(urlPostInfoByUser+post_id, hdUser);
+    
+    if(resUser.data.like){
+        likeBtn.name = "heart"
+    }
+    else{
+        likeBtn.name = "heart-outline"
+    }
 }
 
 function getQueryStrings(){

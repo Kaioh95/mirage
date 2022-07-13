@@ -1,6 +1,7 @@
 import FetchService from './service/FetchService.js';
 const fetchService = new FetchService();
 
+document.addEventListener("DOMContentLoaded", onLogUser);
 const loginForm = document.querySelector("#form-login");
 if(loginForm){
     loginForm.addEventListener("submit", function(e) {
@@ -93,4 +94,4 @@ function changeTheme(){
 }
 
 
-await onLogUser();
+//await onLogUser();

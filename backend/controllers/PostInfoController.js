@@ -80,6 +80,30 @@ module.exports = class PostIndoController{
             likes: likesCount,
         })
     }
+
+    static async getPostInfoByUser(req, res){
+        const post_id = req.params.id
+
+        if(!ObjectId.isValid(post_id)){
+            res.status(422).json({msg: "ID inválido"})
+            return
+        }
+
+        const token = getToken(req)
+        try{
+            const decoded = jwt.verify(token, 'nossosecret')
+        } catch(error){
+            return res.status(400).json({msg: "Token inválido!"});
+        }
+
+        const user = await getUserByToken(token)
+
+        const postInfoUser = await PostInfo.findOne({post_id: post_id, user_id: user._id})
+        res.status(200).json({
+            data: postInfoUser
+        })
+    }
+
     static async editLike(req, res){
         const token = getToken(req)
         try{
