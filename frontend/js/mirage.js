@@ -11,20 +11,9 @@ window.addEventListener("resize", ajustarNumeroColunas)
 async function onDocumentLoad(){
     await getLastFiftyPost();
     ajustarNumeroColunas();
-    changeTheme();
-
-    let btnlogout = document.getElementById('button-log-out')
-    if(btnlogout){
-        btnlogout.onclick = () => {logout()}
-    }
 
     let dropDownMenu = document.getElementById('icon-login-menu')
     dropDownMenu.onclick = function(){loginDropDown()}
-}
-
-function logout(){
-    localStorage.removeItem('token')
-    window.location = "index.html"
 }
 
 async function getLastFiftyPost(){
@@ -40,27 +29,6 @@ async function getLastFiftyPost(){
         const responseInfo = await fetchService.performGetHttpRequest(urlPostInfo+post_id, headers);
         lastFiftyPost[ii]['views'] = responseInfo.views
         lastFiftyPost[ii]['likes'] = responseInfo.likes
-    }
-}
-
-function changeTheme(){
-    let r = document.querySelector(':root')
-    const toggleTema = document.getElementById("toggle-tema")
-    toggleTema.onclick = () => {
-        if (toggleTema.checked){
-            r.style.setProperty('--cor-primaria', '#1C0C5B')
-            r.style.setProperty('--cor-secundaria', '#2C2F49')
-            r.style.setProperty('--cor-terciaria', '#13132C')
-            r.style.setProperty('--cor-fundo', '#08041C')
-            r.style.setProperty('--cor-texto', '#9F94F5')
-        }
-        else{
-            r.style.setProperty('--cor-primaria', 'rgba(28, 12, 91, 1)')
-            r.style.setProperty('--cor-secundaria', 'rgba(145, 107, 191, 0.5)')
-            r.style.setProperty('--cor-terciaria', '#504382')
-            r.style.setProperty('--cor-fundo', 'rgba(218, 212, 241, 0.5)')
-            r.style.setProperty('--cor-texto', '#1C0C5B')
-        }
     }
 }
 

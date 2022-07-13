@@ -1,7 +1,17 @@
 import FetchService from './service/FetchService.js';
 const fetchService = new FetchService();
 
-document.addEventListener("DOMContentLoaded", onLogUser);
+document.addEventListener("DOMContentLoaded", onDocLoad);
+
+async function onDocLoad(){
+    await onLogUser()
+
+    let btnlogout = document.getElementById('button-log-out')
+    if(btnlogout){
+        btnlogout.onclick = () => {logout()}
+    }
+}
+
 const loginForm = document.querySelector("#form-login");
 if(loginForm){
     loginForm.addEventListener("submit", function(e) {
@@ -73,10 +83,36 @@ async function onLogUser(){
 }
 
 function changeTheme(){
-    var r = document.querySelector(':root')
+    let r = document.querySelector(':root')
     const toggleTema = document.getElementById("toggle-tema")
+    let theme = localStorage.getItem("theme")
+    if(!theme){
+        localStorage.setItem("theme", "light")
+        theme = "light"
+    }
+
+    if (theme === "dark"){
+        toggleTema.checked = true
+        localStorage.setItem("theme", "dark")
+        r.style.setProperty('--cor-primaria', '#1C0C5B')
+        r.style.setProperty('--cor-secundaria', '#2C2F49')
+        r.style.setProperty('--cor-terciaria', '#13132C')
+        r.style.setProperty('--cor-fundo', '#08041C')
+        r.style.setProperty('--cor-texto', '#9F94F5')
+    }
+    else{
+        toggleTema.checked = false
+        localStorage.setItem("theme", "light")
+        r.style.setProperty('--cor-primaria', 'rgba(28, 12, 91, 1)')
+        r.style.setProperty('--cor-secundaria', 'rgba(145, 107, 191, 0.5)')
+        r.style.setProperty('--cor-terciaria', '#504382')
+        r.style.setProperty('--cor-fundo', 'rgba(218, 212, 241, 0.5)')
+        r.style.setProperty('--cor-texto', '#1C0C5B')
+    }
+
     toggleTema.onclick = () => {
         if (toggleTema.checked){
+            localStorage.setItem("theme", "dark")
             r.style.setProperty('--cor-primaria', '#1C0C5B')
             r.style.setProperty('--cor-secundaria', '#2C2F49')
             r.style.setProperty('--cor-terciaria', '#13132C')
@@ -84,6 +120,7 @@ function changeTheme(){
             r.style.setProperty('--cor-texto', '#9F94F5')
         }
         else{
+            localStorage.setItem("theme", "light")
             r.style.setProperty('--cor-primaria', 'rgba(28, 12, 91, 1)')
             r.style.setProperty('--cor-secundaria', 'rgba(145, 107, 191, 0.5)')
             r.style.setProperty('--cor-terciaria', '#504382')
@@ -93,5 +130,20 @@ function changeTheme(){
     }
 }
 
+function loginDropDown() {
+    let menu = document.getElementById("login-menu-dropdown");
+
+    if(menu.style.display === 'block'){
+        menu.style.display = 'none'
+    }
+    else{
+        menu.style.display = 'block'
+    }
+}
+
+function logout(){
+    localStorage.removeItem('token')
+    window.location = "index.html"
+}
 
 //await onLogUser();
