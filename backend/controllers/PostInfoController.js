@@ -15,7 +15,8 @@ module.exports = class PostIndoController{
         try{
             const decoded = jwt.verify(token, 'nossosecret')
         } catch(error){
-            return res.status(400).json({msg: "Token inválido!"});
+            res.status(400).json({msg: "Token inválido!"});
+            return
         }
 
         const user = await getUserByToken(token)
@@ -27,10 +28,11 @@ module.exports = class PostIndoController{
             return
         }
 
-        const userExists = await PostInfo.findOne({user_id: user._id})
+        const userExists = await PostInfo.findOne({post_id: post_id, user_id: user._id})
 
         if(userExists){
-            return res.status(422).json({msg: 'Usuário já visualizou o post'})
+            res.status(422).json({msg: 'Usuário já visualizou o post'})
+            return
         }
 
         try{
@@ -88,7 +90,7 @@ module.exports = class PostIndoController{
 
         const user = await getUserByToken(token)
         const post_id = req.params.id
-        const like = req.body.like
+        //const like = req.body.like
 
         if(!ObjectId.isValid(post_id)){
             res.status(422).json({msg: "ID inválido"})
@@ -99,7 +101,11 @@ module.exports = class PostIndoController{
         if(!postInfo){
             res.status(422).json({msg: "informações de Post não encontradas!"})
         }
-        postInfo.like = like
+        if(postInfo.like){
+            postInfo.like = false
+        }else{
+            postInfo.like = true
+        }
 
         try{
             //const updatedPostInfo = await PostInfo.findByIdAndUpdate(postInfo._id, postInfo)

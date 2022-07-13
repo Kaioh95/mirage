@@ -1,23 +1,69 @@
+import FetchService from './service/FetchService.js';
+const fetchService = new FetchService();
 const tamanhoPadraoPost = 595
 
 document.addEventListener("DOMContentLoaded", onDocumentLoad);
-function onDocumentLoad(){
+window.addEventListener("resize", ajustaElementos);
+
+async function onDocumentLoad(){
+    let url = "http://localhost:5000/posts/post/";
+    let urlPostImage = "http://localhost:5000/images/posts/"
+
     let queryValues = getQueryStrings();
 
-    let img = new Image();
-    img.src = `imagens/${queryValues["pathImg"]}`;
-    
-    let largura = img.width;
-    let altura = img.height;
-    let proporcao = tamanhoPadraoPost / largura;
+    const headers = fetchService.buildHeaders();
+    const response = await fetchService.performGetHttpRequest(url+queryValues["post"], headers);
 
-    if(proporcao >=0 && proporcao <= 1){
-        largura = tamanhoPadraoPost;
-        altura = Math.floor(proporcao * altura);
+    let img = new Image();
+    img.src = urlPostImage+response.post.image;
+
+    img.onload = () => {
+        let largura = img.width;
+        let altura = img.height;
+        let proporcao = tamanhoPadraoPost / largura;
+
+        if(proporcao >=0 && proporcao <= 1){
+            largura = tamanhoPadraoPost;
+            altura = Math.floor(proporcao * altura);
+        }
+
+        let areaImagem = document.getElementById("imagem-post");
+        areaImagem.innerHTML = `<img src="${img.src}" width=${largura} height=${altura}>`;
     }
 
-    let areaImagem = document.getElementById("imagem-post");
-    areaImagem.innerHTML = `<img src="imagens/${queryValues["pathImg"]}" width=${largura} height=${altura}>`;
+    await atualizaView(queryValues["post"])
+    await atualizaInfoPost(response, queryValues["post"])
+}
+
+async function atualizaView(post_id){
+    let url = "http://localhost:5000/post-info/create/"
+
+    const token = localStorage.getItem('token')
+    if(!token){
+        return null
+    }
+    const headers = fetchService.buildHeaders(`Bearer ${token}`);
+    const responseInfo = await fetchService.performPostHttpRequestNoBody(url+post_id, headers);
+    console.log(responseInfo)
+}
+
+async function atualizaInfoPost(response, post_id){
+    let urlPostInfo = "http://localhost:5000/post-info/views-likes/"
+    
+    const headers = fetchService.buildHeaders();
+    const responseInfo = await fetchService.performGetHttpRequest(urlPostInfo+post_id, headers);
+
+    let avatarDonoPost = document.getElementById("avatar-dono-post");
+    let nomeDonoPost = document.getElementById("nome-dono-post");
+    let tituloAtual = document.getElementById("titulo-atual");
+    let viewsAtual = document.getElementById("views-atual");
+    let likesAtual = document.getElementById("likes-atual");
+
+    avatarDonoPost.innerHTML = `<h2>${response.post.user.name.charAt(0)}</h2>`
+    nomeDonoPost.innerHTML = response.post.user.name
+    tituloAtual.innerHTML = response.post.title
+    viewsAtual.innerHTML = `${responseInfo.views} Views`
+    likesAtual.innerHTML = `${responseInfo.likes} Likes`
 }
 
 function getQueryStrings(){

@@ -54,11 +54,13 @@ body {
 
 #logo{
     padding-right: 30px;
+    height: 44px;
 }
 
 .logo{
     display: inline-flex;
     margin-right: 10px;
+    align-items: center;
 }
 
 label{
@@ -511,6 +513,11 @@ input:checked + .slider:before{
 
     .login-area a{
         text-decoration: none;
+    }
+
+    #logo{
+        height: 30px;
+        padding: 0;
     }
 
     #button-sign-in{

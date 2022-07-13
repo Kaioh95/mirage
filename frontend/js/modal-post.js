@@ -42,7 +42,10 @@ async function submitCreatePostForm(e, form){
     const headers = fetchService.buildHeadersFile(`Bearer ${token}`);
 
     const response = await fetchService.performPostHttpRequestFile(url, headers, data);
-    console.log(response)
+
+    if(response.msg){
+        alert(response.msg)
+    }
 
     window.location = "index.html"
 }

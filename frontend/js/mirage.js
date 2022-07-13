@@ -126,15 +126,16 @@ function adicionarCartaoPosts(numeroColunas){
         let elementoColuna = document.getElementById("coluna"+coluna)
         let img = new Image()
         img.src = `http://localhost:5000/images/posts/${pathImg}`
-        
+
+        //img.onload = function(){
         let imgLargura = 240
         let proporcaoTamanho = 240/img.width 
         let imgAltura = Math.floor(proporcaoTamanho * img.height)
 
         const innerString = `
-            <a class="link-post" draggable="false" href="post.html?pathImg=${pathImg}">
+            <a class="link-post" draggable="false" href="post.html?post=${post_id}">
             <div class="conteudo-post">
-                <img id="img${ii}" src="${img.src}" width=${imgLargura} height=${imgAltura}>
+                <img id="img${ii}" src="${img.src}" width=${imgLargura} >
             </div>
             <div class="meta-dados-post">
                 <h4 class="titulo-post">${titulo}</h4>
@@ -146,7 +147,7 @@ function adicionarCartaoPosts(numeroColunas){
 
                     <div class="info-icon-count">
                         <ion-icon name="chatbubble-outline"></ion-icon>
-                        <div class="info-count">120</div>
+                        <div class="info-count">2</div>
                     </div>
 
                     <div class="info-icon-count">
@@ -163,6 +164,7 @@ function adicionarCartaoPosts(numeroColunas){
         cartaoPost.id = `cartaoPost${ii}`
         cartaoPost.innerHTML = innerString
         elementoColuna.appendChild(cartaoPost)
+        //}
     }
 
 }
