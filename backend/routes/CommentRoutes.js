@@ -9,3 +9,19 @@ router.post(
     verifyToken,
     CommentController.create
 );
+router.get(
+    "/comment-by-post/:id",
+    CommentController.getCommentsByPostId
+);
+router.patch(
+    "/edit/:id",
+    verifyToken,
+    CommentController.editComment
+)
+router.delete(
+    "/delete/:id",
+    verifyToken,
+    CommentController.deleteComment
+)
+
+module.exports = router;

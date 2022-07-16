@@ -17,10 +17,12 @@ app.use(express.static('public'))
 const UserRoutes = require('./routes/UserRoutes')
 const PostRoutes = require('./routes/PostRoutes')
 const PostInfoRoutes = require('./routes/PostInfoRoutes')
+const CommentRoutes = require('./routes/CommentRoutes')
 
 app.use('/users', UserRoutes)
 app.use('/posts', PostRoutes)
 app.use('/post-info', PostInfoRoutes)
+app.use('/comments', CommentRoutes)
 
 app.listen(5000)
 
