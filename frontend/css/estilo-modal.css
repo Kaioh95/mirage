@@ -1,0 +1,110 @@
+.modal{
+    z-index: 3;
+    display: none;
+    padding-top: 100px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.modal-content{
+    display: flex;
+    width: min-content;
+    position: relative;
+    margin: 10% auto;
+    padding: 15px 20px;
+    background-color: #dfdceb;
+    box-shadow: 9px 9px 20px rgb(255 255 255 / 21%);
+}
+
+.modal-div-center{
+    cursor: pointer;
+    position: absolute;
+    bottom: 0;
+    right: 10px;
+    top: 0px;
+    font-size: 30px;
+    color: #1C0C5B;
+}
+
+#imagem-modal{
+    width: 90%;
+    margin-top: 10px;
+    left: -15px;
+    top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#selecionar-imagem{
+    margin-top: 25px;
+}
+
+.modal-div-imagem{
+    display: grid;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.form-upload{
+    margin-top: 25px;
+    background:rgba(28, 12, 91, 1);
+    padding: 12px;
+    text-align: center;
+    width: 360px;
+    height: 45px;
+    border-radius: 10px;
+}
+
+.input-personalizado{
+    cursor: pointer;
+}
+
+.input-file{
+    display:none;
+}
+
+
+.linha-vertical{
+    margin: 7px;
+    border-left: 1px solid rgb(0 0 0 / 16%);/* Adiciona borda esquerda na div como ser fosse uma linha.*/
+    box-sizing: border-box;
+}
+
+.form-descricao{
+    display: grid;
+}
+.input-modal, select:focus, textarea:focus{
+    background: rgba(145, 107, 191, 0.55);
+    border-radius: 10px;
+    border: none;
+    height: 50px;
+    width: 385px;
+    margin: 5px;
+    color: aliceblue;
+    outline: none;
+}
+
+#btn-postar{
+    height: 45px;
+    width: 100px;
+    color: aliceblue;
+    background-color: #1C0C5B;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    justify-self: self-end;
+    margin: 5px;
+}
+
+@media screen and (max-width:860px){
+    
+    .modal-content{
+        display: grid;
+    }  
+
+}

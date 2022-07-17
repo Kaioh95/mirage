@@ -7,16 +7,52 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="css/estilo-post.css">
+        <link rel="stylesheet" href="css/estilo-modal.css">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
     </head>
 
     <body>
-        <button class="btn-add-post">
-            <ion-icon style="width: 30px; height: 30px;" name="add-outline"></ion-icon>
+        <button onclick="document.getElementById('modal-new-post').style.display='block'" class="btn-add-post">
+            <ion-icon style="width: 30px; height: 30px;" 
+                name="add-outline"></ion-icon>
         </button>
-        <!-- ************************** Giovanna ************************** -->
+
+        <div id="modal-new-post" class="modal">
+            <div class="modal-content">
+                <div class="modal-div-center">
+                    <span onclick="document.getElementById('modal-new-post').style.display='none'" title="Fechar modal">&times;</span>
+                </div>
+                <div class="modal-div-imagem">
+                    <div class="imagem-container">
+                        <img id="imagem-modal" src="icons/Imagem.png" alt="imagem-exemplo">
+                    </div>
+                    <form class="form-upload" enctype="multipart/form-data">
+                        <label class="input-personalizado">
+                            <span class="botao-selecionar" style="color: rgba(255, 255, 255, 1);">Selecione um arquivo</span>
+                            <input type="file" id="input-post-image" class="input-file" required accept="image/*">
+                        </label>
+                    </form>
+                </div>
+                <hr class="linha-vertical">
+                <div class="container-descricao">
+                    <form id="create-post-form" class="form-descricao" enctype="multipart/form-data" action="">
+                        <label style="color: #1C0C5B; margin-left: 8px;">Titulo do post</label>
+                        <input class="input-modal" name="title" type="text" required style="padding: 15px;">
+
+                        <label style="color: #1C0C5B; margin-left: 8px;">Marcações</label>
+                        <input class="input-modal" name="tags" type="text" placeholder="pets, memes, games" style="padding: 15px;"> 
+
+                        <label style="color: #1C0C5B; margin-left: 8px;">Descrição</label>
+                        <input class="input-modal" name="description" type="text" style="padding: 15px;"> 
+
+                        <button type="submit" id="btn-postar">Postar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
         <div class="topo" >
 
             <div class="logo">
@@ -142,6 +178,7 @@
         <script type="module" src="js/post.js"></script>
         <script type="module" src="js/logUser.js"></script>
         <script type="module" src="js/changeThemeLayout.js" ></script>
+        <script type="module" src="js/modal-post.js"></script>
         <script type="module" src="js/formComentario.js" ></script>
     </body>
 </html>
