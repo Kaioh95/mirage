@@ -120,7 +120,7 @@ module.exports = class CommentController{
         } catch(error){
             return res.status(400).json({msg: "Token inválido!"});
         }
-
+        const user = await getUserByToken(token)
         const id = req.params.id
 
         if (!ObjectId.isValid(id)) {
@@ -131,7 +131,11 @@ module.exports = class CommentController{
         const comment = await Comment.findById({_id: id})
 
         if(!comment){
-            res.status(422).json({ msg: 'Post não encontrado!' })
+            res.status(422).json({ msg: 'Comentário não encontrado!' })
+            return
+        }
+        if(!comment.user._id.equals(user._id)){
+            res.status(422).json({ msg: 'Sem permissão para deletar este comentário!' })
             return
         }
 

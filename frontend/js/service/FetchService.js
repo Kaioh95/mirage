@@ -159,15 +159,15 @@ export default class FetchService {
         }
     }
 
-    async performDeleteHttpRequest(fetchLink, headers, body) {
-        if(!fetchLink || !headers || !body) {
+    async performDeleteHttpRequest(fetchLink, headers, body=null) {
+        if(!fetchLink || !headers) {
             throw new Error("One or more DELETE request parameters was not passed.");
         }
         try {
             const rawResponse = await fetch(fetchLink, {
                 method: "DELETE",
                 headers: headers,
-                body: JSON.stringify(body)
+                body: body
             });
             const content = await rawResponse.json();
             return content;

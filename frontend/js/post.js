@@ -41,6 +41,12 @@ async function onDocumentLoad(){
     await atualizaInfoPost(response, queryValues["post"])
     await atualizaInfoByUser(queryValues["post"])
     await atualizaComments(queryValues["post"])
+
+    document.querySelectorAll('ion-icon[name="trash-outline"]').forEach(element => {
+        element.addEventListener('click', (e) => {
+            removeComment(e.target.id)
+        });
+    });
 }
 
 async function darLike(){
@@ -134,6 +140,7 @@ async function atualizaComments(post_id){
         let idadeComment = calcularIdadeComentario(new Date(element.createdAt))
         commentList.innerHTML += `
             <div class="meta-comentario">
+                <ion-icon id="${element._id}" style="float: right;" name="trash-outline"></ion-icon>
                 <div class="dono-comentario">
                     <a class="avatar" href="index.html">
                         <div class="avatar-dono-comentario"><h3>${userAvatar}</h3></div>
@@ -150,6 +157,19 @@ async function atualizaComments(post_id){
             </div>
         `
     });
+}
+
+async function removeComment(commentId){
+    let urlComment = "http://localhost:5000/comments/delete/"
+    const token = localStorage.getItem('token')
+    if(!token){
+        return null
+    }
+
+    const headers = fetchService.buildHeaders(`Bearer ${token}`)
+    const response = await fetchService.performDeleteHttpRequest(urlComment+commentId, headers)
+    alert(response.msg)
+    window.location.reload()
 }
 
 function getQueryStrings(){
