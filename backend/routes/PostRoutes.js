@@ -14,6 +14,8 @@ router.post(
 router.get("/last-posts", PostController.getLastFiftyPosts)
 router.get("/post/:id", PostController.getPostById)
 router.get("/all", PostController.getAllPosts)
+router.get("/post-by-title/:text", PostController.searchPostByTitle)
+router.get("/post-by-tag/:tag", PostController.searchPostByTag)
 router.patch(
     "/edit/:id",
     verifyToken,

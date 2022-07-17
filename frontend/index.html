@@ -63,10 +63,10 @@
             </div>
 
             <div class="barra-de-busca">
-                <form class="form-buscar" action="/search">
-                    <input class="pesquisar" type="text" name="buscar" placeholder="Search for images and @users" style="color: aliceblue; padding: 15px;">
+                <form id="form-buscar" class="form-buscar" action="#">
+                    <input class="pesquisar" type="text" name="buscar" placeholder="Search for images and @users" style="color: aliceblue; padding: 15px;" required>
                     
-                    <button type="submit" class="btn-pesquisar">
+                    <button id="btn-buscar" type="submit" class="btn-pesquisar">
                         <ion-icon style="width: 24px; height: 24px;" name="search-outline"></ion-icon>
                     </button>
                 </form>
@@ -96,17 +96,17 @@
             <div class="menu" id="menu">
                 <div class="categorias-menu">
                     <img src="icons/bug-pixel.png" alt="" style="margin-top: 20px;">
-                    <button class="button-name-category">Pets</button>
+                    <button id="btn-tag-pets" class="button-name-category" value="Pets">Pets</button>
                 </div>
 
                 <div class="categorias-menu">
                     <img src="icons/face-pixel.png" alt="" style="margin-top: 20px;">
-                    <button class="button-name-category">Memes</button>
+                    <button id="btn-tag-memes" class="button-name-category" value="Memes">Memes</button>
                 </div>
 
                 <div class="categorias-menu">
                     <img src="icons/game-pixel.png" alt="" style="margin-top: 20px;">
-                    <button class="button-name-category">Game</button>
+                    <button id="btn-tag-game" class="button-name-category" value="Game">Game</button>
                 </div>
 
                 

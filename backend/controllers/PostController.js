@@ -99,6 +99,29 @@ module.exports = class PostController{
         res.status(200).json({ posts: posts, })
     }
 
+    static async searchPostByTitle(req, res){
+        const text = req.params.text
+        if(!text){
+            res.status(422).json({msg: "Texto inválido"})
+            return
+        }
+        const regexSrc = new RegExp(text.trim(), 'i')
+        const posts = await Post.find({title: {$regex: regexSrc}}).sort('-createdAt')
+        res.status(200).json({ posts: posts, })
+    }
+
+    static async searchPostByTag(req, res){
+        const tag = req.params.tag
+        if(!tag){
+            res.status(422).json({msg: "Tag inválida"})
+            return
+        }
+
+        const regexSrc = new RegExp(tag.trim(), 'i')
+        const posts = await Post.find({tags: {$regex: regexSrc}}).sort('-createdAt')
+        res.status(200).json({ posts: posts, })
+    }
+
     static async deletePost(req, res){
         const token = getToken(req)
         try{

@@ -14,6 +14,15 @@ async function onDocumentLoad(){
 
     let dropDownMenu = document.getElementById('icon-login-menu')
     dropDownMenu.onclick = function(){loginDropDown()}
+
+    const searchForm = document.getElementById("form-buscar");
+    if(searchForm){
+        searchForm.addEventListener("submit", function(e) {
+            submitSearchForm(e, this);
+        });
+    }
+
+    bindMenuTags()
 }
 
 async function getLastFiftyPost(){
@@ -139,6 +148,63 @@ function adicionarCartaoPosts(numeroColunas){
         //}
     }
 
+}
+
+async function submitSearchForm(e, form){
+    e.preventDefault();
+    let url = "http://localhost:5000/posts/post-by-title/";
+    let urlPostInfo = "http://localhost:5000/post-info/views-likes/"
+    let urlComment = "http://localhost:5000/comments/comment-count/"
+
+    const btnBuscarSubmit = document.getElementById('btn-buscar');
+    btnBuscarSubmit.disable = true;
+    setTimeout(() => btnBuscarSubmit.disable = false, 2000);
+
+    const jsonSearch = fetchService.buildJsonFormData(form);
+    const headers = fetchService.buildHeaders();
+
+    const response = await fetchService.performGetHttpRequest(url+jsonSearch.buscar, headers);
+    lastFiftyPost = response.posts
+    for(let ii = 0; ii < response.posts.length; ii++){
+        let post_id = response.posts[ii]._id
+        const responseInfo = await fetchService.performGetHttpRequest(urlPostInfo+post_id, headers);
+        const responseComment = await fetchService.performGetHttpRequest(urlComment+post_id, headers);
+        lastFiftyPost[ii]['views'] = responseInfo.views
+        lastFiftyPost[ii]['likes'] = responseInfo.likes
+        lastFiftyPost[ii]['comments'] = responseComment.commentsCount
+    }
+    ajustarNumeroColunas();
+}
+
+function bindMenuTags(){
+    let btnPets = document.getElementById('btn-tag-pets')
+    btnPets.onclick = function(){searchByTag(btnPets.value)}
+
+    let btnMemes = document.getElementById('btn-tag-memes')
+    btnMemes.onclick = function(){searchByTag(btnMemes.value)}
+
+    let btnGame = document.getElementById('btn-tag-game')
+    btnGame.onclick = function(){searchByTag(btnGame.value)}
+}
+
+async function searchByTag(btnTag){
+    let url = "http://localhost:5000/posts/post-by-tag/";
+    let urlPostInfo = "http://localhost:5000/post-info/views-likes/"
+    let urlComment = "http://localhost:5000/comments/comment-count/"
+
+    const headers = fetchService.buildHeaders();
+
+    const response = await fetchService.performGetHttpRequest(url+btnTag, headers);
+    lastFiftyPost = response.posts
+    for(let ii = 0; ii < response.posts.length; ii++){
+        let post_id = response.posts[ii]._id
+        const responseInfo = await fetchService.performGetHttpRequest(urlPostInfo+post_id, headers);
+        const responseComment = await fetchService.performGetHttpRequest(urlComment+post_id, headers);
+        lastFiftyPost[ii]['views'] = responseInfo.views
+        lastFiftyPost[ii]['likes'] = responseInfo.likes
+        lastFiftyPost[ii]['comments'] = responseComment.commentsCount
+    }
+    ajustarNumeroColunas();
 }
 
 function loginDropDown() {
