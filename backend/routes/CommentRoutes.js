@@ -13,15 +13,19 @@ router.get(
     "/comment-by-post/:id",
     CommentController.getCommentsByPostId
 );
+router.get(
+    "/comment-count/:id",
+    CommentController.countCommentsByPostId
+);
 router.patch(
     "/edit/:id",
     verifyToken,
     CommentController.editComment
-)
+);
 router.delete(
     "/delete/:id",
     verifyToken,
     CommentController.deleteComment
-)
+);
 
 module.exports = router;

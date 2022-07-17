@@ -19,6 +19,7 @@ async function onDocumentLoad(){
 async function getLastFiftyPost(){
     let url = "http://localhost:5000/posts/last-posts";
     let urlPostInfo = "http://localhost:5000/post-info/views-likes/"
+    let urlComment = "http://localhost:5000/comments/comment-count/"
 
     const headers = fetchService.buildHeaders();
     const response = await fetchService.performGetHttpRequest(url, headers);
@@ -27,8 +28,10 @@ async function getLastFiftyPost(){
     for(let ii = 0; ii < response.posts.length; ii++){
         let post_id = response.posts[ii]._id
         const responseInfo = await fetchService.performGetHttpRequest(urlPostInfo+post_id, headers);
+        const responseComment = await fetchService.performGetHttpRequest(urlComment+post_id, headers);
         lastFiftyPost[ii]['views'] = responseInfo.views
         lastFiftyPost[ii]['likes'] = responseInfo.likes
+        lastFiftyPost[ii]['comments'] = responseComment.commentsCount
     }
 }
 
@@ -61,8 +64,8 @@ function ajustarNumeroColunas(){
         adicionarCartaoPosts(numeroColunas)
     }
 
-    let menu = document.getElementById("login-menu-dropdown");
     if(largura>860){
+        let menu = document.getElementById("login-menu-dropdown");
         menu.style.display = null;
     }
 
@@ -90,6 +93,7 @@ function adicionarCartaoPosts(numeroColunas){
         let descricao = postAtual.description
         let views = postAtual.views
         let likes = postAtual.likes
+        let comments = postAtual.comments
     
         let elementoColuna = document.getElementById("coluna"+coluna)
         let img = new Image()
@@ -115,7 +119,7 @@ function adicionarCartaoPosts(numeroColunas){
 
                     <div class="info-icon-count">
                         <ion-icon name="chatbubble-outline"></ion-icon>
-                        <div class="info-count">2</div>
+                        <div class="info-count">${comments}</div>
                     </div>
 
                     <div class="info-icon-count">

@@ -40,6 +40,7 @@ async function onDocumentLoad(){
     await atualizaView(queryValues["post"])
     await atualizaInfoPost(response, queryValues["post"])
     await atualizaInfoByUser(queryValues["post"])
+    await atualizaComments(queryValues["post"])
 }
 
 async function darLike(){
@@ -117,6 +118,40 @@ async function atualizaInfoByUser(post_id){
     }
 }
 
+async function atualizaComments(post_id){
+    let urlComment = "http://localhost:5000/comments/comment-by-post/"
+
+    const headers = fetchService.buildHeaders()
+    const response = await fetchService.performGetHttpRequest(urlComment+post_id, headers)
+    
+    document.getElementById("comment-count").innerHTML = `<span>${response.comments.length} COMENTÁRIOS</span>`
+    let commentList = document.getElementById("comment-list")
+    commentList.innerHTML = ""
+
+    response.comments.forEach(element => {
+        let userName = element.user.name
+        let userAvatar = userName.charAt(0).toUpperCase()
+        let idadeComment = calcularIdadeComentario(new Date(element.createdAt))
+        commentList.innerHTML += `
+            <div class="meta-comentario">
+                <div class="dono-comentario">
+                    <a class="avatar" href="index.html">
+                        <div class="avatar-dono-comentario"><h3>${userAvatar}</h3></div>
+                    </a>
+                    <a class="nome-dono-comentario" title="Dono do Comentario">
+                        ${userName}
+                    </a>
+                    <span>&nbsp;&#9830;&nbsp;</span>
+                    <span>${idadeComment} atrás</span>
+                </div>
+                <div class="texto-comentario">
+                    <span>${element.text}</span>
+                </div>
+            </div>
+        `
+    });
+}
+
 function getQueryStrings(){
     let queryValues = {};
     let decode = function(s) {return decodeURIComponent(s.replace(/\+/g, " ")); };
@@ -149,4 +184,26 @@ function ajustaElementos(){
     if(largura>860){
         menu.style.display = null;
     }
+}
+
+function calcularIdadeComentario(timeComment){
+    let timeAtual = new Date();
+    let diferenca = timeAtual - timeComment
+
+    let years = Math.floor(diferenca /1000/60/60/24/30.33/12),
+    days = Math.floor(diferenca /1000/60/60/24),
+    hours = Math.floor(diferenca /1000/60/60),
+    minutes = Math.floor(diferenca /1000/60),
+    seconds = Math.floor(diferenca /1000);
+
+    if(seconds<60)
+        return seconds + "s"
+    else if(minutes<60)
+        return minutes + "min"
+    else if(hours<24)
+        return hours + "h"
+    else if(days<365)
+        return days + "d"
+    else
+        return years + " anos"
 }

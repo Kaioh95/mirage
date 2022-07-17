@@ -54,7 +54,7 @@ module.exports = class CommentController{
             return
         }
 
-        const commentsByPost = await Comment.find({post_id: post_id})
+        const commentsByPost = await Comment.find({post_id: post_id}).sort('-createdAt')
 
         if(!commentsByPost){
             res.status(422).json({msg: "Nenhum comentário neste post!"})
@@ -62,6 +62,19 @@ module.exports = class CommentController{
         }
 
         res.status(200).json({comments: commentsByPost})
+    }
+
+    static async countCommentsByPostId(req, res){
+        const post_id = req.params.id
+
+        if(!ObjectId.isValid(post_id)){
+            res.status(422).json({msg: "ID inválido"})
+            return
+        }
+
+        const commentsCount = await Comment.find({post_id: post_id}).count()
+
+        res.status(200).json({commentsCount: commentsCount})
     }
 
     static async editComment(req, res){

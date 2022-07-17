@@ -87,18 +87,18 @@
 
                     <form id="form-comentario">
                         <div id="novo-comentario">
-                            <textarea placeholder="Deixe um comentário" style="height: 40px;"></textarea>
+                            <textarea name="text" placeholder="Deixe um comentário" style="height: 40px;" required></textarea>
                         </div>
                         <div class="comentario-area-botao">
-                            <button class="botao-comentario" type="submit" title="Enviar">Enviar</button>
+                            <button id="btn-comentario" class="botao-comentario" type="submit" title="Enviar">Enviar</button>
                         </div>
                     </form>
 
-                    <div class="contagem-comentario">
+                    <div id="comment-count" class="contagem-comentario">
                         <span>2 COMENTÁRIOS</span>
                     </div>
 
-                    <div class="lista-comentarios">
+                    <div id="comment-list" class="lista-comentarios">
                         <div class="meta-comentario">
                             <div class="dono-comentario">
                                 <a class="avatar" href="index.html">
@@ -142,5 +142,6 @@
         <script type="module" src="js/post.js"></script>
         <script type="module" src="js/logUser.js"></script>
         <script type="module" src="js/changeThemeLayout.js" ></script>
+        <script type="module" src="js/formComentario.js" ></script>
     </body>
 </html>
