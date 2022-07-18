@@ -10,7 +10,7 @@ if(signForm){
 
 async function submitSignForm(e, form){
     e.preventDefault();
-    let url = fetchService.getBaseUrl+"/users/auth/register";
+    let url = fetchService.getBaseUrl()+"/users/auth/register";
 
     const btnSubmit = document.getElementById('sign-in');
     btnSubmit.disable = true;

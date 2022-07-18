@@ -26,9 +26,9 @@ async function onDocumentLoad(){
 }
 
 async function getLastFiftyPost(){
-    let url = fetchService.getBaseUrl+"/posts/last-posts";
-    let urlPostInfo = fetchService.getBaseUrl+"/post-info/views-likes/"
-    let urlComment = fetchService.getBaseUrl+"/comments/comment-count/"
+    let url = fetchService.getBaseUrl()+"/posts/last-posts";
+    let urlPostInfo = fetchService.getBaseUrl()+"/post-info/views-likes/"
+    let urlComment = fetchService.getBaseUrl()+"/comments/comment-count/"
 
     const headers = fetchService.buildHeaders();
     const response = await fetchService.performGetHttpRequest(url, headers);
@@ -106,7 +106,7 @@ function adicionarCartaoPosts(numeroColunas){
     
         let elementoColuna = document.getElementById("coluna"+coluna)
         let img = new Image()
-        img.src = fetchService.getBaseUrl+`/images/posts/${pathImg}`
+        img.src = fetchService.getBaseUrl()+`/images/posts/${pathImg}`
 
         //img.onload = function(){
         let imgLargura = 240
@@ -152,9 +152,9 @@ function adicionarCartaoPosts(numeroColunas){
 
 async function submitSearchForm(e, form){
     e.preventDefault();
-    let url = fetchService.getBaseUrl+"/posts/post-by-title/";
-    let urlPostInfo = fetchService.getBaseUrl+"/post-info/views-likes/"
-    let urlComment = fetchService.getBaseUrl+"/comments/comment-count/"
+    let url = fetchService.getBaseUrl()+"/posts/post-by-title/";
+    let urlPostInfo = fetchService.getBaseUrl()+"/post-info/views-likes/"
+    let urlComment = fetchService.getBaseUrl()+"/comments/comment-count/"
 
     const btnBuscarSubmit = document.getElementById('btn-buscar');
     btnBuscarSubmit.disable = true;
@@ -188,9 +188,9 @@ function bindMenuTags(){
 }
 
 async function searchByTag(btnTag){
-    let url = fetchService.getBaseUrl+"/posts/post-by-tag/";
-    let urlPostInfo = fetchService.getBaseUrl+"/post-info/views-likes/"
-    let urlComment = fetchService.getBaseUrl+"/comments/comment-count/"
+    let url = fetchService.getBaseUrl()+"/posts/post-by-tag/";
+    let urlPostInfo = fetchService.getBaseUrl()+"/post-info/views-likes/"
+    let urlComment = fetchService.getBaseUrl()+"/comments/comment-count/"
 
     const headers = fetchService.buildHeaders();
 

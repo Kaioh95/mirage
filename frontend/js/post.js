@@ -12,8 +12,8 @@ async function onDocumentLoad(){
     let likeBtn = document.getElementById('like-btn')
     likeBtn.onclick = function(){darLike()}
 
-    let url = fetchService.getBaseUrl+"/posts/post/";
-    let urlPostImage = fetchService.getBaseUrl+"/images/posts/"
+    let url = fetchService.getBaseUrl()+"/posts/post/";
+    let urlPostImage = fetchService.getBaseUrl()+"/images/posts/"
 
     let queryValues = getQueryStrings();
 
@@ -54,7 +54,7 @@ async function darLike(){
     let likesAtual = document.getElementById("likes-atual");
     let numLikes = parseInt(likesAtual.textContent.trim().slice(" ")[0], 10)
 
-    let url = fetchService.getBaseUrl+"/post-info/edit/";
+    let url = fetchService.getBaseUrl()+"/post-info/edit/";
     let queryValues = getQueryStrings();
 
     const token = localStorage.getItem('token')
@@ -75,7 +75,7 @@ async function darLike(){
 }
 
 async function atualizaView(post_id){
-    let url = fetchService.getBaseUrl+"/post-info/create/"
+    let url = fetchService.getBaseUrl()+"/post-info/create/"
 
     const token = localStorage.getItem('token')
     if(!token){
@@ -87,7 +87,7 @@ async function atualizaView(post_id){
 }
 
 async function atualizaInfoPost(response, post_id){
-    let urlPostInfo = fetchService.getBaseUrl+"/post-info/views-likes/"
+    let urlPostInfo = fetchService.getBaseUrl()+"/post-info/views-likes/"
     
     const headers = fetchService.buildHeaders();
     const responseInfo = await fetchService.performGetHttpRequest(urlPostInfo+post_id, headers);
@@ -107,7 +107,7 @@ async function atualizaInfoPost(response, post_id){
 
 async function atualizaInfoByUser(post_id){
     let likeBtn = document.getElementById('like-btn')
-    let urlPostInfoByUser = fetchService.getBaseUrl+"/post-info/views-likes-by-user/"
+    let urlPostInfoByUser = fetchService.getBaseUrl()+"/post-info/views-likes-by-user/"
 
     const token = localStorage.getItem('token')
     if(!token){
@@ -125,7 +125,7 @@ async function atualizaInfoByUser(post_id){
 }
 
 async function atualizaComments(post_id){
-    let urlComment = fetchService.getBaseUrl+"/comments/comment-by-post/"
+    let urlComment = fetchService.getBaseUrl()+"/comments/comment-by-post/"
 
     const headers = fetchService.buildHeaders()
     const response = await fetchService.performGetHttpRequest(urlComment+post_id, headers)
@@ -160,7 +160,7 @@ async function atualizaComments(post_id){
 }
 
 async function removeComment(commentId){
-    let urlComment = fetchService.getBaseUrl+"/comments/delete/"
+    let urlComment = fetchService.getBaseUrl()+"/comments/delete/"
     const token = localStorage.getItem('token')
     if(!token){
         return null

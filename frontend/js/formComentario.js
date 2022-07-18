@@ -10,7 +10,7 @@ if(commentForm){
 
 async function submitCommentForm(e, form){
     e.preventDefault();
-    let url = fetchService.getBaseUrl+"/comments/create/";
+    let url = fetchService.getBaseUrl()+"/comments/create/";
     let queryValues = getQueryStrings();
 
     if(!queryValues["post"]){
