@@ -3,6 +3,10 @@ export default class FetchService {
 
     }
 
+    getBaseUrl(){
+        return "http://localhost:5000"
+    }
+
     buildHeaders(authorization = null){
         const headers = {
             "Content-type": "application/json",

@@ -3,17 +3,17 @@ const fetchService = new FetchService();
 
 var largura
 var numeroColunas
-var lastFiftyPost
+var lastFiftyPost = []
 
 document.addEventListener("DOMContentLoaded", onDocumentLoad);
 window.addEventListener("resize", ajustarNumeroColunas)
 
 async function onDocumentLoad(){
-    await getLastFiftyPost();
-    ajustarNumeroColunas();
-
     let dropDownMenu = document.getElementById('icon-login-menu')
     dropDownMenu.onclick = function(){loginDropDown()}
+
+    await getLastFiftyPost();
+    ajustarNumeroColunas();
 
     const searchForm = document.getElementById("form-buscar");
     if(searchForm){
@@ -26,9 +26,9 @@ async function onDocumentLoad(){
 }
 
 async function getLastFiftyPost(){
-    let url = "http://localhost:5000/posts/last-posts";
-    let urlPostInfo = "http://localhost:5000/post-info/views-likes/"
-    let urlComment = "http://localhost:5000/comments/comment-count/"
+    let url = fetchService.getBaseUrl+"/posts/last-posts";
+    let urlPostInfo = fetchService.getBaseUrl+"/post-info/views-likes/"
+    let urlComment = fetchService.getBaseUrl+"/comments/comment-count/"
 
     const headers = fetchService.buildHeaders();
     const response = await fetchService.performGetHttpRequest(url, headers);
@@ -106,7 +106,7 @@ function adicionarCartaoPosts(numeroColunas){
     
         let elementoColuna = document.getElementById("coluna"+coluna)
         let img = new Image()
-        img.src = `http://localhost:5000/images/posts/${pathImg}`
+        img.src = fetchService.getBaseUrl+`/images/posts/${pathImg}`
 
         //img.onload = function(){
         let imgLargura = 240
@@ -152,9 +152,9 @@ function adicionarCartaoPosts(numeroColunas){
 
 async function submitSearchForm(e, form){
     e.preventDefault();
-    let url = "http://localhost:5000/posts/post-by-title/";
-    let urlPostInfo = "http://localhost:5000/post-info/views-likes/"
-    let urlComment = "http://localhost:5000/comments/comment-count/"
+    let url = fetchService.getBaseUrl+"/posts/post-by-title/";
+    let urlPostInfo = fetchService.getBaseUrl+"/post-info/views-likes/"
+    let urlComment = fetchService.getBaseUrl+"/comments/comment-count/"
 
     const btnBuscarSubmit = document.getElementById('btn-buscar');
     btnBuscarSubmit.disable = true;
@@ -188,9 +188,9 @@ function bindMenuTags(){
 }
 
 async function searchByTag(btnTag){
-    let url = "http://localhost:5000/posts/post-by-tag/";
-    let urlPostInfo = "http://localhost:5000/post-info/views-likes/"
-    let urlComment = "http://localhost:5000/comments/comment-count/"
+    let url = fetchService.getBaseUrl+"/posts/post-by-tag/";
+    let urlPostInfo = fetchService.getBaseUrl+"/post-info/views-likes/"
+    let urlComment = fetchService.getBaseUrl+"/comments/comment-count/"
 
     const headers = fetchService.buildHeaders();
 

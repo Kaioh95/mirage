@@ -21,7 +21,7 @@ if(loginForm){
 
 async function submitLoginForm(e, form){
     e.preventDefault();
-    let url = "http://localhost:5000/users/auth/login";
+    let url = fetchService.getBaseUrl()+"/users/auth/login";
 
     const btnSubmit = document.getElementById('sign-in');
     btnSubmit.disable = true;
@@ -49,7 +49,7 @@ async function onLogUser(){
     if(!token){
         return null
     }
-    const urlUser = "http://localhost:5000/users/checkuser";
+    const urlUser = fetchService.getBaseUrl()+"/users/checkuser";
 
     console.log(token)
     const headers = fetchService.buildHeaders(`Bearer ${token}`);

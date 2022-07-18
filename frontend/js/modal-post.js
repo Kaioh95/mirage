@@ -27,7 +27,7 @@ if(createPostForm){
 
 async function submitCreatePostForm(e, form){
     e.preventDefault();
-    let url = "http://localhost:5000/posts/create";
+    let url = fetchService.getBaseUrl()+"/posts/create";
     const btnPostar = document.getElementById('btn-postar');
     let arquivoPost = document.getElementById('input-post-image');
     const token = localStorage.getItem('token')
