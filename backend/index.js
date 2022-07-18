@@ -7,7 +7,7 @@ const app = express()
 app.use(express.json())
 
 // Solve CORS
-app.user(cors({ credentials: true, origin: 'https://kaioh95.github.io/mirage/frontend/'}))
+app.use(cors({ credentials: true, origin: 'https://kaioh95.github.io/mirage/frontend'}))
 //app.use(cors({ credentials: true, origin: 'http://localhost:3000'}))
 
 // Pasta public de imagens
