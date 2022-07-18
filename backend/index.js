@@ -7,7 +7,8 @@ const app = express()
 app.use(express.json())
 
 // Solve CORS
-app.use(cors({ credentials: true, origin: 'http://localhost:3000'}))
+app.user(cors({ credentials: true, origin: 'https://kaioh95.github.io/mirage/frontend/'}))
+//app.use(cors({ credentials: true, origin: 'http://localhost:3000'}))
 
 // Pasta public de imagens
 //app.use('/public', express.static('public'))
@@ -24,5 +25,5 @@ app.use('/posts', PostRoutes)
 app.use('/post-info', PostInfoRoutes)
 app.use('/comments', CommentRoutes)
 
-app.listen(5000)
+app.listen(process.env.PORT || 5000)
 
