@@ -27,19 +27,19 @@ Implementamos utilizando HTML e CSS, as cores foram trocadas para melhor visuali
 Também adicionamos um switch para mudar para o tema escuro. Observe também na quarta imagem, o modal para preencher informações relativas ao post que o usuário pode criar e na terceira imagem temos um espaço de comentários onde é possível escrever ou excluir um comentário, além de ser possível deixar um “gostei” no post.
 
 <p align="center">
-   <img src="./.github/tela1.png" alt="Tela 1" width="250"/>
+   <img src="./.github/tela1.png" alt="Tela 1" width="480"/>
 </p>
 
 <p align="center">
-   <img src="./.github/tela2.png" alt="Tela 2" width="250"/>
+   <img src="./.github/tela2.png" alt="Tela 2" width="480"/>
 </p>
 
 <p align="center">
-   <img src="./.github/tela4.png" alt="Tela 4" width="250"/>
+   <img src="./.github/tela4.png" alt="Tela 4" width="480"/>
 </p>
 
 <p align="center">
-   <img src="./.github/tela3.png" alt="Tela 3" width="250"/>
+   <img src="./.github/tela3.png" alt="Tela 3" width="480"/>
 </p>
 
 ## Sistema
@@ -48,7 +48,7 @@ Também adicionamos um switch para mudar para o tema escuro. Observe também na 
     O backend foi implementado em Node.js utilizando o Mongodb como banco de dados. Nosso servidor foi dividido da seguinte forma.
 
 <p align="center">
-   <img src="./.github/mirage-back-pkgs.png" alt="Tela 3" width="250"/>
+   <img src="./.github/mirage-back-pkgs.png" alt="Tela 3" width="480"/>
 </p>
 
    Para facilitar o desenvolvimento da aplicação foram utilizadas ferramentas para criação tokens de validação, upload de arquivos, encriptação de senhas. a seguir a lista de ferramentas utilizadas:
@@ -70,13 +70,13 @@ Já no frontend não foi utilizado nenhum framework, além de alguns CDNs para �
 Caso deseje rodar a aplicação localmente, primeiramente é necessário definir um arquivo .env com as seguinte variáveis de ambiente na pasta backend/ utilizando usuário e senha definidos no Mongo Atlas.
 
 <p align="center">
-   <img src="./.github/env.PNG" alt="env" width="250"/>
+   <img src="./.github/env.PNG" alt="env" width="480"/>
 </p>
 
 Agora você deve definir sua string de conexão ao banco de dados do Mongo Atlas no arquivo backend/db/[conn.js](backend/db/conn.js)
 
 <p align="center">
-   <img src="./.github/connDB.PNG" alt="conn" width="250"/>
+   <img src="./.github/connDB.PNG" alt="conn" width="480"/>
 </p>
 
 e agora execute o seguinte comando
@@ -90,7 +90,7 @@ Agora, para executar o frontend é necessário alterar a string de url base da a
 
 
 <p align="center">
-   <img src="./.github/frontURL.PNG" alt="frontURL" width="250"/>
+   <img src="./.github/frontURL.PNG" alt="frontURL" width="480"/>
 </p>
 
 Basta executar o frontend na porta 3000 para utilizar a aplicação, podendo rodar o seguinte comando:
