@@ -70,13 +70,13 @@ Já no frontend não foi utilizado nenhum framework, além de alguns CDNs para �
 Caso deseje rodar a aplicação localmente, primeiramente é necessário definir um arquivo .env com as seguinte variáveis de ambiente na pasta backend/ utilizando usuário e senha definidos no Mongo Atlas.
 
 <p align="center">
-   <img src="./.github/env.png" alt="env" width="250"/>
+   <img src="./.github/env.PNG" alt="env" width="250"/>
 </p>
 
 Agora você deve definir sua string de conexão ao banco de dados do Mongo Atlas no arquivo backend/db/[conn.js](backend/db/conn.js)
 
 <p align="center">
-   <img src="./.github/connDB.png" alt="conn" width="250"/>
+   <img src="./.github/connDB.PNG" alt="conn" width="250"/>
 </p>
 
 e agora execute o seguinte comando
@@ -90,7 +90,7 @@ Agora, para executar o frontend é necessário alterar a string de url base da a
 
 
 <p align="center">
-   <img src="./.github/frontURL.png" alt="frontURL" width="250"/>
+   <img src="./.github/frontURL.PNG" alt="frontURL" width="250"/>
 </p>
 
 Basta executar o frontend na porta 3000 para utilizar a aplicação, podendo rodar o seguinte comando:
