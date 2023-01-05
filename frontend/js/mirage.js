@@ -34,14 +34,6 @@ async function getLastFiftyPost(){
     const response = await fetchService.performGetHttpRequest(url, headers);
 
     lastFiftyPost = response.posts
-    for(let ii = 0; ii < response.posts.length; ii++){
-        let post_id = response.posts[ii]._id
-        const responseInfo = await fetchService.performGetHttpRequest(urlPostInfo+post_id, headers);
-        const responseComment = await fetchService.performGetHttpRequest(urlComment+post_id, headers);
-        lastFiftyPost[ii]['views'] = responseInfo.views
-        lastFiftyPost[ii]['likes'] = responseInfo.likes
-        lastFiftyPost[ii]['comments'] = responseComment.commentsCount
-    }
 }
 
 function ajustarNumeroColunas(){

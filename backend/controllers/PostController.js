@@ -1,6 +1,8 @@
 const jwt = require('jsonwebtoken')
 
 const Post = require('../models/Post')
+const PostInfo = require('../models/PostInfo')
+const Comment = require('../models/Comment')
 
 // helpers
 const checkToken = require('../helpers/check-token')
@@ -90,23 +92,42 @@ module.exports = class PostController{
     }
 
     static async getLastFiftyPosts(req, res){
-        const posts = await Post.find().sort('-createdAt').limit(50)
-        res.status(200).json({ posts: posts, })
+        const skip = req.query.skip
+        const limit = req.query.limit
+        
+        const posts = await Post.find().sort('-createdAt').skip(skip).limit(limit)
+        const postsInfo = posts.map(async (post, index) => {
+            const views = await PostInfo.find({post_id: post._id}).count()
+            const likes = await PostInfo.find({post_id: post._id, like: true}).count()
+            const comments = await Comment.find({post_id: post._id}).count()
+            
+            return {...post.toObject(), views, likes, comments}
+        })
+        const postsN = await Promise.all(postsInfo)
+
+        res.status(200).json({ posts: postsN, })
     }
 
     static async getAllPosts(req, res){
-        const posts = await Post.find().sort('-createdAt')
+        const skip = req.query.skip
+        const limit = req.query.limit
+
+        const posts = await Post.find().sort('-createdAt').skip(skip).limit(limit)
         res.status(200).json({ posts: posts, })
     }
 
     static async searchPostByTitle(req, res){
         const text = req.params.text
+        const sortFilter = req.query.sort
+        const skip = req.query.skip
+        const limit = req.query.limit
+
         if(!text){
             res.status(422).json({msg: "Texto inválido"})
             return
         }
         const regexSrc = new RegExp(text.trim(), 'i')
-        const posts = await Post.find({title: {$regex: regexSrc}}).sort('-createdAt')
+        const posts = await Post.find({title: {$regex: regexSrc}}).sort(sortFilter).skip(skip).limit(limit)
         res.status(200).json({ posts: posts, })
     }
 

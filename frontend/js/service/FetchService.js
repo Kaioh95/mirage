@@ -4,8 +4,8 @@ export default class FetchService {
     }
 
     getBaseUrl(){
-        //return "http://localhost:5000"
-        return "https://mirage-mira-backend.herokuapp.com"
+        return "http://localhost:5000"
+        //return "https://mirage-mira-backend.herokuapp.com"
     }
 
     buildHeaders(authorization = null){

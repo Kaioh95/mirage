@@ -94,12 +94,16 @@ module.exports = class CommentController{
         const user = await getUserByToken(token)
         const text = req.body.text
 
+        if(!text){
+            return res.status(422).json({msg: "Insert Text"})
+        }
+
         const comment = await Comment.findById(id)
         comment.text = text
 
         try{
             const updatedComment = await Comment.findOneAndUpdate(
-                { id: comment.id },
+                { _id: comment._id },
                 { $set: comment },
                 { new: true },
             )
