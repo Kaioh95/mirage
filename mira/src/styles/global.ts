@@ -1,5 +1,4 @@
 import { createGlobalStyle } from 'styled-components'
-import BodyBackImg from '../assets/bodyback.png'
 
 export default createGlobalStyle`
     *{

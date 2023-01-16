@@ -2,15 +2,12 @@ import React from 'react';
 import './App.css';
 
 import GlobalStyle from './styles/global';
-import Header from './components/Header';
 import { CustomThemeProvider } from './contexts/CustomThemeContext';
-import PostCard from './components/PostCard';
 
-import BugImg from './assets/bug-pixel.png';
-import FaceImg from './assets/face-pixel.png';
-import GameImg from './assets/game-pixel.png';
-import Img from './assets/imagen.png';
-import logo from './assets/logo.png';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import Header from './components/Header';
+import MainPage from './pages/MainPage';
+import PostPage from './pages/PostPage';
 
 function App() {
 	return (
@@ -18,22 +15,13 @@ function App() {
 			<div className="App">
 				<GlobalStyle/>
 				<Header/>
-				<div style={{
-					display: 'flex',
-					flexWrap: 'wrap',
-					justifyContent: 'space-between',
-					padding: '40px 200px',
-					height: '100vh'
-				}}>
-					<PostCard/>
-					<PostCard src={BugImg}/>
-					<PostCard/>
-					<PostCard src={FaceImg}/>
-					<PostCard src={GameImg}/>
-					<PostCard/>
-					<PostCard src={Img}/>
-					<PostCard src={logo}/>
-				</div>
+				<Router>
+					<Routes>
+						<Route path='/' element={<MainPage/>}></Route>
+						<Route path='/post/:id' element={<PostPage/>}></Route>
+						<Route path='*' element={<Navigate to="/"/>}></Route>
+					</Routes>
+				</Router>
 			</div>
 		</CustomThemeProvider>
 	);

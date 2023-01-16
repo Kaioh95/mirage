@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from 'react-router-dom'
 
 export const PostContainer = styled.div`
     max-width: 300px;
@@ -6,6 +7,7 @@ export const PostContainer = styled.div`
     width: 300px;
     margin: 0;
     padding: 0;
+    height: fit-content;
     margin-bottom: 20px;
     border-radius: ${({ theme }) => theme.borderRadius.card};
 
@@ -17,7 +19,7 @@ export const PostContainer = styled.div`
         opacity: 0.95;
     }
 `;
-export const PostLink = styled.a`
+export const PostLink = styled(Link)`
     text-decoration: none;
     cursor: pointer;
 `;

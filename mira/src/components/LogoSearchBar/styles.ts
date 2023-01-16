@@ -13,6 +13,7 @@ export const LogoArea = styled.div`
 `;
 export const LogoImg = styled.img`
     width: 150px;
+    display: block;
 
     ${({theme}) => theme.device.tablet()}{
         width: 80px;

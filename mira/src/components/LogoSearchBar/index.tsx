@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { Field, Formik, FormikHelpers, FormikValues } from "formik";
 import { DropButton, LogoArea, LogoImg, SearchButton, SearchContainer, SearchForm, SearchInput } from "./styles";
 import { ChevronDown, ChevronRight, SearchIcon } from "../Icons";
@@ -19,7 +20,9 @@ const LogoSearchBar: React.FC = () => {
     return(
         <React.Fragment>
             <LogoArea>
-                <LogoImg src={MiraImage} alt='Logo'></LogoImg>
+                <a href="/">
+                    <LogoImg src={MiraImage} alt='Logo'></LogoImg>
+                </a>
                 <DropButton onClick={e => dropDown ? setDropDown(false) : setDropDown(true)}>
                     {dropDown ? ChevronDown : ChevronRight}
                 </DropButton>
