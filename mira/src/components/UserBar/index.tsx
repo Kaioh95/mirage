@@ -79,6 +79,7 @@ const UserBar: React.FC = () => {
 			<MenuList>
 				<a href="http://localhost:5000/images/posts/1672953027051KaiohShin-300x300.png">Posts</a>
 				<a href="http://localhost:5000/images/posts/1672953027051KaiohShin-300x300.png">Favorites</a>
+				<a href="http://localhost:5000/images/posts/1672953027051KaiohShin-300x300.png">Comments</a>
 			</MenuList>
 
 			<UserMenuFooter>

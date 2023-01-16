@@ -94,6 +94,7 @@ export const AvatarSpan = styled.span`
     text-decoration: none;
     border-radius: ${({ theme }) => theme.borderRadius.addButton};
     background-size: cover;
+    cursor: pointer;
 `;
 export const UserMenu = styled.menu`
     background-color: ${({ theme }) => theme.colors.menu};
@@ -116,15 +117,15 @@ export const UserMenu = styled.menu`
 export const AvatarA = styled.a`
     min-height: 40px;
     min-width: 40px;
-    padding: 10px;
+    margin: 10px;
     text-decoration: none;
     display: inline-block;
     cursor: pointer;
 
     &>img {
+        display: block;
         height: 40px;
         width: 40px;
-
         border-radius: ${({ theme }) => theme.borderRadius.addButton};
     }
 `
@@ -161,7 +162,6 @@ export const UserCard = styled.div`
     }
 `;
 export const MenuList = styled.div`
-    height: 70px;
     padding: 5px 0;
 
     &>a {

@@ -31,7 +31,7 @@ export const light: DefaultTheme = {
         },
     },
     borderRadius: {
-        card: '4px',
+        card: '5px',
         button: '5px',
         addButton: '50%',
         searchBar: '8px',
