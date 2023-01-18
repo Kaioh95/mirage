@@ -18,7 +18,7 @@ module.exports = class PostController{
         try{
             const decoded = jwt.verify(token, 'nossosecret')
         } catch(error){
-            return res.status(400).json({msg: "Token inválido!"});
+            return res.status(400).json({msg: "Invalid Token!"});
         }
         const user = await getUserByToken(token)
 
@@ -31,22 +31,22 @@ module.exports = class PostController{
             image = req.file.filename
         }
         else{
-            res.status(422).json({msg: 'A imagem é obrigatória'})
+            res.status(422).json({msg: 'Image is required!'})
             return
         }
 
         if(!title){
-            res.status(422).json({msg: 'O título é obrigatório'})
+            res.status(422).json({msg: 'Title is required!'})
             return
         }
 
         if(tags && tags.split(',') > 5){
-            res.status(422).json({msg: 'Insira no máximo 5 tags'})
+            res.status(422).json({msg: 'Enter a maximum of 5 tags!'})
             return
         }
 
         if(description && description.length > 256){
-            res.status(422).json({msg: 'A descrição deve ter no máximo 256 caracteres'})
+            res.status(422).json({msg: 'The description must be a maximum of 256 characters!'})
             return
         }
 
@@ -66,7 +66,7 @@ module.exports = class PostController{
             })
             await newPost.save()
 
-            res.status(201).json({msg: 'Post criado com sucesso!'})
+            res.status(201).json({msg: 'Post created!'})
         }catch(error){
             res.status(500).json({msg: error})
         }
@@ -77,18 +77,18 @@ module.exports = class PostController{
         const id = req.params.id
 
         if(!ObjectId.isValid(id)){
-            res.status(422).json({msg: "ID inválido"})
+            res.status(422).json({msg: "ID invalid!"})
             return
         }
 
         const post = await Post.findById(id)
 
         if(!post){
-            res.status(422).json({msg: "Post não encontrado"})
+            res.status(422).json({msg: "Post not found!"})
             return
         }
 
-        res.status(200).json({ post })
+        res.status(200).json({ post, msg: "Post found!"})
     }
 
     static async getLastFiftyPosts(req, res){
@@ -105,7 +105,7 @@ module.exports = class PostController{
         })
         const postsN = await Promise.all(postsInfo)
 
-        res.status(200).json({ posts: postsN, })
+        res.status(200).json({ posts: postsN, msg: 'Posts found!'})
     }
 
     static async getAllPosts(req, res){
@@ -113,7 +113,7 @@ module.exports = class PostController{
         const limit = req.query.limit
 
         const posts = await Post.find().sort('-createdAt').skip(skip).limit(limit)
-        res.status(200).json({ posts: posts, })
+        res.status(200).json({ posts: posts, msg: 'Posts found!'})
     }
 
     static async searchPostByTitle(req, res){
@@ -128,19 +128,19 @@ module.exports = class PostController{
         }
         const regexSrc = new RegExp(text.trim(), 'i')
         const posts = await Post.find({title: {$regex: regexSrc}}).sort(sortFilter).skip(skip).limit(limit)
-        res.status(200).json({ posts: posts, })
+        res.status(200).json({ posts: posts, msg: 'Posts found!'})
     }
 
     static async searchPostByTag(req, res){
         const tag = req.params.tag
         if(!tag){
-            res.status(422).json({msg: "Tag inválida"})
+            res.status(422).json({msg: "Invalid Tag!"})
             return
         }
 
         const regexSrc = new RegExp(tag.trim(), 'i')
         const posts = await Post.find({tags: {$regex: regexSrc}}).sort('-createdAt')
-        res.status(200).json({ posts: posts, })
+        res.status(200).json({ posts: posts, msg: 'Posts found!'})
     }
 
     static async deletePost(req, res){
@@ -148,7 +148,7 @@ module.exports = class PostController{
         try{
             const decoded = jwt.verify(token, 'nossosecret')
         } catch(error){
-            return res.status(400).json({msg: "Token inválido!"});
+            return res.status(400).json({msg: "Invalid token!"});
         }
 
         const id = req.params.id
@@ -167,7 +167,7 @@ module.exports = class PostController{
 
         try{
             await Post.deleteOne({ _id: id })
-            res.status(200).json({ msg: 'Post removido com sucesso!' })
+            res.status(200).json({ msg: 'Post deleted!' })
         } catch(error){
             res.status(500).json({ error: error })
         }
@@ -178,7 +178,7 @@ module.exports = class PostController{
         try{
             const decoded = jwt.verify(token, 'nossosecret')
         } catch(error){
-            return res.status(400).json({msg: "Token inválido!"});
+            return res.status(400).json({msg: "Invalid token!"});
         }
 
         const title = req.body.title
@@ -187,7 +187,7 @@ module.exports = class PostController{
         const id = req.params.id
 
         if(!ObjectId.isValid(id)){
-            res.status(422).json({msg: "ID inválido"})
+            res.status(422).json({msg: "Invalid ID!"})
             return
         }
 
@@ -198,22 +198,22 @@ module.exports = class PostController{
             image = req.file.filename
         }
         else{
-            res.status(422).json({msg: 'A imagem é obrigatória'})
+            res.status(422).json({msg: 'Image required!'})
             return
         }
 
         if(!title){
-            res.status(422).json({msg: 'O título é obrigatório'})
+            res.status(422).json({msg: 'Title required!'})
             return
         }
 
         if(tags && tags.split(',') > 5){
-            res.status(422).json({msg: 'Insira no máximo 5 tags'})
+            res.status(422).json({msg: 'Enter a maximum of 5 characters!'})
             return
         }
 
         if(description && description.length > 256){
-            res.status(422).json({msg: 'A descrição deve ter no máximo 256 caracteres'})
+            res.status(422).json({msg: 'The description must be a maximum of 256 characters'})
             return
         }
 

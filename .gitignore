@@ -8,3 +8,4 @@ backend/public/images/posts/*.png
 backend/public/images/posts/*.jpg
 backend/public/images/posts/*.jpeg
 backend/public/images/posts/*.gif
+.env

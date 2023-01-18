@@ -45,6 +45,11 @@ export const Tag = styled(Link)`
 
     text-decoration: none;
     color: ${({ theme }) => theme.colors.text};
+
+    ${({ theme }) => theme.device.mobile()}{
+        width: 75px;
+        height: 90px;
+    };
 `;
 export const TagTitle = styled.div`
     text-align: center;
@@ -71,4 +76,14 @@ export const MainContainer = styled.main`
 
     width: 80%;
     padding: 40px 0px;
+
+    ${({ theme }) => theme.device.tablet()}{
+        justify-content: space-between;
+        width: 100%;
+    };
+
+    ${({ theme }) => theme.device.mobile()}{
+        justify-content: center;
+        width: 100%;
+    };
 `;

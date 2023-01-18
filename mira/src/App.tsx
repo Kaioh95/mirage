@@ -8,21 +8,28 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import Header from './components/Header';
 import MainPage from './pages/MainPage';
 import PostPage from './pages/PostPage';
+import { PostContextProvider } from './contexts/PostContext';
+
+import 'react-toastify/dist/ReactToastify.min.css';
+import { ToastContainer } from 'react-toastify';
 
 function App() {
 	return (
 		<CustomThemeProvider>
-			<div className="App">
-				<GlobalStyle/>
-				<Header/>
-				<Router>
-					<Routes>
-						<Route path='/' element={<MainPage/>}></Route>
-						<Route path='/post/:id' element={<PostPage/>}></Route>
-						<Route path='*' element={<Navigate to="/"/>}></Route>
-					</Routes>
-				</Router>
-			</div>
+			<PostContextProvider>
+				<div className="App">
+					<GlobalStyle/>
+					<ToastContainer/>
+					<Header/>
+					<Router>
+						<Routes>
+							<Route path='/' element={<MainPage/>}></Route>
+							<Route path='/post/:id' element={<PostPage/>}></Route>
+							<Route path='*' element={<Navigate to="/"/>}></Route>
+						</Routes>
+					</Router>
+				</div>
+			</PostContextProvider>
 		</CustomThemeProvider>
 	);
 }

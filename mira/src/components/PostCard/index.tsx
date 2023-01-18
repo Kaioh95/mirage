@@ -12,7 +12,7 @@ interface PostCardProps{
 }
 
 function PostCard(props: PostCardProps){
-
+    console.log(props)
     return(
         <PostContainer>
             <PostLink to={props.id ? `/post/${props.id}` : '#'}>
@@ -20,20 +20,20 @@ function PostCard(props: PostCardProps){
                     <PostImg width={300} src={props.src || 'http://localhost:5000/images/posts/1672953027051KaiohShin-300x300.png'}/>
                 </ImgContainer>
                 <PostData>
-                    <TituloPost>Teste Título</TituloPost>
+                    <TituloPost>{props.title || 'Teste Título'}</TituloPost>
                     
                     <PostMetaData>
                         <IconData>
                             <button>{HeartIcon}</button>
-                            <DisplayData>10</DisplayData>
+                            <DisplayData>{props.likes || -10}</DisplayData>
                         </IconData>
                         <IconData>
                             <button>{ChatIcon}</button>
-                            <DisplayData>4</DisplayData>
+                            <DisplayData>{props.comments || -4}</DisplayData>
                         </IconData>
                         <IconData>
                             <button>{EyeIcon}</button>
-                            <DisplayData>60</DisplayData>
+                            <DisplayData>{props.views || -60}</DisplayData>
                         </IconData>
                     </PostMetaData>
                 </PostData>

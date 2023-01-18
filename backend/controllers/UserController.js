@@ -32,7 +32,7 @@ module.exports = class UserController{
             return
         }
     
-        return res.status(200).json({ user })
+        return res.status(200).json({ user, msg: 'Hello User!'})
     }
 
     static async register(req, res) {
@@ -130,14 +130,14 @@ module.exports = class UserController{
             return
         }
 
-        res.status(200).json({ user })
+        res.status(200).json({ user, msg: 'User found!' })
 
     }
 
     static async getAllUsers(req, res){
         const users = await User.find().sort('-createdAt')
 
-        res.status(200).json({ users: users ,})
+        res.status(200).json({ users: users, msg: 'Users found!'})
     }
 
     static async checkUser(req, res){

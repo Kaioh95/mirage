@@ -43,7 +43,7 @@ module.exports = class PostIndoController{
             })
             await newPostInfo.save()
 
-            res.status(201).json({msg: 'Informações de post atualizadas!'})
+            res.status(200).json({msg: 'Informações de post atualizadas!'})
         }catch(error){
             res.status(500).json({msg: error})
         }
@@ -78,6 +78,7 @@ module.exports = class PostIndoController{
         res.status(200).json({
             views: viewsCount,
             likes: likesCount,
+            msg: 'Count of views and likes of a post!'
         })
     }
 

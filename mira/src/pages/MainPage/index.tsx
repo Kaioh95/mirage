@@ -6,10 +6,29 @@ import BugImg from '../../assets/bug-pixel.png';
 import FaceImg from '../../assets/face-pixel.png';
 import GameImg from '../../assets/game-pixel.png';
 import Img from '../../assets/imagen.png';
-import logo from '../../assets/logo.png';
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { Post } from "../../models/Post";
+import { PostContext } from "../../contexts/PostContext";
+import { toast } from "react-toastify";
 
 function MainPage(){
+    const { getPosts, getPostsLoading } = useContext(PostContext);
+    const [posts, setPosts] = useState<Post[]>();
+
+    const handleGetPosts = async () => {
+        const { success: response, error } = await getPosts();
+
+        if(error){
+            toast.error(error.message)
+            return;
+        }
+
+        setPosts(response.posts)
+    }
+
+    useEffect(() => {
+        handleGetPosts()
+    }, [])
 
     return(
         <React.Fragment>
@@ -30,12 +49,20 @@ function MainPage(){
                 <MainContainer>
                     <PostCard id='123'/>
                     <PostCard id='asd' src={BugImg}/>
-                    <PostCard id='124'/>
                     <PostCard id='125' src={FaceImg}/>
                     <PostCard id='sds' src={GameImg}/>
-                    <PostCard id='126'/>
                     <PostCard id='fgd' src={Img}/>
-                    <PostCard id='344' src={logo}/>
+                    { posts?.map((post, index) => (
+                        <PostCard 
+                            key={index} 
+                            id={post._id} 
+                            src={`http://localhost:5000/images/posts/${post.image}`}
+                            title={post.title}
+                            likes={post.likes}
+                            comments={post.comments}
+                            views={post.views}
+                            />
+                    )) }
                 </MainContainer>
             </PostsContainer>
         </React.Fragment>

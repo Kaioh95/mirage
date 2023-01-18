@@ -61,7 +61,7 @@ module.exports = class CommentController{
             return
         }
 
-        res.status(200).json({comments: commentsByPost})
+        res.status(200).json({comments: commentsByPost, msg: 'Comments found!'})
     }
 
     static async countCommentsByPostId(req, res){
@@ -74,7 +74,7 @@ module.exports = class CommentController{
 
         const commentsCount = await Comment.find({post_id: post_id}).count()
 
-        res.status(200).json({commentsCount: commentsCount})
+        res.status(200).json({commentsCount: commentsCount, msg: 'Number of comment by post!'})
     }
 
     static async editComment(req, res){
