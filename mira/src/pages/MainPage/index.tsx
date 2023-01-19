@@ -6,10 +6,11 @@ import BugImg from '../../assets/bug-pixel.png';
 import FaceImg from '../../assets/face-pixel.png';
 import GameImg from '../../assets/game-pixel.png';
 import Img from '../../assets/imagen.png';
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, Fragment } from "react";
 import { Post } from "../../models/Post";
 import { PostContext } from "../../contexts/PostContext";
 import { toast } from "react-toastify";
+import Header from "../../components/Header";
 
 function MainPage(){
     const { getPosts, getPostsLoading } = useContext(PostContext);
@@ -31,7 +32,8 @@ function MainPage(){
     }, [])
 
     return(
-        <React.Fragment>
+        <Fragment>
+            <Header/>
             <TagsContainer>
                 <TagsAside>
                     <Tag to='/' style={{backgroundImage: `url(${BugImg})`}}>
@@ -65,7 +67,7 @@ function MainPage(){
                     )) }
                 </MainContainer>
             </PostsContainer>
-        </React.Fragment>
+        </Fragment>
     )
 }
 

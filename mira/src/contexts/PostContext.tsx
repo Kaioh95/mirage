@@ -9,6 +9,16 @@ interface PostContextType{
     createPost?: (data: Post) => Promise<ResponseType>;
     editPost?: (data: Post) => Promise<ResponseType>;
     delete?: (id: string) => Promise<ResponseType>;
+    getPostById?: () => Promise<
+        | {
+            success: undefined,
+            error: Error;
+        }
+        | {
+            success: {post: Post};
+            error: undefined;
+        }
+    >;
     getPosts: () => Promise<
         | {
             success: undefined,
@@ -43,6 +53,7 @@ export const PostContextProvider = ({ children }: PostContextProviderProps) => {
             'get',
             undefined,
             undefined,
+            customErrorMessage
         );
 
         setGetPostsLoading(false);

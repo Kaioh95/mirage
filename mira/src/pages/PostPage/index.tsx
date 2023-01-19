@@ -1,3 +1,5 @@
+import { Fragment } from "react";
+import Header from "../../components/Header";
 import { ContainerPage, ContainerPost, ContainerNewPosts} from "./styles";
 
 interface PostPageProps{
@@ -13,10 +15,13 @@ interface PostPageProps{
 function PostPage(props: PostPageProps){
 
     return(
-        <ContainerPage>
-            <ContainerPost className="Post">Hello World</ContainerPost>
-            <ContainerNewPosts className="NewPosts">1000</ContainerNewPosts>
-        </ContainerPage>
+        <Fragment>
+            <Header/>
+            <ContainerPage>
+                <ContainerPost className="Post">Hello World</ContainerPost>
+                <ContainerNewPosts className="NewPosts">1000</ContainerNewPosts>
+            </ContainerPage>
+        </Fragment>
     )
 }
 

@@ -3,17 +3,19 @@ import { CustomThemeContext } from "../../contexts/CustomThemeContext";
 import Switch from 'react-switch'
 import { AvatarA, AvatarSpan, Button, DropButton, FooterButton, LoggedUserArea, MenuList, UserArea, UserCard, UserMenu, UserMenuFooter } from "./styles";
 import { MoonIcon, OptionIcon, PowerIcon, SunIcon } from "../Icons";
+import { UserContext } from "../../contexts/UserContext";
 
 const UserBar: React.FC = () => {
     const themeContext = useContext(CustomThemeContext);
+	const { isUserLogged } = useContext(UserContext);
     const [optionsDrop, setOptionsDrop] = useState<Boolean>(false);
 	const [menuDrop, setMenuDrop] = useState<Boolean>(false)
-    const [userIsLogged, setUserIsLogged] = useState<Boolean>(true);
+    //const [userIsLogged, setUserIsLogged] = useState<Boolean>(true);
 
     const MenuDefault = <React.Fragment>
         <UserArea 
             className={optionsDrop ? 'drop' : 'collapse'}
-            style={ userIsLogged ? {justifyContent: "flex-end"} : {}}
+            style={ isUserLogged ? {justifyContent: "flex-end"} : {}}
         >
             <Switch
                 onChange={themeContext.toggleTheme}
@@ -96,7 +98,7 @@ const UserBar: React.FC = () => {
 
     return (
         <React.Fragment>
-			{userIsLogged ? MenuLogged : MenuDefault}
+			{isUserLogged ? MenuLogged : MenuDefault}
 		</React.Fragment>
     )
 }

@@ -3,8 +3,9 @@ export interface User {
     name: string;
     email: string;
     password: string;
-    image: string;
-    createdAt: string;
-    updatedAt: string;
+    confirmPassword?: string;
+    image?: string;
+    createdAt?: string;
+    updatedAt?: string;
     __v?: string;
 }

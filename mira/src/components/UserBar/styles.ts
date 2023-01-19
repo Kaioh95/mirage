@@ -133,6 +133,7 @@ export const UserCard = styled.div`
     width: 100%;
     height: 100px;
     display: block;
+    text-align: center;
 
     background-image: 
         url(${starsImg});

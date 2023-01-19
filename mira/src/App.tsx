@@ -12,24 +12,26 @@ import { PostContextProvider } from './contexts/PostContext';
 
 import 'react-toastify/dist/ReactToastify.min.css';
 import { ToastContainer } from 'react-toastify';
+import { UserContextProvider } from './contexts/UserContext';
+import LoginOrRegister from './pages/LoginOrRegister';
 
 function App() {
 	return (
 		<CustomThemeProvider>
+			<UserContextProvider>
 			<PostContextProvider>
-				<div className="App">
-					<GlobalStyle/>
-					<ToastContainer/>
-					<Header/>
-					<Router>
-						<Routes>
-							<Route path='/' element={<MainPage/>}></Route>
-							<Route path='/post/:id' element={<PostPage/>}></Route>
-							<Route path='*' element={<Navigate to="/"/>}></Route>
-						</Routes>
-					</Router>
-				</div>
+				<GlobalStyle/>
+				<ToastContainer/>
+				<Router>
+					<Routes>
+						<Route path='/' element={<MainPage/>}></Route>
+						<Route path='/post/:id' element={<PostPage/>}></Route>
+						<Route path='/login' element={<LoginOrRegister/>}></Route>
+						<Route path='*' element={<Navigate to="/"/>}></Route>
+					</Routes>
+				</Router>
 			</PostContextProvider>
+			</UserContextProvider>
 		</CustomThemeProvider>
 	);
 }
