@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useState } from "react";
+import { createContext, ReactNode, useEffect, useState } from "react";
 import usePersistedState from "../hooks/usePersistedState";
 import { ResponseType, useRequest } from "../hooks/useRequest";
 import { User } from "../models/User";
@@ -13,7 +13,8 @@ interface UserContextType{
     isUserLoginLoading: boolean;
     isUserRegisterLoading: boolean;
     registerUser?: (data: UserRequest) => Promise<ResponseType>;
-    loginUser?: (data: UserLoginRequest) => Promise<ResponseType>;
+    loginUser: (data: UserLoginRequest) => Promise<ResponseType>;
+    signOut: () => void;
     getUserById?: (data: {id: string}) => Promise<
         | {
             success: undefined;
@@ -47,6 +48,7 @@ export const UserContext = createContext({} as UserContextType)
 export const UserContextProvider = ({ children }: UserContextProviderProps) => {
     const { runRequest } = useRequest();
     const [token, setToken] = usePersistedState<string>('token', '-1');
+    const [userId, setUserId] = usePersistedState<string>('userId', '-1');
     const [isUserLogged, setIsUserLogged] = useState(false);
     const [isUserLoginLoading, setIsUserLoginLoading] = useState(false);
     const [isUserRegisterLoading, setIsUserRegisterLoading] = useState(false);
@@ -58,7 +60,7 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
         const customErrorMsg = 'Error trying to login.'
 
         const response = await runRequest<UserLoginResponse, UserLoginRequest>(
-            '',
+            '/users/auth/login',
             'post',
             undefined,
             data,
@@ -75,9 +77,23 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
         }
 
         setIsUserLogged(true);
-        setToken(response.token)
+        await setToken(response.token);
+        await setUserId(response.userId);
+
         return { success: response.message, error: undefined};
     }
+
+    const signOut = () => {
+        setIsUserLogged(false)
+        localStorage.removeItem('token')
+        localStorage.removeItem('userId')
+    }
+
+    useEffect(() => {
+        if(localStorage.getItem('token')){
+            setIsUserLogged(true)
+        }
+    }, [])
 
     return(
         <UserContext.Provider value={{
@@ -85,6 +101,7 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
             isUserLoginLoading,
             isUserRegisterLoading,
             loginUser,
+            signOut
         }}>
             {children}
         </UserContext.Provider>

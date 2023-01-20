@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import BgImg from '../../assets/bodyback.png'
 
@@ -20,7 +21,23 @@ export const FormCard = styled.div`
     background-color: ${({ theme }) => theme.colors.tertiary};
     border-radius: ${({ theme }) => theme.borderRadius.card};
 `;
+export const ImgLink = styled(Link)`
+    position: relative;
+    left: 20%;
 
+    &>img{
+        width: 150px;
+        display: block;
+    }
+`
+export const LogoImg = styled.img`
+    width: 150px;
+    display: block;
+
+    ${({theme}) => theme.device.tablet()}{
+        width: 80px;
+    }
+`;
 export const InputIconContainer = styled.div`
     position: relative;
     margin: 15px 0;
@@ -81,7 +98,7 @@ export const InputIcon = styled.button`
 `;
 export const FormFooter = styled.div`
 
-`
+`;
 export const Button = styled.button`
     background-color: transparent;
     color: ${({ theme }) => theme.colors.lightText};

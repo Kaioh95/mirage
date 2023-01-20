@@ -33,8 +33,8 @@ export const useRequest = () => {
 
             console.log(error)
 
-            if (error.response.data) {
-                errorMsg = error.response.data;
+            if (error.response.data.msg) {
+                errorMsg = error.response.data.msg;
             } else if (customErrorMessage) {
                 errorMsg = customErrorMessage;
             }

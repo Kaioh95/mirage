@@ -26,7 +26,8 @@ function App() {
 					<Routes>
 						<Route path='/' element={<MainPage/>}></Route>
 						<Route path='/post/:id' element={<PostPage/>}></Route>
-						<Route path='/login' element={<LoginOrRegister/>}></Route>
+						<Route path='/login' element={<LoginOrRegister isLoginMode/>}></Route>
+						<Route path='/register' element={<LoginOrRegister/>}></Route>
 						<Route path='*' element={<Navigate to="/"/>}></Route>
 					</Routes>
 				</Router>

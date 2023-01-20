@@ -4,10 +4,12 @@ import Switch from 'react-switch'
 import { AvatarA, AvatarSpan, Button, DropButton, FooterButton, LoggedUserArea, MenuList, UserArea, UserCard, UserMenu, UserMenuFooter } from "./styles";
 import { MoonIcon, OptionIcon, PowerIcon, SunIcon } from "../Icons";
 import { UserContext } from "../../contexts/UserContext";
+import { Link, useNavigate } from "react-router-dom";
 
 const UserBar: React.FC = () => {
+	const navigate = useNavigate();
     const themeContext = useContext(CustomThemeContext);
-	const { isUserLogged } = useContext(UserContext);
+	const { isUserLogged, signOut } = useContext(UserContext);
     const [optionsDrop, setOptionsDrop] = useState<Boolean>(false);
 	const [menuDrop, setMenuDrop] = useState<Boolean>(false)
     //const [userIsLogged, setUserIsLogged] = useState<Boolean>(true);
@@ -31,8 +33,8 @@ const UserBar: React.FC = () => {
                 onColor='#2c2f49'
             />
 
-            <Button>Log In</Button>
-            <Button style={{border: 0}}>Sign Up</Button>
+            <Button onClick={e => navigate('/login')}>Log In</Button>
+            <Button style={{border: 0}} onClick={e => navigate('/register')}>Sign Up</Button>
         </UserArea>
 
         <DropButton
@@ -85,7 +87,7 @@ const UserBar: React.FC = () => {
 			</MenuList>
 
 			<UserMenuFooter>
-				<FooterButton>
+				<FooterButton onClick={e => signOut()}>
 					<button>
 						{PowerIcon}
 					</button>
