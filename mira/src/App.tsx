@@ -5,7 +5,6 @@ import GlobalStyle from './styles/global';
 import { CustomThemeProvider } from './contexts/CustomThemeContext';
 
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import Header from './components/Header';
 import MainPage from './pages/MainPage';
 import PostPage from './pages/PostPage';
 import { PostContextProvider } from './contexts/PostContext';

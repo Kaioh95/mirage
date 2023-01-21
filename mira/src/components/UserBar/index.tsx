@@ -2,16 +2,18 @@ import React, { useContext, useState } from "react";
 import { CustomThemeContext } from "../../contexts/CustomThemeContext";
 import Switch from 'react-switch'
 import { AvatarA, AvatarSpan, Button, DropButton, FooterButton, LoggedUserArea, MenuList, UserArea, UserCard, UserMenu, UserMenuFooter } from "./styles";
-import { MoonIcon, OptionIcon, PowerIcon, SunIcon } from "../Icons";
-import { UserContext } from "../../contexts/UserContext";
-import { Link, useNavigate } from "react-router-dom";
+import { MoonIcon, OptionIcon, PowerIcon, SunIcon, UserIcon } from "../Icons";
+import { UserContext, UserResponse } from "../../contexts/UserContext";
+import { useNavigate } from "react-router-dom";
+import usePersistedState from "../../hooks/usePersistedState";
 
 const UserBar: React.FC = () => {
 	const navigate = useNavigate();
     const themeContext = useContext(CustomThemeContext);
 	const { isUserLogged, signOut } = useContext(UserContext);
     const [optionsDrop, setOptionsDrop] = useState<Boolean>(false);
-	const [menuDrop, setMenuDrop] = useState<Boolean>(false)
+	const [menuDrop, setMenuDrop] = useState<Boolean>(false);
+	const [user] = usePersistedState<UserResponse>('user', {_id:'',name:'',email:''})
     //const [userIsLogged, setUserIsLogged] = useState<Boolean>(true);
 
     const MenuDefault = <React.Fragment>
@@ -66,18 +68,25 @@ const UserBar: React.FC = () => {
 			<AvatarSpan
 				onClick={e => menuDrop? setMenuDrop(false) : setMenuDrop(true)}
 				style={{ 
-					backgroundImage: 'url("http://localhost:5000/images/posts/1672953027051KaiohShin-300x300.png")'
+					backgroundImage: user.image ? 
+						`url("http://localhost:5000/images/users/${user.image}")`
+						: ''
 				}}
-			/>
+			>
+				{user.image? '' : UserIcon}
+			</AvatarSpan>
 		</LoggedUserArea>
 		
 		{/* User DropDown Menu */}
 		<UserMenu className={menuDrop? 'active' : ''}>
 			<UserCard>
 				<AvatarA>
-					<img src='http://localhost:5000/images/posts/1672953027051KaiohShin-300x300.png' alt='UserProfile'></img>
+					{	user.image ?
+						<img src={`http://localhost:5000/images/users/${user.image}`} alt='UserProfile'></img>
+						: UserIcon
+					}
 				</AvatarA>
-				<div>Sr. Kaioh Shin</div>
+				<div>{user.name ? user.name : ' - - '}</div>
 			</UserCard>
 
 			<MenuList>

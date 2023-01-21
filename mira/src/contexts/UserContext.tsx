@@ -4,18 +4,18 @@ import { ResponseType, useRequest } from "../hooks/useRequest";
 import { User } from "../models/User";
 
 export type UserRequest = Omit<User, 'image' | 'createdAt' | 'updatedAt' | '__v' | '_id'>;
+export type UserResponse = Omit<User, 'password' | 'confirmpassword'>;
 export type UserEditRequest = Omit<User, 'createdAt' | 'updatedAt' | '__v' | '_id'>;
-export type UserLoginRequest = Omit<User, 'name' | 'confirmPassword' | 'image' | 'createdAt' | 'updatedAt' | '__v' | '_id'>;
+export type UserLoginRequest = Omit<User, 'name' | 'confirmpassword' | 'image' | 'createdAt' | 'updatedAt' | '__v' | '_id'>;
 export type UserLoginResponse = {message: string; token: string; userId: string};
 
 interface UserContextType{
     isUserLogged: boolean;
     isUserLoginLoading: boolean;
-    isUserRegisterLoading: boolean;
-    registerUser?: (data: UserRequest) => Promise<ResponseType>;
+    registerUser: (data: UserRequest) => Promise<ResponseType>;
     loginUser: (data: UserLoginRequest) => Promise<ResponseType>;
     signOut: () => void;
-    getUserById?: (data: {id: string}) => Promise<
+    getUserById: (data: {id: string}) => Promise<
         | {
             success: undefined;
             error: Error
@@ -31,7 +31,7 @@ interface UserContextType{
             error: Error
         }
         | {
-            success: User[];
+            success: {users: User[]};
             error: undefined;
         }
     >
@@ -49,9 +49,41 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
     const { runRequest } = useRequest();
     const [token, setToken] = usePersistedState<string>('token', '-1');
     const [userId, setUserId] = usePersistedState<string>('userId', '-1');
+    const [user, setUser] = usePersistedState<UserResponse>('user', {_id:'',email:''});
+
     const [isUserLogged, setIsUserLogged] = useState(false);
     const [isUserLoginLoading, setIsUserLoginLoading] = useState(false);
-    const [isUserRegisterLoading, setIsUserRegisterLoading] = useState(false);
+
+    const registerUser = async (data: UserRequest) => {
+        setIsUserLogged(false);
+        setIsUserLoginLoading(true);
+
+        const customErrorMsg = 'Error trying to register.'
+
+        const response = await runRequest<UserLoginResponse, UserRequest>(
+            '/users/auth/register',
+            'post',
+            undefined,
+            data,
+            customErrorMsg
+        );
+
+        if(response instanceof Error){
+            return {
+                success: undefined,
+                error: response,
+            }
+        }
+
+        setToken(response.token);
+        setUserId(response.userId);
+        await getUserById({id: response.userId});
+
+        setIsUserLoginLoading(false);
+        setIsUserLogged(true);
+
+        return { success: response.message, error: undefined};
+    }
 
     const loginUser = async (data: UserLoginRequest) => {
         setIsUserLogged(false);
@@ -67,8 +99,6 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
             customErrorMsg
         );
 
-        setIsUserLoginLoading(false);
-
         if(response instanceof Error){
             return {
                 success: undefined,
@@ -76,9 +106,12 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
             }
         }
 
+        setToken(response.token);
+        setUserId(response.userId);
+        await getUserById({id: response.userId});
+
+        setIsUserLoginLoading(false);
         setIsUserLogged(true);
-        await setToken(response.token);
-        await setUserId(response.userId);
 
         return { success: response.message, error: undefined};
     }
@@ -87,6 +120,31 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
         setIsUserLogged(false)
         localStorage.removeItem('token')
         localStorage.removeItem('userId')
+        localStorage.removeItem('user')
+    }
+
+    const getUserById = async (data: {id: string}) => {
+        const customErrorMsg = 'Error fetching user'
+
+        const response = await runRequest<{user: User}>(
+            `/users/select/${data.id}`,
+            'get',
+            undefined,
+            undefined,
+            customErrorMsg
+        )
+
+        if(response instanceof Error){
+            return {
+                success: undefined,
+                error: response,
+            }
+        }
+
+        await setUser(response.user)
+        console.log(response.user)
+        console.log(user)
+        return{ success: response.user, error: undefined}
     }
 
     useEffect(() => {
@@ -99,9 +157,10 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
         <UserContext.Provider value={{
             isUserLogged,
             isUserLoginLoading,
-            isUserRegisterLoading,
+            registerUser,
             loginUser,
-            signOut
+            signOut,
+            getUserById
         }}>
             {children}
         </UserContext.Provider>

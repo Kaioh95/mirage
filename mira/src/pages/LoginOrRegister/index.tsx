@@ -3,16 +3,17 @@ import { Button, CustomInput, FormCard, FormError, FormFooter, ImgLink, InputIco
 import { LoginShema } from "../../schemas/LoginSchema";
 import { SignUpSchema } from "../../schemas/SignUpSchema";
 import { LockIcon, UserIcon } from "../../components/Icons";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import LogoImg from '../../assets/logo.png'
 import { UserContext } from "../../contexts/UserContext";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 interface LoginSignUpRequest extends FormikValues{
     name?: string
     email: string
     password: string
-    confirmPassword?: string
+    confirmpassword?: string
     dummyData?: string
 }
 
@@ -21,8 +22,9 @@ interface LoginOrRegisterProps{
 }
 
 function LoginOrRegister(props: LoginOrRegisterProps){
+    const navigate = useNavigate();
     const [loginMode, setLoginMode] = useState<boolean>(props.isLoginMode? true : false);
-    const { isUserLoginLoading, isUserRegisterLoading, loginUser } = useContext(UserContext)
+    const { isUserLogged, isUserLoginLoading, registerUser, loginUser } = useContext(UserContext)
 
     const changeMode = () => {
         if(loginMode){
@@ -34,15 +36,21 @@ function LoginOrRegister(props: LoginOrRegisterProps){
     }
 
     const onSubmit = async (values: LoginSignUpRequest, actions: FormikHelpers<LoginSignUpRequest>) => {
-        const { success: response , error} = await loginUser(values);
+        const { success: response , error} = loginMode? await loginUser(values) :  await registerUser(values);
 
         if(error){
-            toast.error(error.message)
+            toast.error(error.message);
         }
 
-        console.log(response)
-        actions.resetForm()
+        console.log(response);
+        actions.resetForm();
     }
+
+    useEffect(() => {
+        if(isUserLogged){
+            navigate('/')
+        }
+    }, [isUserLogged])
 
     return(
         <LoginRegisterContainer>
@@ -55,7 +63,7 @@ function LoginOrRegister(props: LoginOrRegisterProps){
                         name: '',
                         email: '',
                         password: '',
-                        confirmPassword: ''
+                        confirmpassword: ''
                     }}
                     validationSchema={loginMode? LoginShema : SignUpSchema}
                     onSubmit={onSubmit}
@@ -104,7 +112,7 @@ function LoginOrRegister(props: LoginOrRegisterProps){
                         {!loginMode ? (
                             <InputIconContainer>
                                 <Field
-                                    name='confirmPassword'
+                                    name='confirmpassword'
                                     type='text'
                                     placeholder='Confirm Password'
                                     as={CustomInput}
@@ -113,13 +121,17 @@ function LoginOrRegister(props: LoginOrRegisterProps){
                                     {LockIcon}
                                 </InputIcon>
 
-                                <ErrorMessage component={FormError} name="confirmPassword"/>
+                                <ErrorMessage component={FormError} name="confirmpassword"/>
                             </InputIconContainer>
                         ) : ''}
                         <InputIconContainer></InputIconContainer>
 
                         <FormFooter>
-                            <Button type="submit">{loginMode? 'Log In' : 'Sign Up'}</Button>
+                            <Button type="submit" 
+                                disabled={isUserLoginLoading}
+                            >
+                                {loginMode? 'Log In' : 'Sign Up'}
+                            </Button>
                         </FormFooter>
                     </Form>
                 </Formik>
