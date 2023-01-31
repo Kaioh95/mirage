@@ -115,6 +115,10 @@ export const Button = styled.button`
     transition: all 0.3s;
     float: right;
 
+    &.disabled{
+        opacity: 0.4;
+    }
+
     &:hover{
         background-color: ${({ theme }) => theme.colors.primary};
     }

@@ -21,6 +21,7 @@ export const dark: DefaultTheme = {
             small: '12px',
             medium: '14px',
             large: '18px',
+            xLarge: '22px',
         },
         family: "'Inter', Arial, Helvetica",
         weight: {

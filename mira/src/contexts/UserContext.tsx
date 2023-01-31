@@ -67,6 +67,7 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
             data,
             customErrorMsg
         );
+        setIsUserLoginLoading(false);
 
         if(response instanceof Error){
             return {
@@ -79,7 +80,6 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
         setUserId(response.userId);
         await getUserById({id: response.userId});
 
-        setIsUserLoginLoading(false);
         setIsUserLogged(true);
 
         return { success: response.message, error: undefined};
@@ -98,6 +98,7 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
             data,
             customErrorMsg
         );
+        setIsUserLoginLoading(false);
 
         if(response instanceof Error){
             return {
@@ -110,7 +111,6 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
         setUserId(response.userId);
         await getUserById({id: response.userId});
 
-        setIsUserLoginLoading(false);
         setIsUserLogged(true);
 
         return { success: response.message, error: undefined};

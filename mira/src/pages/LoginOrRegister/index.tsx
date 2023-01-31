@@ -56,7 +56,7 @@ function LoginOrRegister(props: LoginOrRegisterProps){
         <LoginRegisterContainer>
             <FormCard>
                 <ImgLink to="/">
-                    <img src={LogoImg}/>
+                    <img src={LogoImg} alt='logo'/>
                 </ImgLink>
                 <Formik
                     initialValues={{
@@ -129,6 +129,7 @@ function LoginOrRegister(props: LoginOrRegisterProps){
                         <FormFooter>
                             <Button type="submit" 
                                 disabled={isUserLoginLoading}
+                                className={isUserLoginLoading? 'disabled' : ''}
                             >
                                 {loginMode? 'Log In' : 'Sign Up'}
                             </Button>
