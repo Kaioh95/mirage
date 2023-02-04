@@ -11,6 +11,7 @@ export const useRequest = () => {
         method: 'get' | 'post' | 'patch' | 'delete',
         params?: any,
         data?: U | undefined,
+        headers?: any,
         customErrorMessage?: string 
     ) => {
         let response;
@@ -21,7 +22,9 @@ export const useRequest = () => {
                 method,
                 params,
                 data,
-                headers: {
+                headers: headers ?
+                    headers
+                    : {
                     'Content-Type': 'application/json',
                     'Authorization': 'Bearer TOKEN_MISSING',
                 },

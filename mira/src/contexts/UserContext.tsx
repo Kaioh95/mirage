@@ -65,6 +65,7 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
             'post',
             undefined,
             data,
+            undefined,
             customErrorMsg
         );
         setIsUserLoginLoading(false);
@@ -96,6 +97,7 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
             'post',
             undefined,
             data,
+            undefined,
             customErrorMsg
         );
         setIsUserLoginLoading(false);
@@ -129,6 +131,7 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
         const response = await runRequest<{user: User}>(
             `/users/select/${data.id}`,
             'get',
+            undefined,
             undefined,
             undefined,
             customErrorMsg

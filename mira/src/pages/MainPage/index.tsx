@@ -16,8 +16,8 @@ function MainPage(){
     const { getPosts, getPostsLoading } = useContext(PostContext);
     const [posts, setPosts] = useState<Post[]>();
 
-    const handleGetPosts = async () => {
-        const { success: response, error } = await getPosts();
+    const handleGetPosts = async (skip: number, limit: number) => {
+        const { success: response, error } = await getPosts(skip, limit);
 
         if(error){
             toast.error(error.message)
@@ -28,7 +28,7 @@ function MainPage(){
     }
 
     useEffect(() => {
-        handleGetPosts()
+        handleGetPosts(0, 50)
     }, [])
 
     return(

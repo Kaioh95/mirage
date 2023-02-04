@@ -1,9 +1,15 @@
-import { Fragment } from "react";
+import { Fragment, useContext, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import CommentCard from "../../components/CommentCard";
 import CommentForm from "../../components/CommentForm";
 import Header from "../../components/Header";
 import { HeartIcon, UserIcon } from "../../components/Icons";
 import SmallPostCard from "../../components/SmallPostCard";
+import { CommentContext } from "../../contexts/CommentContext";
+import { PostContext } from "../../contexts/PostContext";
+import { Comment } from "../../models/Comment";
+import { Post } from "../../models/Post";
 import { ContainerPage, ContainerPost, ContainerNewPosts, PageWrapper, HeaderPost, PostTitle, AvatarA, PostAuthor, AuthorNameAndViews, AuthorName, PostViews, PostImg, LikesContainer, LikeButton, LikesInfo, CommentCountInfo, ItensList} from "./styles";
 
 interface PostPageProps{
@@ -17,6 +23,52 @@ interface PostPageProps{
 }
 
 function PostPage(props: PostPageProps){
+    const { getPostById, getPosts } = useContext(PostContext);
+    const { getCommentsByPostId } = useContext(CommentContext);
+    const { id } = useParams();
+
+    const [ post, setPost ] = useState<Post>();
+    const [ comments, setComments ] = useState<Comment[]>();
+    const [ posts, setPosts ] = useState<Post[]>();
+
+    const handleGetPost = async () => {
+        const { success: response, error } = await getPostById(id ? id : '123');
+
+        if(error){
+            toast.error(error.message);
+            return;
+        }
+
+        setPost(response.post);
+    }
+
+    const handleGetCommentsByPostId = async () => {
+        const { success: response, error } = await getCommentsByPostId(id ? id : '123');
+
+        if(error){
+            toast.error(error.message);
+            return;
+        }
+
+        setComments(response.comments);
+    }
+
+    const handleGetPosts = async (skip: number, limit: number) => {
+        const { success: response, error } = await getPosts(skip, limit);
+
+        if(error){
+            toast.error(error.message)
+            return;
+        }
+
+        setPosts(response.posts)
+    }
+    
+    useEffect(() => {
+        handleGetPost();
+        handleGetCommentsByPostId();
+        handleGetPosts(0, 5);
+    }, []);
 
     return(
         <Fragment>
@@ -25,56 +77,61 @@ function PostPage(props: PostPageProps){
                 <ContainerPage>
                     <ContainerPost className="Post">
                         <HeaderPost>
-                            <PostTitle>Meu Post</PostTitle>
+                            <PostTitle>{post?.title ? post?.title : '- -'}</PostTitle>
                             <PostAuthor>
                                 <AvatarA>
-                                    {/*	user.image ?
-                                        <img src={`http://localhost:5000/images/users/${user.image}`} alt='UserProfile'></img>
+                                    {	
+                                        post?.user.image ?
+                                        <img src={`http://localhost:5000/images/users/${post?.user.image}`} alt='UserProfile'></img>
                                         : UserIcon
-                                    */
-                                    UserIcon
                                     }
                                 </AvatarA>
                                 <AuthorNameAndViews>
-                                    <AuthorName> Sr. Kaio Shin</AuthorName>
+                                    <AuthorName>{post?.user.name ? post?.user.name : '- -'}</AuthorName>
                                     <PostViews>
-                                        <span>100 Views &#9830; 5h</span>
+                                        <span>{post?.views} Views &#9830; 5h</span>
                                     </PostViews>
                                 </AuthorNameAndViews>
                             </PostAuthor>
                         </HeaderPost>
                         
                         <PostImg>
-                            <img src="http://localhost:5000/images/posts/1672953027051KaiohShin-300x300.png" alt="Content"></img>
+                            <img src={`http://localhost:5000/images/posts/${post?.image}`} alt="Content"></img>
                         </PostImg>
 
                         <LikesContainer>
                             <LikeButton>
                                 {HeartIcon}
                             </LikeButton>
-                            <LikesInfo> 60 Likes </LikesInfo>
+                            <LikesInfo>{post?.likes || 0} Likes</LikesInfo>
                         </LikesContainer>
 
-                        <CommentForm/>
+                        <CommentForm postId={id || '1'}/>
 
                         <CommentCountInfo>
-                            20 Comments
+                            {post?.comments || 0} Comments
                         </CommentCountInfo>
 
                         <ItensList>
-                            <CommentCard commentOwnerName="SR. Kaioh Shin" text="Lorem ipsum"/>
-                            <CommentCard commentOwnerName="SR. Kaioh Shin" text="Lorem ipsum"/>
-                            <CommentCard commentOwnerName="SR. Kaioh Shin" text="Lorem ipsum"/>
+                            {comments?.map((el, index) => (
+                                <CommentCard
+                                    key={el._id}
+                                    commentOwnerName={el.user?.name || '- -'}
+                                    commentOwnerAvatar={el.user?.image}
+                                    text={el.text}
+                                />
+                            ))}
+                            <CommentCard commentOwnerName="Sr. Kaio Shin" text="Apenas teste"/>
+                            <CommentCard commentOwnerName="Sr. Kaio Shin" text="Apenas teste"/>
+                            <CommentCard commentOwnerName="Sr. Kaio Shin" text="Apenas teste"/>
                         </ItensList>
                     </ContainerPost>
                     
                     <ContainerNewPosts className="NewPosts">
                         <ItensList style={{maxHeight: "300px", overflow: "hidden scroll"}}>
-                            <SmallPostCard title="New Post 1"/>
-                            <SmallPostCard title="New Post 2"/>
-                            <SmallPostCard title="New Post 3"/>
-                            <SmallPostCard title="New Post 4"/>
-                            <SmallPostCard title="New Post 5"/>
+                            {posts?.map((el, index) => (
+                                <SmallPostCard id={index} key={el._id} image={el.image} title={el.title}/>    
+                            ))}
                         </ItensList>
                     </ContainerNewPosts>
                 </ContainerPage>

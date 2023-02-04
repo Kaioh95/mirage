@@ -20,7 +20,7 @@ module.exports = class UserController{
         const id = req.params.id
     
         if (!ObjectId.isValid(id)) {
-            res.status(422).json({ msg: 'ID inválido!' })
+            res.status(422).json({ msg: 'Invalid Id!' })
             return
         }
 
@@ -28,7 +28,7 @@ module.exports = class UserController{
         const user = await User.findById(id, '-password')
     
         if(!user){
-            res.status(422).json({msg: 'Usuário não encontrado!'})
+            res.status(422).json({msg: 'User not found!'})
             return
         }
     
@@ -42,26 +42,26 @@ module.exports = class UserController{
         const confirmpassword = req.body.confirmpassword
         
         if(!name){
-            return res.status(422).json({msg: 'O nome é obrigatório!'})
+            return res.status(422).json({msg: 'Name is required!'})
         }
     
         if(!email){
-            return res.status(422).json({msg: 'O email é obrigatório!'})
+            return res.status(422).json({msg: 'Email is required!'})
         }
     
         if(!password){
-            return res.status(422).json({msg: 'A senha é obrigatória!'})
+            return res.status(422).json({msg: 'Password is required!'})
         }
     
         if(password !== confirmpassword){
-            return res.status(422).json({msg: 'As senhas não conferem!'})
+            return res.status(422).json({msg: 'Confirm password do not match!'})
         }
     
         // check if user email exists
         const userExists = await User.findOne({email: email})
     
         if(userExists){
-            return res.status(422).json({msg: 'Por favor, utilize outro e-mail!'})
+            return res.status(422).json({msg: 'Please use another email.'})
         }
     
         // create password
@@ -91,25 +91,25 @@ module.exports = class UserController{
     
         // validations
         if(!email){
-            return res.status(422).json({msg: 'O email é obrigatório!'})
+            return res.status(422).json({msg: 'Email is required!'})
         }
     
         if(!password){
-            return res.status(422).json({msg: 'A senha é obrigatória!'})
+            return res.status(422).json({msg: 'Password is required'})
         }
     
         // check if user exists
         const user = await User.findOne({email: email})
     
         if(!user){
-            return res.status(422).json({msg: 'Usuário não encontrado'})
+            return res.status(422).json({msg: 'User not found'})
         }
     
         // check if password match
         const checkPassword = await bcrypt.compare(password, user.password)
     
         if(!checkPassword){
-            return res.status(422).json({msg: 'Senha inválida!'})
+            return res.status(422).json({msg: 'Invalid password!'})
         }
     
         await createUserToken(user, req, res)
@@ -119,14 +119,14 @@ module.exports = class UserController{
         const id = req.params.id
 
         if (!ObjectId.isValid(id)) {
-            res.status(422).json({ msg: 'ID inválido!' })
+            res.status(422).json({ msg: 'Invalid Id!' })
             return
         }
 
         const user = await User.findById(id, '-password')
 
         if(!user){
-            res.status(422).json({ msg: 'Ususário não encontrado!'})
+            res.status(422).json({ msg: 'User not found!'})
             return
         }
 
@@ -142,21 +142,19 @@ module.exports = class UserController{
 
     static async checkUser(req, res){
         let currentUser
-        
-        console.log(req.headers.authorization)
 
         if(req.headers.authorization){
             const token = getToken(req)
             try{
                 const decoded = jwt.verify(token, 'nossosecret')
             } catch(error){
-                return res.status(400).json({msg: "Token inválido!"});
+                return res.status(400).json({msg: "Token Invalid!"});
             }
             const decoded = jwt.verify(token, 'nossosecret')
             currentUser = await User.findById(decoded.id)
 
             if(!currentUser){
-                res.status(422).json({ msg: 'Ususário não encontrado!'})
+                res.status(422).json({ msg: 'User not found!'})
                 return
             }
 
@@ -173,7 +171,7 @@ module.exports = class UserController{
         try{
             const decoded = jwt.verify(token, 'nossosecret')
         } catch(error){
-            return res.status(400).json({msg: "Token inválido!"});
+            return res.status(400).json({msg: "Token Invalid!"});
         }
         const user = await getUserByToken(token)
         
@@ -189,14 +187,14 @@ module.exports = class UserController{
         }
 
         if(!name){
-            res.status(422).json({msg: 'O nome é obrigatório!'})
+            res.status(422).json({msg: 'Name is required!'})
             return
         }
 
         user.name = name
 
         if(!email){
-            res.status(422).json({msg: 'O email é obrigatório!'})
+            res.status(422).json({msg: 'Email is required!'})
             return
         }
 
@@ -204,7 +202,7 @@ module.exports = class UserController{
         const userExists = await User.findOne({email: email})
 
         if( user.email !== email && userExists){
-            res.status(422).json({ msg: 'Utilize outro e-mail!' })
+            res.status(422).json({ msg: 'Please use another email!' })
             return
         }
 
@@ -216,7 +214,7 @@ module.exports = class UserController{
         }
 
         if(!password){
-            res.status(422).json({msg: 'A senha é obrigatória!'})
+            res.status(422).json({msg: 'Password is required'})
             return
         }
 
@@ -227,7 +225,7 @@ module.exports = class UserController{
                 { new: true },
             )
             res.json({
-                msg: 'Usuário atualizado com sucesso!',
+                msg: 'Updated User!',
                 data: updatedUser,
             })
         } catch(error) {
@@ -240,20 +238,20 @@ module.exports = class UserController{
         const id = req.params.id
 
         if (!ObjectId.isValid(id)) {
-            res.status(422).json({ msg: 'ID inválido!' })
+            res.status(422).json({ msg: 'Invalid Id!' })
             return
         }
 
         const user = await User.findById({ _id: id})
 
         if(!user){
-            res.status(422).json({ msg: 'Usuário não encontrado!' })
+            res.status(422).json({ msg: 'User not found!' })
             return
         }
 
         try{
             await User.deleteOne({ _id: id })
-            res.status(200).json({ msg: 'Usuário removido com sucesso!' })
+            res.status(200).json({ msg: 'User removed!' })
         } catch(error){
             res.status(500).json({ error: error })
         }

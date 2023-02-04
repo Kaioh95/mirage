@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken')
 
 const Post = require('../models/Post')
+const User = require('../models/User')
 const PostInfo = require('../models/PostInfo')
 const Comment = require('../models/Comment')
 
@@ -57,12 +58,7 @@ module.exports = class PostController{
                 tags: arrayTags,
                 description: description,
                 image: image,
-                user: {
-                    _id: user._id,
-                    name: user.name,
-                    email: user.email,
-                    image: user.image,
-                },
+                user_id: user._id,
             })
             await newPost.save()
 
@@ -74,21 +70,28 @@ module.exports = class PostController{
     }
 
     static async getPostById(req, res){
-        const id = req.params.id
+        const id = req.params.id;
 
         if(!ObjectId.isValid(id)){
-            res.status(422).json({msg: "ID invalid!"})
-            return
+            res.status(422).json({msg: "ID invalid!"});
+            return;
         }
 
-        const post = await Post.findById(id)
+        const post = await Post.findById(id);
 
         if(!post){
-            res.status(422).json({msg: "Post not found!"})
-            return
+            res.status(422).json({msg: "Post not found!"});
+            return;
         }
 
-        res.status(200).json({ post, msg: "Post found!"})
+        const user = await User.findById(post.user_id);
+        const views = await PostInfo.find({post_id: post._id}).count();
+        const likes = await PostInfo.find({post_id: post._id, like: true}).count()
+        const comments = await Comment.find({post_id: post._id}).count();
+        
+        const postWithInfo = {...post.toObject(), user, views, likes, comments}
+
+        res.status(200).json({ post: postWithInfo, msg: "Post found!"});
     }
 
     static async getLastFiftyPosts(req, res){
@@ -96,12 +99,13 @@ module.exports = class PostController{
         const limit = req.query.limit
         
         const posts = await Post.find().sort('-createdAt').skip(skip).limit(limit)
-        const postsInfo = posts.map(async (post, index) => {
+        const postsInfo = posts.map(async (post) => {
+            const user = await User.findById(post.user_id);
             const views = await PostInfo.find({post_id: post._id}).count()
             const likes = await PostInfo.find({post_id: post._id, like: true}).count()
             const comments = await Comment.find({post_id: post._id}).count()
             
-            return {...post.toObject(), views, likes, comments}
+            return {...post.toObject(), user, views, likes, comments}
         })
         const postsN = await Promise.all(postsInfo)
 
@@ -113,7 +117,13 @@ module.exports = class PostController{
         const limit = req.query.limit
 
         const posts = await Post.find().sort('-createdAt').skip(skip).limit(limit)
-        res.status(200).json({ posts: posts, msg: 'Posts found!'})
+        const postsInfo = posts.map(async (post) => {
+            const user = await User.findById(post.user_id);
+            
+            return {...post.toObject(), user}
+        })
+        const postsN = await Promise.all(postsInfo)
+        res.status(200).json({ posts: postsN, msg: 'Posts found!'})
     }
 
     static async searchPostByTitle(req, res){
@@ -128,7 +138,15 @@ module.exports = class PostController{
         }
         const regexSrc = new RegExp(text.trim(), 'i')
         const posts = await Post.find({title: {$regex: regexSrc}}).sort(sortFilter).skip(skip).limit(limit)
-        res.status(200).json({ posts: posts, msg: 'Posts found!'})
+
+        const postsInfo = posts.map(async (post) => {
+            const user = await User.findById(post.user_id);
+            
+            return {...post.toObject(), user}
+        })
+        const postsN = await Promise.all(postsInfo)
+
+        res.status(200).json({ posts: postsN, msg: 'Posts found!'})
     }
 
     static async searchPostByTag(req, res){
@@ -140,7 +158,15 @@ module.exports = class PostController{
 
         const regexSrc = new RegExp(tag.trim(), 'i')
         const posts = await Post.find({tags: {$regex: regexSrc}}).sort('-createdAt')
-        res.status(200).json({ posts: posts, msg: 'Posts found!'})
+
+        const postsInfo = posts.map(async (post) => {
+            const user = await User.findById(post.user_id);
+            
+            return {...post.toObject(), user}
+        })
+        const postsN = await Promise.all(postsInfo)
+
+        res.status(200).json({ posts: postsN, msg: 'Posts found!'})
     }
 
     static async deletePost(req, res){
@@ -192,6 +218,11 @@ module.exports = class PostController{
         }
 
         const post = await Post.findById(id)
+
+        if (!post){
+            res.status(422).json({msg: "Post do not exist."});
+            return
+        }
         
         let image = ''
         if(req.file){
@@ -224,7 +255,7 @@ module.exports = class PostController{
         post.tags = arrayTags
         post.description = description
         post.image = image
-        post.user = user
+        post.user_id = user._id
 
         try{
             const updatedPost = await Post.findOneAndUpdate(
@@ -233,7 +264,7 @@ module.exports = class PostController{
                 { new: true },
             )
             res.json({
-                msg: 'Post atualizado com sucesso!',
+                msg: 'Updated Post!',
                 data: updatedPost,
             })
         } catch(error) {

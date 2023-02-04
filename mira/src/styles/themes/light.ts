@@ -10,7 +10,7 @@ export const light: DefaultTheme = {
         background: '#dad4f180',
         menu: '#53565d',
         menuLight: 'hsla(0,0%,80%,.29)',
-        text: '#1C0C5B',
+        text: '#333',
         lightText: "#f0f8ff",
     },
     boxShadow: '0 6px 10px 0 rgb(27 28 30 / 31%)',

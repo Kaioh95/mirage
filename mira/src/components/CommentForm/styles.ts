@@ -61,4 +61,8 @@ export const SendCommentButton = styled.button`
     &:hover{
         background-color: ${({ theme }) => theme.colors.tertiary};
     }
+
+    &.disabled{
+        opacity: 0.4;
+    }
 `;

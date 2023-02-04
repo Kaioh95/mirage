@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken')
 
 const Comment = require('../models/Comment')
+const User = require('../models/User')
 
 // helpers
 const checkToken = require('../helpers/check-token')
@@ -15,7 +16,7 @@ module.exports = class CommentController{
         try{
             const decoded = jwt.verify(token, 'nossosecret')
         } catch(error){
-            return res.status(400).json({msg: "Token inválido!"});
+            return res.status(400).json({msg: "Invalid Token!"});
         }
         const user = await getUserByToken(token)
 
@@ -23,7 +24,7 @@ module.exports = class CommentController{
         const post_id = req.params.id
 
         if(!text){
-            res.status(422).json({msg: "Texto do comentário é obrigatório"})
+            res.status(422).json({msg: "Text is required."})
             return
         }
         
@@ -31,16 +32,11 @@ module.exports = class CommentController{
             const newComment = new Comment({
                 text: text,
                 post_id: post_id,
-                user: {
-                    _id: user._id,
-                    name: user.name,
-                    email: user.email,
-                    image: user.image,
-                },
+                user_id: user._id,
             })
             await newComment.save()
 
-            res.status(201).json({msg: 'Comentario criado com sucesso!'})
+            res.status(201).json({msg: 'Comment created!'})
         }catch(error){
             res.status(500).json({msg: error})
         }
@@ -50,25 +46,57 @@ module.exports = class CommentController{
         const post_id = req.params.id
 
         if(!ObjectId.isValid(post_id)){
-            res.status(422).json({msg: "ID inválido"})
+            res.status(422).json({msg: "Invalid Id!"})
             return
         }
 
         const commentsByPost = await Comment.find({post_id: post_id}).sort('-createdAt')
 
         if(!commentsByPost){
-            res.status(422).json({msg: "Nenhum comentário neste post!"})
+            res.status(422).json({msg: "No comments on this post!"})
             return
         }
 
-        res.status(200).json({comments: commentsByPost, msg: 'Comments found!'})
+        const commentsInfo = commentsByPost.map(async (com) => {
+            const user = await User.findById(com.user_id);
+            
+            return {...com.toObject(), user}
+        })
+        const commentsByPostN = await Promise.all(commentsInfo)
+
+        res.status(200).json({comments: commentsByPostN, msg: 'Comments found!'})
+    }
+
+    static async getCommentsByUserId(req, res){
+        const post_id = req.params.id
+
+        if(!ObjectId.isValid(post_id)){
+            res.status(422).json({msg: "Invalid Id!"})
+            return
+        }
+
+        const commentsByUser = await Comment.find({user_id: post_id}).sort('-createdAt')
+
+        if(!commentsByUser){
+            res.status(422).json({msg: "No comments on this post!"})
+            return
+        }
+
+        const commentsInfo = commentsByUser.map(async (com) => {
+            const user = await User.findById(com.user_id);
+            
+            return {...com.toObject(), user}
+        })
+        const commentsByUserN = await Promise.all(commentsInfo)
+
+        res.status(200).json({comments: commentsByUserN, msg: 'Comments found!'})
     }
 
     static async countCommentsByPostId(req, res){
         const post_id = req.params.id
 
         if(!ObjectId.isValid(post_id)){
-            res.status(422).json({msg: "ID inválido"})
+            res.status(422).json({msg: "Invalid Id!"})
             return
         }
 
@@ -81,7 +109,7 @@ module.exports = class CommentController{
         const id = req.params.id
 
         if(!ObjectId.isValid(id)){
-            res.status(422).json({msg: "ID inválido"})
+            res.status(422).json({msg: "Invalid Id!"})
             return
         }
 
@@ -89,7 +117,7 @@ module.exports = class CommentController{
         try{
             const decoded = jwt.verify(token, 'nossosecret')
         } catch(error){
-            return res.status(400).json({msg: "Token inválido!"});
+            return res.status(400).json({msg: "Invalid Token!"});
         }
         const user = await getUserByToken(token)
         const text = req.body.text
@@ -100,6 +128,7 @@ module.exports = class CommentController{
 
         const comment = await Comment.findById(id)
         comment.text = text
+        comment.user_id = user._id
 
         try{
             const updatedComment = await Comment.findOneAndUpdate(
@@ -109,7 +138,7 @@ module.exports = class CommentController{
             )
 
             res.status(200).json({
-                msg: "Comentário atualizado",
+                msg: "Updated comment!",
                 data: updatedComment,
             })
         }catch(error){
@@ -122,30 +151,30 @@ module.exports = class CommentController{
         try{
             const decoded = jwt.verify(token, 'nossosecret')
         } catch(error){
-            return res.status(400).json({msg: "Token inválido!"});
+            return res.status(400).json({msg: "Invalid Token!"});
         }
         const user = await getUserByToken(token)
         const id = req.params.id
 
         if (!ObjectId.isValid(id)) {
-            res.status(422).json({ msg: 'ID inválido!' })
+            res.status(422).json({ msg: 'Invalid Id!' })
             return
         }
 
         const comment = await Comment.findById({_id: id})
 
         if(!comment){
-            res.status(422).json({ msg: 'Comentário não encontrado!' })
+            res.status(422).json({ msg: 'Comment not found!' })
             return
         }
-        if(!comment.user._id.equals(user._id)){
-            res.status(422).json({ msg: 'Sem permissão para deletar este comentário!' })
+        if(!comment.user_id.equals(user._id)){
+            res.status(422).json({ msg: 'No permission to delete this comment!' })
             return
         }
 
         try{
             await Comment.deleteOne({ _id: id })
-            res.status(200).json({ msg: 'Comentário removido com sucesso!' })
+            res.status(200).json({ msg: 'Comment removed!' })
         } catch(error){
             res.status(500).json({ error: error })
         }

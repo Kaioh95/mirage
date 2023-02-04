@@ -1,11 +1,32 @@
 import { Field, Formik, FormikHelpers } from "formik"
 import { CommentCustomForm, CommentInput, CommentFormFooter, SendCommentButton } from "./styles"
 import { CommentShema } from "../../schemas/CommentSchema"
+import { useContext } from "react";
+import { CommentContext } from "../../contexts/CommentContext";
+import { toast } from "react-toastify";
 
-function CommentForm(){
+interface CommentFormProps{
+    postId: string;
+}
+
+function CommentForm(props: CommentFormProps){
+    const { createComment , isCreatingComment } = useContext(CommentContext);
 
     const onSubmit = async (values: {text: string}, actions: FormikHelpers<{text: string}>) => {
-        console.log(values)
+        const token = localStorage.getItem('token');
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${JSON.parse(token || JSON.stringify("TOKEN_MISSING"))}`,
+        }
+
+        const { success: response , error} = await createComment(props.postId, values, headers);
+
+        if(error){
+            toast.error(error.message);
+        }
+
+        toast.success(response?.msg);
+        actions.resetForm();
     }
 
     return(
@@ -24,7 +45,12 @@ function CommentForm(){
                     as={CommentInput}
                 />
                 <CommentFormFooter>
-                    <SendCommentButton type="submit">Send</SendCommentButton>
+                    <SendCommentButton type="submit"
+                        disabled={isCreatingComment}
+                        className={isCreatingComment? 'disabled' : ''}
+                    >
+                        Send
+                    </SendCommentButton>
                 </CommentFormFooter>
             </CommentCustomForm>
         </Formik>

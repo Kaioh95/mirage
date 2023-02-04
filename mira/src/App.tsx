@@ -13,12 +13,14 @@ import 'react-toastify/dist/ReactToastify.min.css';
 import { ToastContainer } from 'react-toastify';
 import { UserContextProvider } from './contexts/UserContext';
 import LoginOrRegister from './pages/LoginOrRegister';
+import { CommentContextProvider } from './contexts/CommentContext';
 
 function App() {
 	return (
 		<CustomThemeProvider>
 			<UserContextProvider>
 			<PostContextProvider>
+			<CommentContextProvider>
 				<GlobalStyle/>
 				<ToastContainer/>
 				<Router>
@@ -30,6 +32,7 @@ function App() {
 						<Route path='*' element={<Navigate to="/"/>}></Route>
 					</Routes>
 				</Router>
+			</CommentContextProvider>
 			</PostContextProvider>
 			</UserContextProvider>
 		</CustomThemeProvider>

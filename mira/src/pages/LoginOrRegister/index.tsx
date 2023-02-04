@@ -88,7 +88,7 @@ function LoginOrRegister(props: LoginOrRegisterProps){
                                 placeholder='Insert email'
                                 as={CustomInput}
                             />
-                            <InputIcon type='button'>
+                            <InputIcon type='button' disabled>
                                 {UserIcon}
                             </InputIcon>
 
@@ -102,7 +102,7 @@ function LoginOrRegister(props: LoginOrRegisterProps){
                                 placeholder='Insert password'
                                 as={CustomInput}
                             />
-                            <InputIcon type='button'>
+                            <InputIcon type='button' disabled>
                                 {LockIcon}
                             </InputIcon>
 
@@ -117,7 +117,7 @@ function LoginOrRegister(props: LoginOrRegisterProps){
                                     placeholder='Confirm Password'
                                     as={CustomInput}
                                 />
-                                <InputIcon type='button'>
+                                <InputIcon type='button' disabled>
                                     {LockIcon}
                                 </InputIcon>
 

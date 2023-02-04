@@ -15,7 +15,13 @@ function CommentCard(props: CommentCardProps){
             <button>{DeleteIcon}</button>
             <button>{EditIcon}</button>
             <CommentHeader>
-                <CommentOwner>{UserIcon}</CommentOwner>
+                <CommentOwner>
+                    {	
+                        props.commentOwnerAvatar ?
+                        <img src={`http://localhost:5000/images/users/${props.commentOwnerAvatar}`} alt='UserProfile'></img>
+                        : UserIcon
+                    }
+                </CommentOwner>
                 <CommentOwner>{props.commentOwnerName}</CommentOwner>
                 <span> &#9830; 6h</span>
             </CommentHeader>

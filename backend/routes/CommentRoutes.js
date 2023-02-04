@@ -14,6 +14,10 @@ router.get(
     CommentController.getCommentsByPostId
 );
 router.get(
+    "/comment-by-user/:id",
+    CommentController.getCommentsByUserId
+);
+router.get(
     "/comment-count/:id",
     CommentController.countCommentsByPostId
 );
