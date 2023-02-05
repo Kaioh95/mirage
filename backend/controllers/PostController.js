@@ -187,7 +187,7 @@ module.exports = class PostController{
         const post = await Post.findById({ _id: id})
 
         if(!post){
-            res.status(422).json({ msg: 'Post não encontrado!' })
+            res.status(422).json({ msg: 'Post no found!' })
             return
         }
 

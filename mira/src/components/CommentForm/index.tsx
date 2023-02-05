@@ -1,6 +1,6 @@
 import { Field, Formik, FormikHelpers } from "formik"
 import { CommentCustomForm, CommentInput, CommentFormFooter, SendCommentButton } from "./styles"
-import { CommentShema } from "../../schemas/CommentSchema"
+import { CommentSchema } from "../../schemas/CommentSchema"
 import { useContext } from "react";
 import { CommentContext } from "../../contexts/CommentContext";
 import { toast } from "react-toastify";
@@ -25,7 +25,9 @@ function CommentForm(props: CommentFormProps){
             toast.error(error.message);
         }
 
-        toast.success(response?.msg);
+        if(response){
+            toast.success(response?.msg);
+        }
         actions.resetForm();
     }
 
@@ -34,7 +36,7 @@ function CommentForm(props: CommentFormProps){
             initialValues={{
                 text: '',
             }}
-            validationSchema={CommentShema}
+            validationSchema={CommentSchema}
             onSubmit={onSubmit}
         >
             <CommentCustomForm>

@@ -3,7 +3,7 @@ import { User } from "./User";
 export interface Post{
     _id: string;
     title: string;
-    tags: Array<string>;
+    tags: Array<string> | string;
     description: string;
     image: string;
     createdAt: string;

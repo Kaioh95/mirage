@@ -11,9 +11,12 @@ import { Post } from "../../models/Post";
 import { PostContext } from "../../contexts/PostContext";
 import { toast } from "react-toastify";
 import Header from "../../components/Header";
+import AddButton from "../../components/AddButton";
+import Modal from "../../components/Modal";
+import PostForm from "../../components/PostForm";
 
 function MainPage(){
-    const { getPosts, getPostsLoading } = useContext(PostContext);
+    const { getPosts, getPostsLoading, hiddenPostModal, setHiddenPostModal } = useContext(PostContext);
     const [posts, setPosts] = useState<Post[]>();
 
     const handleGetPosts = async (skip: number, limit: number) => {
@@ -33,6 +36,11 @@ function MainPage(){
 
     return(
         <Fragment>
+            <Modal hidden={hiddenPostModal} setHidden={setHiddenPostModal}>
+                <PostForm/>
+            </Modal>
+            <AddButton/>
+            
             <Header/>
             <TagsContainer>
                 <TagsAside>

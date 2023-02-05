@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useState } from "react";
+import { createContext, Dispatch, ReactNode, SetStateAction, useState } from "react";
 import { ResponseType, useRequest } from "../hooks/useRequest";
 import { Comment } from "../models/Comment";
 
@@ -8,6 +8,8 @@ interface CommentContextType{
     isCreatingComment: boolean;
     isFetchingComments: boolean;
     isDeletingComment: boolean;
+    hiddenCommentModal: boolean;
+    setHiddenCommentModal: Dispatch<SetStateAction<boolean>>;
     createComment: (id: string, data: CommentCreatePost, headers: any) => Promise<
         | {
             success: {msg: string},
@@ -44,6 +46,7 @@ export const CommentContextProvider = ({children}: CommentContextProviderProps) 
     const [isCreatingComment, setIsCreatingComment] = useState<boolean>(false);
     const [isFetchingComments, setIsFetchingComments] = useState<boolean>(false);
     const [isDeletingComment, setIsDeletingComment] = useState<boolean>(false);
+    const [hiddenCommentModal, setHiddenCommentModal] = useState<boolean>(false);
 
     const createComment = async (id: string, data: CommentCreatePost, headers: any) => {
         setIsCreatingComment(true);
@@ -100,6 +103,8 @@ export const CommentContextProvider = ({children}: CommentContextProviderProps) 
             isCreatingComment,
             isDeletingComment,
             isFetchingComments,
+            hiddenCommentModal,
+            setHiddenCommentModal,
             createComment,
             getCommentsByPostId
         }}>

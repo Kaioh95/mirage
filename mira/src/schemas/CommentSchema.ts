@@ -1,5 +1,5 @@
 import * as yup from "yup"
 
-export const CommentShema = yup.object().shape({
+export const CommentSchema = yup.object().shape({
     text: yup.string().min(1).required()
 })

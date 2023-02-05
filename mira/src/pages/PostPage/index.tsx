@@ -1,15 +1,18 @@
 import { Fragment, useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import AddButton from "../../components/AddButton";
 import CommentCard from "../../components/CommentCard";
 import CommentForm from "../../components/CommentForm";
 import Header from "../../components/Header";
 import { HeartIcon, UserIcon } from "../../components/Icons";
+import Modal from "../../components/Modal";
 import SmallPostCard from "../../components/SmallPostCard";
 import { CommentContext } from "../../contexts/CommentContext";
 import { PostContext } from "../../contexts/PostContext";
 import { Comment } from "../../models/Comment";
 import { Post } from "../../models/Post";
+import { calcPassedTime } from "../../utils/calcPassedTime";
 import { ContainerPage, ContainerPost, ContainerNewPosts, PageWrapper, HeaderPost, PostTitle, AvatarA, PostAuthor, AuthorNameAndViews, AuthorName, PostViews, PostImg, LikesContainer, LikeButton, LikesInfo, CommentCountInfo, ItensList} from "./styles";
 
 interface PostPageProps{
@@ -23,8 +26,8 @@ interface PostPageProps{
 }
 
 function PostPage(props: PostPageProps){
-    const { getPostById, getPosts } = useContext(PostContext);
-    const { getCommentsByPostId } = useContext(CommentContext);
+    const { getPostById, getPosts, hiddenPostModal, setHiddenPostModal } = useContext(PostContext);
+    const { getCommentsByPostId, hiddenCommentModal, setHiddenCommentModal } = useContext(CommentContext);
     const { id } = useParams();
 
     const [ post, setPost ] = useState<Post>();
@@ -72,6 +75,12 @@ function PostPage(props: PostPageProps){
 
     return(
         <Fragment>
+            <Modal hidden={hiddenPostModal} setHidden={setHiddenPostModal}>Post</Modal>
+            <Modal hidden={hiddenCommentModal} setHidden={setHiddenCommentModal}>
+                <CommentForm postId={id || '1'}/>
+            </Modal>
+            <AddButton/>
+            
             <Header/>
             <PageWrapper>
                 <ContainerPage>
@@ -89,7 +98,7 @@ function PostPage(props: PostPageProps){
                                 <AuthorNameAndViews>
                                     <AuthorName>{post?.user.name ? post?.user.name : '- -'}</AuthorName>
                                     <PostViews>
-                                        <span>{post?.views} Views &#9830; 5h</span>
+                                        <span>{post?.views} Views &#9830; {calcPassedTime(post?.createdAt)}</span>
                                     </PostViews>
                                 </AuthorNameAndViews>
                             </PostAuthor>
@@ -118,6 +127,7 @@ function PostPage(props: PostPageProps){
                                     key={el._id}
                                     commentOwnerName={el.user?.name || '- -'}
                                     commentOwnerAvatar={el.user?.image}
+                                    createdAt={el.createdAt}
                                     text={el.text}
                                 />
                             ))}

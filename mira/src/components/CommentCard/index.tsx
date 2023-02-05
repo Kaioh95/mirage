@@ -1,3 +1,4 @@
+import { calcPassedTime } from "../../utils/calcPassedTime";
 import { DeleteIcon, EditIcon, UserIcon } from "../Icons"
 import { CommentBody, CommentContent, CommentHeader, CommentOwner } from "./styles"
 
@@ -5,6 +6,7 @@ interface CommentCardProps{
     id?: string;
     commentOwnerAvatar?: string;
     commentOwnerName: string;
+    createdAt?: string;
     text: string;
 }
 
@@ -23,7 +25,7 @@ function CommentCard(props: CommentCardProps){
                     }
                 </CommentOwner>
                 <CommentOwner>{props.commentOwnerName}</CommentOwner>
-                <span> &#9830; 6h</span>
+                <span> &#9830; {calcPassedTime(props.createdAt)}</span>
             </CommentHeader>
             <CommentBody>
                 <span>{props.text}</span>
