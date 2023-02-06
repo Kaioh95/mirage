@@ -31,8 +31,11 @@ module.exports = class PostIndoController{
         const userExists = await PostInfo.findOne({post_id: post_id, user_id: user._id})
 
         if(userExists){
-            res.status(422).json({msg: 'User has already viewed the post!'})
-            return
+            res.status(200).json({
+                msg: 'User has already viewed the post!',
+                data: userExists
+            });
+            return;
         }
 
         try{

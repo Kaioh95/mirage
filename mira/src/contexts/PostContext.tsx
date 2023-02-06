@@ -9,7 +9,28 @@ interface PostContextType{
     isDeletingPost: boolean;
     getPostsLoading: boolean;
     hiddenPostModal: boolean;
+    isLoadingLike: boolean;
     setHiddenPostModal: Dispatch<SetStateAction<boolean>>;
+    getLike: (post_id: string, headers: any) => Promise<
+        | {
+            success: undefined,
+            error: Error,
+        }
+        | {
+            success: {data: {like: boolean}}
+            error: undefined
+        }
+    >;
+    registerViewLikePost: (post_id: string, headers: any, isLike: boolean) => Promise<
+        | { 
+            success: undefined,
+            error: Error
+        }
+        | {
+            success: {msg: string, data?: {like: boolean}},
+            error: undefined
+        }
+    >;
     createPost: (data: PostCreateRequest, headers: any) => Promise<ResponseType>;
     editPost?: (data: Post) => Promise<ResponseType>;
     delete?: (id: string) => Promise<ResponseType>;
@@ -47,6 +68,55 @@ export const PostContextProvider = ({ children }: PostContextProviderProps) => {
     const [isDeletingPost, setIsDeletingPost] = useState(false);
     const [getPostsLoading, setGetPostsLoading] = useState(false);
     const [hiddenPostModal, setHiddenPostModal] = useState(true);
+    const [isLoadingLike, setIsLoadingLike] = useState(false);
+
+    const getLike = async (post_id: string, headers: any) => {
+        setIsLoadingLike(true);
+        const customErrorMessage = 'Error fetching like info post.';
+
+        const response = await runRequest<{data: {like: boolean}}>(
+            `/post-info/views-likes-by-user/${post_id}`,
+            'get',
+            undefined,
+            undefined,
+            headers,
+            customErrorMessage
+        )
+
+        setIsLoadingLike(false);
+
+        if (response instanceof Error){
+            return { success: undefined, error: response }
+        }
+
+        return { success: response, error: undefined }
+    }
+
+    const registerViewLikePost = async (post_id: string, headers: any, isLike :boolean) => {
+        setIsLoadingLike(true);
+        const customErrorMessage = 'Error view/like post.';
+        const changeUrl = isLike ?
+            `/post-info/edit/${post_id}` 
+            : `/post-info/create/${post_id}`;
+        const changeMethod = isLike ? 'patch' : 'post';
+
+        const response = await runRequest<{msg: string, data?: {like: boolean}}>(
+            changeUrl,
+            changeMethod,
+            undefined,
+            undefined,
+            headers,
+            customErrorMessage
+        )
+
+        setIsLoadingLike(false);
+
+        if (response instanceof Error){
+            return { success: undefined, error: response }
+        }
+
+        return { success: response, error: undefined }
+    }
 
     const createPost = async (data: PostCreateRequest, headers: any) => {
         setIsCreatePostLoading(true);
@@ -121,6 +191,9 @@ export const PostContextProvider = ({ children }: PostContextProviderProps) => {
             isDeletingPost,
             getPostsLoading,
             hiddenPostModal,
+            isLoadingLike,
+            getLike,
+            registerViewLikePost,
             createPost,
             setHiddenPostModal,
             getPostById,

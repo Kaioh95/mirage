@@ -5,7 +5,7 @@ import AddButton from "../../components/AddButton";
 import CommentCard from "../../components/CommentCard";
 import CommentForm from "../../components/CommentForm";
 import Header from "../../components/Header";
-import { HeartIcon, UserIcon } from "../../components/Icons";
+import { HeartIcon, SolidHeartIcon, UserIcon } from "../../components/Icons";
 import Modal from "../../components/Modal";
 import SmallPostCard from "../../components/SmallPostCard";
 import { CommentContext } from "../../contexts/CommentContext";
@@ -26,13 +26,14 @@ interface PostPageProps{
 }
 
 function PostPage(props: PostPageProps){
-    const { getPostById, getPosts, hiddenPostModal, setHiddenPostModal } = useContext(PostContext);
+    const { getPostById, getPosts, hiddenPostModal, setHiddenPostModal, isLoadingLike, registerViewLikePost, getLike } = useContext(PostContext);
     const { hiddenCommentModal, getCommentsByPostId, setHiddenCommentModal} = useContext(CommentContext);
     const { id } = useParams();
 
     const [ post, setPost ] = useState<Post>();
     const [ comments, setComments ] = useState<Comment[]>();
     const [ posts, setPosts ] = useState<Post[]>();
+    const [ likeInfo, setLikeInfo ] = useState<boolean>(false);
 
     const handleGetPost = async () => {
         const { success: response, error } = await getPostById(id ? id : '123');
@@ -66,11 +67,44 @@ function PostPage(props: PostPageProps){
 
         setPosts(response.posts)
     }
+
+    const handleLike = async () => {
+        const token = localStorage.getItem('token');
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${JSON.parse(token || JSON.stringify("TOKEN_MISSING"))}`,
+        }
+        const {success: response, error } = await getLike(id || '', headers);
+
+        if(error){
+            toast.error(error.message)
+            return;
+        }
+
+        setLikeInfo(response.data.like)
+    }
+
+    const handleRegisterLike = async (isLike: boolean) => {
+        const token = localStorage.getItem('token');
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${JSON.parse(token || JSON.stringify("TOKEN_MISSING"))}`,
+        };
+        const {success: response, error } = await registerViewLikePost(id || '', headers, isLike);
+
+        if(error){
+            toast.error(error.message);
+            return;
+        }
+
+        setLikeInfo(response.data?.like || false);
+    }
     
     useEffect(() => {
         handleGetPost();
         handleGetCommentsByPostId();
         handleGetPosts(0, 5);
+        handleRegisterLike(false);
     }, []);
 
     return(
@@ -109,8 +143,11 @@ function PostPage(props: PostPageProps){
                         </PostImg>
 
                         <LikesContainer>
-                            <LikeButton>
-                                {HeartIcon}
+                            <LikeButton
+                                onClick={e => handleRegisterLike(true)}
+                                disabled={isLoadingLike}
+                            >
+                                {likeInfo? SolidHeartIcon :HeartIcon}
                             </LikeButton>
                             <LikesInfo>{post?.likes || 0} Likes</LikesInfo>
                         </LikesContainer>
