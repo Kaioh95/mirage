@@ -14,7 +14,7 @@ interface PostValues extends FormikValues{
 }
 
 function PostForm(){
-    const { createPost, isCreatePostLoading } = useContext(PostContext);
+    const { createPost, isCreatePostLoading, setHiddenPostModal } = useContext(PostContext);
 
     const initialValues={
         image: "",
@@ -59,8 +59,9 @@ function PostForm(){
         }
 
         if(response){
-            toast.success(response?.msg);
+            toast.success(response);
         }
+        setHiddenPostModal(true);
         actions.resetForm();
     }
 
@@ -106,6 +107,8 @@ function PostForm(){
                     <PostFormFooter>
                         <CreatePostButton
                             type="submit"
+                            className={isCreatePostLoading? 'disabled' : ''}
+                            disabled={isCreatePostLoading}
                         >
                             Post
                         </CreatePostButton>

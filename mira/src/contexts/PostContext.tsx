@@ -10,16 +10,7 @@ interface PostContextType{
     getPostsLoading: boolean;
     hiddenPostModal: boolean;
     setHiddenPostModal: Dispatch<SetStateAction<boolean>>;
-    createPost: (data: PostCreateRequest, headers: any) => Promise<
-        | {
-            success: {msg: string},
-            error: undefined;
-        }
-        | {
-            success: undefined;
-            error: Error;
-        }
-    >;
+    createPost: (data: PostCreateRequest, headers: any) => Promise<ResponseType>;
     editPost?: (data: Post) => Promise<ResponseType>;
     delete?: (id: string) => Promise<ResponseType>;
     getPostById: (id: string) => Promise<
@@ -73,13 +64,10 @@ export const PostContextProvider = ({ children }: PostContextProviderProps) => {
         setIsCreatePostLoading(false);
 
         if (response instanceof Error){
-            return{
-                success: undefined,
-                error: response,
-            }
+            return { success: undefined, error: response }
         }
 
-        return { success: response, error: undefined }
+        return { success: response.msg, error: undefined }
     }
 
     const getPostById = async (id: string) => {
@@ -98,10 +86,7 @@ export const PostContextProvider = ({ children }: PostContextProviderProps) => {
         setGetPostsLoading(false);
 
         if(response instanceof Error){
-            return{
-                success: undefined,
-                error: response,
-            }
+            return { success: undefined, error: response }
         }
 
         return { success: response, error: undefined };
@@ -124,10 +109,7 @@ export const PostContextProvider = ({ children }: PostContextProviderProps) => {
         setGetPostsLoading(false);
 
         if(response instanceof Error){
-            return {
-                success: undefined,
-                error: response,
-            }
+            return { success: undefined, error: response }
         }
 
         return { success: response, error: undefined};

@@ -27,7 +27,7 @@ interface PostPageProps{
 
 function PostPage(props: PostPageProps){
     const { getPostById, getPosts, hiddenPostModal, setHiddenPostModal } = useContext(PostContext);
-    const { getCommentsByPostId, hiddenCommentModal, setHiddenCommentModal } = useContext(CommentContext);
+    const { hiddenCommentModal, getCommentsByPostId, setHiddenCommentModal} = useContext(CommentContext);
     const { id } = useParams();
 
     const [ post, setPost ] = useState<Post>();
@@ -46,7 +46,7 @@ function PostPage(props: PostPageProps){
     }
 
     const handleGetCommentsByPostId = async () => {
-        const { success: response, error } = await getCommentsByPostId(id ? id : '123');
+        const { success: response, error } = await getCommentsByPostId(id ? id : '');
 
         if(error){
             toast.error(error.message);
@@ -77,7 +77,7 @@ function PostPage(props: PostPageProps){
         <Fragment>
             <Modal hidden={hiddenPostModal} setHidden={setHiddenPostModal}>Post</Modal>
             <Modal hidden={hiddenCommentModal} setHidden={setHiddenCommentModal}>
-                <CommentForm postId={id || '1'}/>
+                <CommentForm postId={id || '1'} isEdit />
             </Modal>
             <AddButton/>
             
@@ -125,15 +125,16 @@ function PostPage(props: PostPageProps){
                             {comments?.map((el, index) => (
                                 <CommentCard
                                     key={el._id}
+                                    id={el._id}
                                     commentOwnerName={el.user?.name || '- -'}
                                     commentOwnerAvatar={el.user?.image}
                                     createdAt={el.createdAt}
                                     text={el.text}
                                 />
                             ))}
-                            <CommentCard commentOwnerName="Sr. Kaio Shin" text="Apenas teste"/>
-                            <CommentCard commentOwnerName="Sr. Kaio Shin" text="Apenas teste"/>
-                            <CommentCard commentOwnerName="Sr. Kaio Shin" text="Apenas teste"/>
+                            <CommentCard id="" commentOwnerName="Sr. Kaio Shin" text="Apenas teste"/>
+                            <CommentCard id="" commentOwnerName="Sr. Kaio Shin" text="Apenas teste"/>
+                            <CommentCard id="" commentOwnerName="Sr. Kaio Shin" text="Apenas teste"/>
                         </ItensList>
                     </ContainerPost>
                     

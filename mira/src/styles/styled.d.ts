@@ -10,6 +10,7 @@ declare module 'styled-components' {
             background: string,
             menu: string,
             menuLight: string,
+            menuItem: string,
             text: string,
             lightText: string,
         },

@@ -10,6 +10,7 @@ export const dark: DefaultTheme = {
         background: '#08041C',
         menu: '#53565d',
         menuLight: 'hsla(0,0%,80%,.29)',
+        menuItem: 'hsla(0,0%,100%,.25)',
         text: '#f8f8f8',
         lightText: "#f0f8ff",
     },

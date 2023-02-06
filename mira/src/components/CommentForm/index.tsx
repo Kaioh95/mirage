@@ -6,11 +6,13 @@ import { CommentContext } from "../../contexts/CommentContext";
 import { toast } from "react-toastify";
 
 interface CommentFormProps{
+    isEdit?: boolean;
     postId: string;
 }
 
 function CommentForm(props: CommentFormProps){
-    const { createComment , isCreatingComment } = useContext(CommentContext);
+    const { isCreatingComment, commentIdToEdit, commentTextToEdit,
+        createComment, editComment, setHiddenCommentModal } = useContext(CommentContext);
 
     const onSubmit = async (values: {text: string}, actions: FormikHelpers<{text: string}>) => {
         const token = localStorage.getItem('token');
@@ -19,22 +21,27 @@ function CommentForm(props: CommentFormProps){
             'Authorization': `Bearer ${JSON.parse(token || JSON.stringify("TOKEN_MISSING"))}`,
         }
 
-        const { success: response , error} = await createComment(props.postId, values, headers);
+        const { success: response , error} = !props.isEdit ? 
+            await createComment(props.postId, values, headers)
+            : await editComment(commentIdToEdit || '', values, headers);
 
         if(error){
             toast.error(error.message);
         }
 
         if(response){
-            toast.success(response?.msg);
+            toast.success(response);
         }
+
+        setHiddenCommentModal(true);
         actions.resetForm();
     }
 
     return(
         <Formik
+            enableReinitialize
             initialValues={{
-                text: '',
+                text: props.isEdit? commentTextToEdit : '',
             }}
             validationSchema={CommentSchema}
             onSubmit={onSubmit}

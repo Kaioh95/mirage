@@ -1,9 +1,12 @@
+import { useContext } from "react";
+import { toast } from "react-toastify";
+import { CommentContext } from "../../contexts/CommentContext";
 import { calcPassedTime } from "../../utils/calcPassedTime";
 import { DeleteIcon, EditIcon, UserIcon } from "../Icons"
 import { CommentBody, CommentContent, CommentHeader, CommentOwner } from "./styles"
 
 interface CommentCardProps{
-    id?: string;
+    id: string;
     commentOwnerAvatar?: string;
     commentOwnerName: string;
     createdAt?: string;
@@ -11,11 +14,42 @@ interface CommentCardProps{
 }
 
 function CommentCard(props: CommentCardProps){
+    const { setCommentIdToEdit, setCommentTextToEdit, deleteComment, setHiddenCommentModal} = useContext(CommentContext);
+
+    const onDelete = async () => {
+        const token = localStorage.getItem('token');
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${JSON.parse(token || JSON.stringify("TOKEN_MISSING"))}`,
+        }
+
+        const { success: response , error} = await deleteComment(props.id, headers);
+
+        if(error){
+            toast.error(error.message);
+        }
+
+        if(response){
+            toast.success(response);
+        }
+    }
 
     return(
         <CommentContent>
-            <button>{DeleteIcon}</button>
-            <button>{EditIcon}</button>
+            <button
+                onClick={e => onDelete()}
+            >
+                {DeleteIcon}
+            </button>
+            <button
+                onClick={async (e) => {
+                    setCommentIdToEdit(props.id)  
+                    setCommentTextToEdit(props.text)
+                    setHiddenCommentModal(false)
+                }}
+            >
+                {EditIcon}
+            </button>
             <CommentHeader>
                 <CommentOwner>
                     {	
@@ -34,4 +68,4 @@ function CommentCard(props: CommentCardProps){
     )
 }
 
-export default CommentCard
+export default CommentCard;

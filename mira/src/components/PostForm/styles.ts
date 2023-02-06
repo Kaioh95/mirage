@@ -50,7 +50,7 @@ export const CustomInput = styled.input`
     margin: 10px 0;
 
     border-radius: ${({ theme }) => theme.borderRadius.card};
-    background: hsla(0,0%,100%,.25);
+    background: ${({ theme }) => theme.colors.menuItem};
     color: ${({ theme }) => theme.colors.lightText};
     
     outline: none;
