@@ -14,7 +14,7 @@ router.get(
     CommentController.getCommentsByPostId
 );
 router.get(
-    "/comment-by-user/:id",
+    "/comments-by-user/:id",
     CommentController.getCommentsByUserId
 );
 router.get(

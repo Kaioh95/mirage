@@ -94,6 +94,56 @@ module.exports = class PostController{
         res.status(200).json({ post: postWithInfo, msg: "Post found!"});
     }
 
+    static async getPostsByUserId(req, res){
+        const id = req.params.id;
+        const skip = req.query.skip
+        const limit = req.query.limit
+
+        if(!ObjectId.isValid(id)){
+            res.status(422).json({msg: "User ID invalid!"});
+            return;
+        }
+
+        const posts = await Post.find({user_id: id}).sort('-createdAt').skip(skip).limit(limit);
+
+        if(!posts){
+            res.status(422).json({msg: "Posts not found!"});
+            return;
+        }
+
+        const postsInfo = posts.map(async (post) => {
+            const views = await PostInfo.find({post_id: post._id}).count()
+            const likes = await PostInfo.find({post_id: post._id, like: true}).count()
+            const comments = await Comment.find({post_id: post._id}).count()
+            
+            return {...post.toObject(), views, likes, comments}
+        })
+        const postsN = await Promise.all(postsInfo)
+
+        res.status(200).json({ posts: postsN, msg: 'Posts found!'})
+    }
+
+    static async getPostsLikedByUserId(req, res){
+        const id = req.params.id;
+        const skip = req.query.skip
+        const limit = req.query.limit
+
+        if(!ObjectId.isValid(id)){
+            res.status(422).json({msg: "User ID invalid!"});
+            return;
+        }
+
+        const postsIds = await PostInfo.find({user_id: id, like: true}).sort('-createdAt').skip(skip).limit(limit);
+
+        const postsLiked = postsIds.map(async (pInfo) => {
+            const postLiked = await Post.findById(pInfo.post_id)
+            return postLiked;
+        })
+        const postsN = await Promise.all(postsLiked)
+
+        res.status(200).json({ posts: postsN, msg: 'Posts found!'})
+    }
+
     static async getLastFiftyPosts(req, res){
         const skip = req.query.skip
         const limit = req.query.limit
@@ -151,13 +201,16 @@ module.exports = class PostController{
 
     static async searchPostByTag(req, res){
         const tag = req.params.tag
+        const skip = req.query.skip
+        const limit = req.query.limit
+
         if(!tag){
             res.status(422).json({msg: "Invalid Tag!"})
             return
         }
 
         const regexSrc = new RegExp(tag.trim(), 'i')
-        const posts = await Post.find({tags: {$regex: regexSrc}}).sort('-createdAt')
+        const posts = await Post.find({tags: {$regex: regexSrc}}).sort('-createdAt').skip(skip).limit(limit)
 
         const postsInfo = posts.map(async (post) => {
             const user = await User.findById(post.user_id);

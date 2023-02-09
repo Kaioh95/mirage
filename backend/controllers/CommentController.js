@@ -44,13 +44,15 @@ module.exports = class CommentController{
 
     static async getCommentsByPostId(req, res){
         const post_id = req.params.id
+        const skip = req.query.skip
+        const limit = req.query.limit
 
         if(!ObjectId.isValid(post_id)){
             res.status(422).json({msg: "Invalid Id!"})
             return
         }
 
-        const commentsByPost = await Comment.find({post_id: post_id}).sort('-createdAt')
+        const commentsByPost = await Comment.find({post_id: post_id}).sort('-createdAt').skip(skip).limit(limit)
 
         if(!commentsByPost){
             res.status(422).json({msg: "No comments on this post!"})
@@ -68,14 +70,16 @@ module.exports = class CommentController{
     }
 
     static async getCommentsByUserId(req, res){
-        const post_id = req.params.id
+        const id = req.params.id
+        const skip = req.query.skip
+        const limit = req.query.limit
 
         if(!ObjectId.isValid(post_id)){
             res.status(422).json({msg: "Invalid Id!"})
             return
         }
 
-        const commentsByUser = await Comment.find({user_id: post_id}).sort('-createdAt')
+        const commentsByUser = await Comment.find({user_id: id}).sort('-createdAt').skip(skip).limit(limit)
 
         if(!commentsByUser){
             res.status(422).json({msg: "No comments on this post!"})
