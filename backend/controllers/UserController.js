@@ -119,7 +119,7 @@ module.exports = class UserController{
         const id = req.params.id
 
         if (!ObjectId.isValid(id)) {
-            res.status(422).json({ msg: 'Invalid Id!' })
+            res.status(422).json({ msg: 'Invalid Id, user not found!' })
             return
         }
 
@@ -193,7 +193,7 @@ module.exports = class UserController{
 
         user.name = name
 
-        if(!email){
+        /*if(!email){
             res.status(422).json({msg: 'Email is required!'})
             return
         }
@@ -206,17 +206,17 @@ module.exports = class UserController{
             return
         }
 
-        user.email = email
+        user.email = email*/
 
         if(image){
             const imageName = req.file.filename
             user.image = imageName
         }
 
-        if(!password){
+        /*if(!password){
             res.status(422).json({msg: 'Password is required'})
             return
-        }
+        }*/
 
         try{
             const updatedUser = await User.findOneAndUpdate(

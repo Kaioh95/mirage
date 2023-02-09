@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import starsImg from '../../assets/starsSM.png'
 
@@ -114,7 +115,7 @@ export const UserMenu = styled.menu`
         display: flex;
     }
 `
-export const AvatarA = styled.a`
+export const AvatarA = styled(Link)`
     min-height: 40px;
     min-width: 40px;
     margin: 10px;

@@ -5,13 +5,14 @@ import { User } from "../models/User";
 
 export type UserRequest = Omit<User, 'image' | 'createdAt' | 'updatedAt' | '__v' | '_id'>;
 export type UserResponse = Omit<User, 'password' | 'confirmpassword'>;
-export type UserEditRequest = Omit<User, 'createdAt' | 'updatedAt' | '__v' | '_id'>;
+export type UserEditRequest = Omit<User, 'email' | 'password' | 'confirmpassword' | 'createdAt' | 'updatedAt' | '__v' | '_id'>;
 export type UserLoginRequest = Omit<User, 'name' | 'confirmpassword' | 'image' | 'createdAt' | 'updatedAt' | '__v' | '_id'>;
 export type UserLoginResponse = {message: string; token: string; userId: string};
 
 interface UserContextType{
     isUserLogged: boolean;
     isUserLoginLoading: boolean;
+    isEditingUser: boolean;
     registerUser: (data: UserRequest) => Promise<ResponseType>;
     loginUser: (data: UserLoginRequest) => Promise<ResponseType>;
     signOut: () => void;
@@ -35,8 +36,8 @@ interface UserContextType{
             error: undefined;
         }
     >
-    deleteUser?: (data: {id: string, token: string}) => Promise<ResponseType>;
-    editUser?: (data: UserEditRequest) => Promise<ResponseType>;
+    deleteUser?: (data: {id: string, headers: any}) => Promise<ResponseType>;
+    editUserImage: (data: UserEditRequest, headers: any) => Promise<ResponseType>;
 };
 
 interface UserContextProviderProps{
@@ -53,6 +54,7 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
 
     const [isUserLogged, setIsUserLogged] = useState(false);
     const [isUserLoginLoading, setIsUserLoginLoading] = useState(false);
+    const [isEditingUser, setIsEditingUser] = useState(false);
 
     const registerUser = async (data: UserRequest) => {
         setIsUserLogged(false);
@@ -145,9 +147,29 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
         }
 
         await setUser(response.user)
-        console.log(response.user)
-        console.log(user)
         return{ success: response.user, error: undefined}
+    }
+
+    const editUserImage = async (data: UserEditRequest, headers: any) => {
+        setIsEditingUser(true);
+        const customErrorMessage = 'Error editing user.';
+
+        const response = await runRequest<{msg: string}>(
+            `/users/edituser`,
+            'patch',
+            undefined,
+            data,
+            headers,
+            customErrorMessage
+        )
+
+        setIsEditingUser(false);
+
+        if (response instanceof Error){
+            return { success: undefined, error: response }
+        }
+
+        return { success: response.msg, error: undefined }
     }
 
     useEffect(() => {
@@ -160,10 +182,12 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
         <UserContext.Provider value={{
             isUserLogged,
             isUserLoginLoading,
+            isEditingUser,
             registerUser,
             loginUser,
             signOut,
-            getUserById
+            getUserById,
+            editUserImage,
         }}>
             {children}
         </UserContext.Provider>

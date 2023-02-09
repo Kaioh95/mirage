@@ -7,6 +7,7 @@ import CommentForm from "../../components/CommentForm";
 import Header from "../../components/Header";
 import { HeartIcon, SolidHeartIcon, UserIcon } from "../../components/Icons";
 import Modal from "../../components/Modal";
+import PostForm from "../../components/PostForm";
 import SmallPostCard from "../../components/SmallPostCard";
 import { CommentContext } from "../../contexts/CommentContext";
 import { PostContext } from "../../contexts/PostContext";
@@ -109,7 +110,9 @@ function PostPage(props: PostPageProps){
 
     return(
         <Fragment>
-            <Modal hidden={hiddenPostModal} setHidden={setHiddenPostModal}>Post</Modal>
+            <Modal hidden={hiddenPostModal} setHidden={setHiddenPostModal}>
+                <PostForm/>
+            </Modal>
             <Modal hidden={hiddenCommentModal} setHidden={setHiddenCommentModal}>
                 <CommentForm postId={id || '1'} isEdit />
             </Modal>
@@ -122,7 +125,7 @@ function PostPage(props: PostPageProps){
                         <HeaderPost>
                             <PostTitle>{post?.title ? post?.title : '- -'}</PostTitle>
                             <PostAuthor>
-                                <AvatarA>
+                                <AvatarA to={`/user/${post?.user._id}`}>
                                     {	
                                         post?.user.image ?
                                         <img src={`http://localhost:5000/images/users/${post?.user.image}`} alt='UserProfile'></img>
@@ -163,6 +166,7 @@ function PostPage(props: PostPageProps){
                                 <CommentCard
                                     key={el._id}
                                     id={el._id}
+                                    commentIdOwner={el.user._id}
                                     commentOwnerName={el.user?.name || '- -'}
                                     commentOwnerAvatar={el.user?.image}
                                     createdAt={el.createdAt}
@@ -178,7 +182,7 @@ function PostPage(props: PostPageProps){
                     <ContainerNewPosts className="NewPosts">
                         <ItensList style={{maxHeight: "300px", overflow: "hidden scroll"}}>
                             {posts?.map((el, index) => (
-                                <SmallPostCard id={index} key={el._id} image={el.image} title={el.title}/>    
+                                <SmallPostCard id={el._id} key={el._id} image={el.image} title={el.title}/>    
                             ))}
                         </ItensList>
                     </ContainerNewPosts>

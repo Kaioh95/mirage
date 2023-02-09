@@ -105,3 +105,17 @@ export const CreatePostButton = styled.button`
         opacity: 0.4;
     }
 `;
+export const FormError = styled.div`
+    font-style: italic;
+    font-size: 10pt;
+    color: red;
+    margin: 0px;
+    height: 13pt;
+
+    &.hidden{
+        visibility: hidden;
+    }
+    &.visible{
+        visibility: visible;
+    }
+`;

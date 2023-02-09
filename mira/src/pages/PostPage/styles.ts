@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const PageWrapper = styled.div`
@@ -50,7 +51,7 @@ export const PostAuthor = styled.div`
     align-items: center;
     margin: 10px 0;
 `;
-export const AvatarA = styled.a`
+export const AvatarA = styled(Link)`
     height: 40px;
     width: 40px;
     text-decoration: none;

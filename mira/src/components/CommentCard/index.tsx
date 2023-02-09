@@ -7,6 +7,7 @@ import { CommentBody, CommentContent, CommentHeader, CommentOwner } from "./styl
 
 interface CommentCardProps{
     id: string;
+    commentIdOwner?: string;
     commentOwnerAvatar?: string;
     commentOwnerName: string;
     createdAt?: string;
@@ -51,14 +52,14 @@ function CommentCard(props: CommentCardProps){
                 {EditIcon}
             </button>
             <CommentHeader>
-                <CommentOwner>
+                <CommentOwner to={`/user/${props.commentIdOwner}`}>
                     {	
                         props.commentOwnerAvatar ?
                         <img src={`http://localhost:5000/images/users/${props.commentOwnerAvatar}`} alt='UserProfile'></img>
                         : UserIcon
                     }
                 </CommentOwner>
-                <CommentOwner>{props.commentOwnerName}</CommentOwner>
+                <CommentOwner to={`/user/${props.commentIdOwner}`}>{props.commentOwnerName}</CommentOwner>
                 <span> &#9830; {calcPassedTime(props.createdAt)}</span>
             </CommentHeader>
             <CommentBody>

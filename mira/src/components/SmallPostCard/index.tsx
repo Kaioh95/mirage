@@ -1,7 +1,7 @@
 import { ImgZoom, SmallPostContainer } from "./styles";
 
 interface SmallPostCardProps{
-    id?: number;
+    id?: string;
     title: string;
     image: string;
 }
@@ -9,7 +9,7 @@ interface SmallPostCardProps{
 function SmallPostCard(props: SmallPostCardProps){
 
     return(
-        <SmallPostContainer to="/post/333">
+        <SmallPostContainer to={`/post/${props.id}`} reloadDocument>
             <ImgZoom>
                 <img 
                     src={`http://localhost:5000/images/posts/${props.image}`}

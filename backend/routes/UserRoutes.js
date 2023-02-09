@@ -13,7 +13,7 @@ router.get("/select/:id", UserController.getUserById);
 router.get("/allusers", UserController.getAllUsers);
 router.get("/checkuser", UserController.checkUser);
 router.patch(
-    "/edituser/:id",
+    "/edituser",
     verifyToken,
     imageUpload.single("image"),
     UserController.editUserNameImg

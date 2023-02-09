@@ -1,7 +1,7 @@
-import { Field, FormikHelpers, FormikProvider, FormikValues, useFormik } from "formik";
+import { ErrorMessage, Field, FormikHelpers, FormikProvider, FormikValues, useFormik } from "formik";
 import { useContext, useEffect, useState } from "react";
 import { PostSchema } from "../../schemas/PostSchema";
-import { CreatePostButton, CustomInput, CustomLabel, FormGroupDiv, PostCustomForm, PostFormFooter, PostImg } from "./styles";
+import { CreatePostButton, CustomInput, CustomLabel, FormError, FormGroupDiv, PostCustomForm, PostFormFooter, PostImg } from "./styles";
 import DefaultImg from "../../assets/imagen.png";
 import { PostContext } from "../../contexts/PostContext";
 import { toast } from "react-toastify";
@@ -67,16 +67,38 @@ function PostForm(){
 
     const formik = useFormik({initialValues, onSubmit, validationSchema: PostSchema});
 
+    const handleDragOverPostImage = (e: any) => {
+        e.preventDefault();
+    }
+
+    const handleDropPostImage = (e: any) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        setImageState({
+            image: e.dataTransfer.files[0]
+        })
+        setImgState({
+            ...imgState,
+            path: URL.createObjectURL(e.dataTransfer.files[0])
+        })
+    }
+
     return(
         <FormikProvider value={formik}>
             <PostCustomForm>
                 <FormGroupDiv className="ImgContent">
-                    <PostImg src={imgState.path !== ""? imgState.path : DefaultImg}/>
+                    <PostImg
+                        onDragOver={handleDragOverPostImage}
+                        onDrop={handleDropPostImage} 
+                        src={imgState.path !== ""? imgState.path : DefaultImg}
+                    />
                     <CustomInput
                         type="file"
                         name="image"
                         onChange={handleFileChange}
                     />
+                    <ErrorMessage component={FormError} name="image"/>
                 </FormGroupDiv>
 
                 <FormGroupDiv>
@@ -87,6 +109,7 @@ function PostForm(){
                         placeholder='Enter a Title'
                         as={CustomInput}
                     />
+                    <ErrorMessage component={FormError} name="title"/>
 
                     <CustomLabel>Tags</CustomLabel>
                     <Field
@@ -95,6 +118,7 @@ function PostForm(){
                         placeholder='pets, games, memes'
                         as={CustomInput}
                     />
+                    <ErrorMessage component={FormError} name="tags"/>
 
                     <CustomLabel>Description</CustomLabel>
                     <Field
@@ -103,6 +127,7 @@ function PostForm(){
                         placeholder='Enter a description'
                         as={CustomInput}
                     />
+                    <ErrorMessage component={FormError} name="description"/>
 
                     <PostFormFooter>
                         <CreatePostButton
