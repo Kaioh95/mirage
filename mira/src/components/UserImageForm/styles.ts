@@ -11,6 +11,7 @@ export const UserCustomForm = styled(Form)`
 `;
 export const FormGroupDiv = styled.div`
     margin-right: 10px;
+    position: relative;
 `;
 export const PostImg = styled.div`
     position: relative;

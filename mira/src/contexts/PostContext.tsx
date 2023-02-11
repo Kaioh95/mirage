@@ -24,11 +24,11 @@ interface PostContextType{
     registerViewLikePost: (post_id: string, headers: any, isLike: boolean) => Promise<
         | { 
             success: undefined,
-            error: Error
+            error: Error,
         }
         | {
             success: {msg: string, data?: {like: boolean}},
-            error: undefined
+            error: undefined,
         }
     >;
     createPost: (data: PostCreateRequest, headers: any) => Promise<ResponseType>;
@@ -40,20 +40,40 @@ interface PostContextType{
             error: Error;
         }
         | {
-            success: {post: Post};
-            error: undefined;
+            success: {post: Post},
+            error: undefined,
         }
     >;
     getPosts: (skip: number, limit: number) => Promise<
         | {
             success: undefined,
-            error: Error;
+            error: Error,
         }
         | {
             success: {posts: Post[]};
             error: undefined;
         }
     >;
+    getPostsByUser: (user_id: string) => Promise<
+        | {
+            success: undefined,
+            error: Error,
+        }
+        | {
+            success: {posts: Post[]}
+            error: undefined,
+        }
+    >
+    getPostsUserLiked: (user_id: string) => Promise<
+        | {
+            success: undefined,
+            error: Error,
+        }
+        | {
+            success: {posts: Post[]}
+            error: undefined,
+        }
+    >
 }
 
 interface PostContextProviderProps{
@@ -185,6 +205,50 @@ export const PostContextProvider = ({ children }: PostContextProviderProps) => {
         return { success: response, error: undefined};
     }
 
+    const getPostsByUser = async (user_id: string) => {
+        setGetPostsLoading(true);
+        const customErroMessage = 'Error fetching post.';
+
+        const response = await runRequest<{posts: Post[]}>(
+            `/posts/posts-by-user/${user_id}`,
+            'get',
+            undefined,
+            undefined,
+            undefined,
+            customErroMessage
+        )
+
+        setGetPostsLoading(false);
+
+        if(response instanceof Error){
+            return { success: undefined, error: response }
+        }
+
+        return { success: response, error: undefined };
+    }
+
+    const getPostsUserLiked = async (user_id: string) => {
+        setGetPostsLoading(true);
+        const customErroMessage = 'Error fetching post.';
+
+        const response = await runRequest<{posts: Post[]}>(
+            `/posts/posts-user-liked/${user_id}`,
+            'get',
+            undefined,
+            undefined,
+            undefined,
+            customErroMessage
+        )
+
+        setGetPostsLoading(false);
+
+        if(response instanceof Error){
+            return { success: undefined, error: response }
+        }
+
+        return { success: response, error: undefined };
+    }
+
     return(
         <PostContext.Provider value={{
             isCreatePostLoading,
@@ -197,7 +261,9 @@ export const PostContextProvider = ({ children }: PostContextProviderProps) => {
             createPost,
             setHiddenPostModal,
             getPostById,
-            getPosts
+            getPosts,
+            getPostsByUser,
+            getPostsUserLiked,
         }}>
             {children}
         </PostContext.Provider>

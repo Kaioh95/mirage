@@ -4,17 +4,19 @@ import Switch from 'react-switch'
 import { AvatarA, AvatarSpan, Button, DropButton, FooterButton, LoggedUserArea, MenuList, UserArea, UserCard, UserMenu, UserMenuFooter } from "./styles";
 import { MoonIcon, OptionIcon, PowerIcon, SunIcon, UserIcon } from "../Icons";
 import { UserContext, UserResponse } from "../../contexts/UserContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import usePersistedState from "../../hooks/usePersistedState";
+import { TabContext } from "../../contexts/TabContext";
 
 const UserBar: React.FC = () => {
 	const navigate = useNavigate();
     const themeContext = useContext(CustomThemeContext);
 	const { isUserLogged, signOut } = useContext(UserContext);
+	const { selectTab } = useContext(TabContext)
+
     const [optionsDrop, setOptionsDrop] = useState<Boolean>(false);
 	const [menuDrop, setMenuDrop] = useState<Boolean>(false);
 	const [user] = usePersistedState<UserResponse>('user', {_id:'',name:'',email:''})
-    //const [userIsLogged, setUserIsLogged] = useState<Boolean>(true);
 
     const MenuDefault = <React.Fragment>
         <UserArea 
@@ -90,9 +92,9 @@ const UserBar: React.FC = () => {
 			</UserCard>
 
 			<MenuList>
-				<a href="http://localhost:5000/images/posts/1672953027051KaiohShin-300x300.png">Posts</a>
-				<a href="http://localhost:5000/images/posts/1672953027051KaiohShin-300x300.png">Favorites</a>
-				<a href="http://localhost:5000/images/posts/1672953027051KaiohShin-300x300.png">Comments</a>
+				<Link to={`/user/${user._id}`} onClick={e => selectTab("postsTab") }>Posts</Link>
+				<Link to={`/user/${user._id}`} onClick={e => selectTab("favTab") }>Favorites</Link>
+				<Link to={`/user/${user._id}`} onClick={e => selectTab("commentsTab") }>Comments</Link>
 			</MenuList>
 
 			<UserMenuFooter>

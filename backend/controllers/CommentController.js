@@ -74,7 +74,7 @@ module.exports = class CommentController{
         const skip = req.query.skip
         const limit = req.query.limit
 
-        if(!ObjectId.isValid(post_id)){
+        if(!ObjectId.isValid(id)){
             res.status(422).json({msg: "Invalid Id!"})
             return
         }

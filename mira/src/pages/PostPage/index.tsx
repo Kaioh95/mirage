@@ -69,22 +69,6 @@ function PostPage(props: PostPageProps){
         setPosts(response.posts)
     }
 
-    const handleLike = async () => {
-        const token = localStorage.getItem('token');
-        const headers = {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${JSON.parse(token || JSON.stringify("TOKEN_MISSING"))}`,
-        }
-        const {success: response, error } = await getLike(id || '', headers);
-
-        if(error){
-            toast.error(error.message)
-            return;
-        }
-
-        setLikeInfo(response.data.like)
-    }
-
     const handleRegisterLike = async (isLike: boolean) => {
         const token = localStorage.getItem('token');
         const headers = {
@@ -94,7 +78,7 @@ function PostPage(props: PostPageProps){
         const {success: response, error } = await registerViewLikePost(id || '', headers, isLike);
 
         if(error){
-            toast.error(error.message);
+            toast.error("Login to comment and like posts.");
             return;
         }
 

@@ -133,11 +133,15 @@ module.exports = class PostController{
             return;
         }
 
-        const postsIds = await PostInfo.find({user_id: id, like: true}).sort('-createdAt').skip(skip).limit(limit);
+        const postsIds = await PostInfo.find({user_id: id, like: true}).sort('-updatedAt').skip(skip).limit(limit);
 
         const postsLiked = postsIds.map(async (pInfo) => {
             const postLiked = await Post.findById(pInfo.post_id)
-            return postLiked;
+            const views = await PostInfo.find({post_id: pInfo._id}).count()
+            const likes = await PostInfo.find({post_id: pInfo._id, like: true}).count()
+            const comments = await Comment.find({post_id: pInfo._id}).count()
+
+            return {...postLiked.toObject(), views, likes, comments};
         })
         const postsN = await Promise.all(postsLiked)
 

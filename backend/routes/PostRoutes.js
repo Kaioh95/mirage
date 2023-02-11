@@ -14,7 +14,7 @@ router.post(
 router.get("/last-posts", PostController.getLastFiftyPosts)
 router.get("/post/:id", PostController.getPostById)
 router.get("/posts-by-user/:id", PostController.getPostsByUserId)
-router.get("/posts-liked-by-user/:id", PostController.getPostsLikedByUserId)
+router.get("/posts-user-liked/:id", PostController.getPostsLikedByUserId)
 router.get("/all", PostController.getAllPosts)
 router.get("/post-by-title/:text", PostController.searchPostByTitle)
 router.get("/post-by-tag/:tag", PostController.searchPostByTag)

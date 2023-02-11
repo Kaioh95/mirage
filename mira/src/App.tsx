@@ -15,6 +15,7 @@ import { UserContextProvider } from './contexts/UserContext';
 import LoginOrRegister from './pages/LoginOrRegister';
 import { CommentContextProvider } from './contexts/CommentContext';
 import UserPage from './pages/UserPage';
+import { TabContextProvider } from './contexts/TabContext';
 
 function App() {
 	return (
@@ -22,18 +23,20 @@ function App() {
 			<UserContextProvider>
 				<PostContextProvider>
 					<CommentContextProvider>
-						<GlobalStyle/>
-						<ToastContainer/>
-						<Router>
-							<Routes>
-								<Route path='/' element={<MainPage/>}></Route>
-								<Route path='/post/:id' element={<PostPage/>}></Route>
-								<Route path='/login' element={<LoginOrRegister isLoginMode/>}></Route>
-								<Route path='/register' element={<LoginOrRegister/>}></Route>
-								<Route path='/user/:id' element={<UserPage/>}></Route>
-								<Route path='*' element={<Navigate to="/"/>}></Route>
-							</Routes>
-						</Router>
+						<TabContextProvider>
+							<GlobalStyle/>
+							<ToastContainer/>
+							<Router>
+								<Routes>
+									<Route path='/' element={<MainPage/>}></Route>
+									<Route path='/post/:id' element={<PostPage/>}></Route>
+									<Route path='/login' element={<LoginOrRegister isLoginMode/>}></Route>
+									<Route path='/register' element={<LoginOrRegister/>}></Route>
+									<Route path='/user/:id' element={<UserPage/>}></Route>
+									<Route path='*' element={<Navigate to="/"/>}></Route>
+								</Routes>
+							</Router>
+						</TabContextProvider>
 					</CommentContextProvider>
 				</PostContextProvider>
 			</UserContextProvider>

@@ -25,7 +25,15 @@ interface CommentContextType{
             error: undefined
         }
     >;
-    getCommentsByUserId?: (id: string) => void;
+    getCommentsByUserId: (user_id: string) => Promise<
+        | {
+            success: undefined,
+            error: Error,
+        }
+        | {
+            success: {comments: Comment[]},
+            error: undefined,
+        }>;
     editComment: (id: string, data: CommentCreatePost, headers: any) => Promise<ResponseType>;
     deleteComment: (id: string, headers: any) => Promise<ResponseType>;
 }
@@ -78,6 +86,27 @@ export const CommentContextProvider = ({children}: CommentContextProviderProps) 
             undefined,
             undefined,
             customErrorMessage
+        )
+
+        setIsFetchingComments(false);
+
+        if(response instanceof Error){
+            return { success: undefined, error: response }
+        }
+
+        return { success: response, error: undefined };
+    }
+    const getCommentsByUserId = async (user_id: string) => {
+        setIsFetchingComments(true);
+        const customErroMessage = 'Error fetching comments.';
+
+        const response = await runRequest<{comments: Comment[]}>(
+            `/comments/comments-by-user/${user_id}`,
+            'get',
+            undefined,
+            undefined,
+            undefined,
+            customErroMessage
         )
 
         setIsFetchingComments(false);
@@ -146,6 +175,7 @@ export const CommentContextProvider = ({children}: CommentContextProviderProps) 
             setHiddenCommentModal,
             createComment,
             getCommentsByPostId,
+            getCommentsByUserId,
             editComment,
             deleteComment,
         }}>
