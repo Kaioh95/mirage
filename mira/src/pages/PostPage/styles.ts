@@ -38,6 +38,20 @@ export const ContainerPost = styled.div`
     }
 `;
 export const HeaderPost = styled.div`
+
+    &>button{
+        float: right;
+        width: 18px;
+        margin: 0 4px;
+
+        border: none;
+        background-color: transparent;
+        color: ${({ theme }) => theme.colors.text};
+
+        &:hover{
+            opacity: 0.3;
+        }
+    }
 `;
 export const PostTitle = styled.div`
     font-family: ${({ theme }) => theme.font.family};

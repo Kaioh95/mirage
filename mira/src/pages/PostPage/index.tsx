@@ -5,7 +5,7 @@ import AddButton from "../../components/AddButton";
 import CommentCard from "../../components/CommentCard";
 import CommentForm from "../../components/CommentForm";
 import Header from "../../components/Header";
-import { HeartIcon, SolidHeartIcon, UserIcon } from "../../components/Icons";
+import { DeleteIcon, HeartIcon, LinkIcon, SolidHeartIcon, UserIcon } from "../../components/Icons";
 import Modal from "../../components/Modal";
 import PostForm from "../../components/PostForm";
 import SmallPostCard from "../../components/SmallPostCard";
@@ -27,7 +27,9 @@ interface PostPageProps{
 }
 
 function PostPage(props: PostPageProps){
-    const { getPostById, getPosts, hiddenPostModal, setHiddenPostModal, isLoadingLike, registerViewLikePost, getLike } = useContext(PostContext);
+    const { hiddenPostModal, isLoadingLike, getPostById, 
+        getPosts, setHiddenPostModal, registerViewLikePost,
+        deletePost } = useContext(PostContext);
     const { hiddenCommentModal, getCommentsByPostId, setHiddenCommentModal} = useContext(CommentContext);
     const { id } = useParams();
 
@@ -84,6 +86,22 @@ function PostPage(props: PostPageProps){
 
         setLikeInfo(response.data?.like || false);
     }
+
+    const handleDeletePost = async () => {
+        const token = localStorage.getItem('token');
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${JSON.parse(token || JSON.stringify("TOKEN_MISSING"))}`,
+        };
+        const {success: response, error } = await deletePost(id || '', headers);
+
+        if(error){
+            toast.error(error.message);
+            return;
+        }
+
+        toast.success("Post Deleted!")
+    }
     
     useEffect(() => {
         handleGetPost();
@@ -107,6 +125,18 @@ function PostPage(props: PostPageProps){
                 <ContainerPage>
                     <ContainerPost className="Post">
                         <HeaderPost>
+                            <button onClick={() => handleDeletePost()}>
+                                {DeleteIcon}
+                            </button>
+                            <button 
+                                onClick={() => {
+                                    navigator.clipboard.writeText(window.location.href)
+                                    toast("link copied to clipboard", 
+                                        {position: "bottom-left", autoClose: 1500})
+                                }}
+                            >
+                                {LinkIcon}
+                            </button>
                             <PostTitle>{post?.title ? post?.title : '- -'}</PostTitle>
                             <PostAuthor>
                                 <AvatarA to={`/user/${post?.user._id}`}>

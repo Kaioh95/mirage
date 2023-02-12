@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { Fragment, useContext } from "react";
 import { toast } from "react-toastify";
 import { CommentContext } from "../../contexts/CommentContext";
 import { calcPassedTime } from "../../utils/calcPassedTime";
@@ -16,6 +16,7 @@ interface CommentCardProps{
 
 function CommentCard(props: CommentCardProps){
     const { setCommentIdToEdit, setCommentTextToEdit, deleteComment, setHiddenCommentModal} = useContext(CommentContext);
+    const loggedUserId = JSON.parse(localStorage.getItem('userId') || '1');
 
     const onDelete = async () => {
         const token = localStorage.getItem('token');
@@ -37,20 +38,25 @@ function CommentCard(props: CommentCardProps){
 
     return(
         <CommentContent>
-            <button
-                onClick={e => onDelete()}
-            >
-                {DeleteIcon}
-            </button>
-            <button
-                onClick={async (e) => {
-                    setCommentIdToEdit(props.id)  
-                    setCommentTextToEdit(props.text)
-                    setHiddenCommentModal(false)
-                }}
-            >
-                {EditIcon}
-            </button>
+            {
+                loggedUserId === props.commentIdOwner ?
+                    <Fragment>
+                        <button
+                            onClick={e => onDelete()}
+                        >
+                            {DeleteIcon}
+                        </button>
+                        <button
+                            onClick={async (e) => {
+                                setCommentIdToEdit(props.id)  
+                                setCommentTextToEdit(props.text)
+                                setHiddenCommentModal(false)
+                            }}
+                        >
+                            {EditIcon}
+                        </button>
+                    </Fragment> : ""
+            }
             <CommentHeader>
                 <CommentOwner to={`/user/${props.commentIdOwner}`}>
                     {	

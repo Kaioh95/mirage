@@ -82,7 +82,7 @@ const UserBar: React.FC = () => {
 		{/* User DropDown Menu */}
 		<UserMenu className={menuDrop? 'active' : ''}>
 			<UserCard>
-				<AvatarA to={`/user/${user._id}`}>
+				<AvatarA to={`/user/${user._id}`} reloadDocument>
 					{	user.image ?
 						<img src={`http://localhost:5000/images/users/${user.image}`} alt='UserProfile'></img>
 						: UserIcon

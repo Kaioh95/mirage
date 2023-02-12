@@ -33,7 +33,7 @@ interface PostContextType{
     >;
     createPost: (data: PostCreateRequest, headers: any) => Promise<ResponseType>;
     editPost?: (data: Post) => Promise<ResponseType>;
-    delete?: (id: string) => Promise<ResponseType>;
+    deletePost: (id: string, headers: any) => Promise<ResponseType>;
     getPostById: (id: string) => Promise<
         | {
             success: undefined,
@@ -249,6 +249,28 @@ export const PostContextProvider = ({ children }: PostContextProviderProps) => {
         return { success: response, error: undefined };
     }
 
+    const deletePost = async (id: string, headers: any) => {
+        setIsDeletingPost(true);
+        const customErrorMessage = 'Error deleting post.';
+
+        const response = await runRequest<{msg: string}>(
+            `/posts/delete/${id}`,
+            'delete',
+            undefined,
+            undefined,
+            headers,
+            customErrorMessage
+        )
+
+        setIsDeletingPost(false);
+
+        if (response instanceof Error){
+            return { success: undefined, error: response }
+        }
+
+        return { success: response.msg, error: undefined }
+    }
+
     return(
         <PostContext.Provider value={{
             isCreatePostLoading,
@@ -259,6 +281,7 @@ export const PostContextProvider = ({ children }: PostContextProviderProps) => {
             getLike,
             registerViewLikePost,
             createPost,
+            deletePost,
             setHiddenPostModal,
             getPostById,
             getPosts,

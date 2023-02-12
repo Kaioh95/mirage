@@ -30,6 +30,7 @@ export const ImgZoom = styled.div`
 
     &>img{
         width: 64px;
+        height: 64px;
         border-radius: ${({ theme }) => theme.borderRadius.card};
     }
 `;

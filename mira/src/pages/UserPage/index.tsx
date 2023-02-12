@@ -1,6 +1,6 @@
 import React from "react";
 import { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import AddButton from "../../components/AddButton";
 import CommentCard from "../../components/CommentCard";
@@ -123,15 +123,21 @@ export default function UserPage(){
                                 <TabContent id="commentsTab">
                                     <div>
                                         { commentsByUser?.map((comment, index) => (
-                                            <CommentCard
-                                                key={comment._id}
-                                                id={comment._id}
-                                                commentIdOwner={comment.user._id}
-                                                commentOwnerAvatar={comment.user.image}
-                                                commentOwnerName={comment.user.name || '- -'}
-                                                createdAt={comment.createdAt}
-                                                text={comment.text}
-                                            />
+                                            <Link
+                                                style={{textDecoration: "none"}} 
+                                                to={`/post/${comment.post_id}`}
+                                                reloadDocument
+                                            >
+                                                <CommentCard
+                                                    key={comment._id}
+                                                    id={comment._id}
+                                                    commentIdOwner={comment.user._id}
+                                                    commentOwnerAvatar={comment.user.image}
+                                                    commentOwnerName={comment.user.name || '- -'}
+                                                    createdAt={comment.createdAt}
+                                                    text={comment.text}
+                                                />
+                                            </Link>
                                         )) }
                                     </div>
                                 </TabContent>
