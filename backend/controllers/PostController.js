@@ -233,6 +233,7 @@ module.exports = class PostController{
         } catch(error){
             return res.status(400).json({msg: "Invalid token!"});
         }
+        const user = await getUserByToken(token)
 
         const id = req.params.id
 
@@ -242,6 +243,11 @@ module.exports = class PostController{
         }
 
         const post = await Post.findById({ _id: id})
+        const postUser = await User.findById(post.user_id)
+
+        if(postUser.email !== user.email || !postUser._id.equals(user._id)){
+            return res.status(400).json({msg: "You do not have permission to delete this post."})
+        }
 
         if(!post){
             res.status(422).json({ msg: 'Post no found!' })
@@ -263,6 +269,7 @@ module.exports = class PostController{
         } catch(error){
             return res.status(400).json({msg: "Invalid token!"});
         }
+        const user = await getUserByToken(token)
 
         const title = req.body.title
         const tags = req.body.tags
@@ -275,6 +282,11 @@ module.exports = class PostController{
         }
 
         const post = await Post.findById(id)
+        const postUser = await User.findById(post.user_id)
+
+        if(postUser.email !== user.email || !postUser._id.equals(user._id)){
+            return res.status(400).json({msg: "You do not have permission to edit this post."})
+        }
 
         if (!post){
             res.status(422).json({msg: "Post do not exist."});
@@ -306,7 +318,6 @@ module.exports = class PostController{
         }
 
         let arrayTags = tags.split(',').map(element => element.trim())
-        const user = await getUserByToken(token)
 
         post.title = title
         post.tags = arrayTags

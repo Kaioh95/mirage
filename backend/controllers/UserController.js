@@ -167,18 +167,27 @@ module.exports = class UserController{
     }
 
     static async editUserNameImg(req, res){
+        const id = req.params.id
         const token = getToken(req)
+
+        if (!ObjectId.isValid(id)) {
+            res.status(422).json({ msg: 'Invalid Id!' })
+            return
+        }
         try{
             const decoded = jwt.verify(token, 'nossosecret')
         } catch(error){
             return res.status(400).json({msg: "Token Invalid!"});
         }
+
         const user = await getUserByToken(token)
+        const userToedit = await User.findById(id)
+
+        if(userToedit.email !== user.email || !userToedit._id.equals(user._id)){
+            return res.status(400).json({msg: "You do not have permission."})
+        }
         
         const name = req.body.name
-        const email = req.body.email
-        const password = user.password
-        const created_at = user.created_at
 
         let image = ''
         if(req.file){
@@ -193,30 +202,10 @@ module.exports = class UserController{
 
         user.name = name
 
-        /*if(!email){
-            res.status(422).json({msg: 'Email is required!'})
-            return
-        }
-
-        // Verifica se usuário existe
-        const userExists = await User.findOne({email: email})
-
-        if( user.email !== email && userExists){
-            res.status(422).json({ msg: 'Please use another email!' })
-            return
-        }
-
-        user.email = email*/
-
         if(image){
             const imageName = req.file.filename
             user.image = imageName
         }
-
-        /*if(!password){
-            res.status(422).json({msg: 'Password is required'})
-            return
-        }*/
 
         try{
             const updatedUser = await User.findOneAndUpdate(
@@ -236,13 +225,25 @@ module.exports = class UserController{
 
     static async deleteUser(req, res){
         const id = req.params.id
+        const token = getToken(req)
 
         if (!ObjectId.isValid(id)) {
             res.status(422).json({ msg: 'Invalid Id!' })
             return
         }
 
+        try{
+            const decoded = jwt.verify(token, 'nossosecret')
+        } catch(error){
+            return res.status(400).json({msg: "Token Invalid!"});
+        }
+
+        const loggedUser = getUserByToken(token)
         const user = await User.findById({ _id: id})
+
+        if(loggedUser.email !== user.email || !loggedUser._id.equals(user._id)){
+            return res.status(400).json({msg: "You do not have permission."})
+        }
 
         if(!user){
             res.status(422).json({ msg: 'User not found!' })

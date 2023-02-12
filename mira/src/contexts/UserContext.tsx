@@ -36,8 +36,8 @@ interface UserContextType{
             error: undefined;
         }
     >
-    deleteUser?: (data: {id: string, headers: any}) => Promise<ResponseType>;
-    editUserImage: (data: UserEditRequest, headers: any) => Promise<ResponseType>;
+    deleteUser?: (id: string, headers: any) => Promise<ResponseType>;
+    editUserImage: (id: string, data: UserEditRequest, headers: any) => Promise<ResponseType>;
 };
 
 interface UserContextProviderProps{
@@ -150,12 +150,12 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
         return{ success: response.user, error: undefined}
     }
 
-    const editUserImage = async (data: UserEditRequest, headers: any) => {
+    const editUserImage = async (id: string, data: UserEditRequest, headers: any) => {
         setIsEditingUser(true);
         const customErrorMessage = 'Error editing user.';
 
         const response = await runRequest<{msg: string}>(
-            `/users/edituser`,
+            `/users/edituser/${id}`,
             'patch',
             undefined,
             data,

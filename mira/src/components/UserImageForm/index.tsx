@@ -74,7 +74,7 @@ export default function UserImageForm(){
             'Authorization': `Bearer ${JSON.parse(token || JSON.stringify("TOKEN_MISSING"))}`,
         }
 
-        const { success: response , error} = await editUserImage(values, headers);
+        const { success: response , error} = await editUserImage(id || '', values, headers);
 
         if(error){
             toast.error(error.message);
