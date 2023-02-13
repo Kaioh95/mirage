@@ -7,6 +7,7 @@ import { CustomInput, FormError, FormGroupDiv, PostImg, UploadIcon, UserCustomFo
 import { useParams } from "react-router-dom";
 import { User } from "../../models/User";
 import { CameraIcon, UserIcon } from "../Icons";
+import { api_url } from "../../constants";
 
 interface UserValues extends FormikValues{
     image: string,
@@ -98,7 +99,7 @@ export default function UserImageForm(){
                             <img 
                                 src={
                                     imgState.path === "" ? 
-                                    `http://localhost:5000/images/users/${user.image}`
+                                    `${api_url}/images/users/${user.image}`
                                     : imgState.path
                                 } alt='UserAvatar'
                             /> :

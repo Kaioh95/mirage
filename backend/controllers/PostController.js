@@ -191,7 +191,7 @@ module.exports = class PostController{
             return
         }
         const regexSrc = new RegExp(text.trim(), 'i')
-        const posts = await Post.find({title: {$regex: regexSrc}}).sort(sortFilter).skip(skip).limit(limit)
+        const posts = await Post.find({title: {$regex: regexSrc}}).sort('-createdAt').skip(skip).limit(limit)
 
         const postsInfo = posts.map(async (post) => {
             const user = await User.findById(post.user_id);
@@ -243,15 +243,16 @@ module.exports = class PostController{
         }
 
         const post = await Post.findById({ _id: id})
-        const postUser = await User.findById(post.user_id)
-
-        if(postUser.email !== user.email || !postUser._id.equals(user._id)){
-            return res.status(400).json({msg: "You do not have permission to delete this post."})
-        }
 
         if(!post){
             res.status(422).json({ msg: 'Post no found!' })
             return
+        }
+        
+        const postUser = await User.findById(post.user_id)
+
+        if(postUser.email !== user.email || !postUser._id.equals(user._id)){
+            return res.status(400).json({msg: "You do not have permission to delete this post."})
         }
 
         try{
@@ -282,15 +283,16 @@ module.exports = class PostController{
         }
 
         const post = await Post.findById(id)
+        
+        if (!post){
+            res.status(422).json({msg: "Post do not exist."});
+            return
+        }
+
         const postUser = await User.findById(post.user_id)
 
         if(postUser.email !== user.email || !postUser._id.equals(user._id)){
             return res.status(400).json({msg: "You do not have permission to edit this post."})
-        }
-
-        if (!post){
-            res.status(422).json({msg: "Post do not exist."});
-            return
         }
         
         let image = ''

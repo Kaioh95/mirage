@@ -65,7 +65,7 @@ export const TagTitle = styled.div`
 `
 export const PostsContainer = styled.div`
     width: 100%;
-    height: 100vw;
+    height: 100vh;
     display: flex;
     justify-content: center;
 `;

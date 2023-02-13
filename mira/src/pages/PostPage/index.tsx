@@ -9,6 +9,7 @@ import { DeleteIcon, HeartIcon, LinkIcon, SolidHeartIcon, UserIcon } from "../..
 import Modal from "../../components/Modal";
 import PostForm from "../../components/PostForm";
 import SmallPostCard from "../../components/SmallPostCard";
+import { api_url } from "../../constants";
 import { CommentContext } from "../../contexts/CommentContext";
 import { PostContext } from "../../contexts/PostContext";
 import { Comment } from "../../models/Comment";
@@ -100,7 +101,7 @@ function PostPage(props: PostPageProps){
             return;
         }
 
-        toast.success("Post Deleted!")
+        toast.success(response)
     }
     
     useEffect(() => {
@@ -142,7 +143,7 @@ function PostPage(props: PostPageProps){
                                 <AvatarA to={`/user/${post?.user._id}`}>
                                     {	
                                         post?.user.image ?
-                                        <img src={`http://localhost:5000/images/users/${post?.user.image}`} alt='UserProfile'></img>
+                                        <img src={`${api_url}/images/users/${post?.user.image}`} alt='UserProfile'></img>
                                         : UserIcon
                                     }
                                 </AvatarA>
@@ -156,7 +157,7 @@ function PostPage(props: PostPageProps){
                         </HeaderPost>
                         
                         <PostImg>
-                            <img src={`http://localhost:5000/images/posts/${post?.image}`} alt="Content"></img>
+                            <img src={`${api_url}/images/posts/${post?.image}`} alt="Content"></img>
                         </PostImg>
 
                         <LikesContainer>

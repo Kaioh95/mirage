@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import { Field, Formik, FormikHelpers, FormikValues } from "formik";
 import { DropButton, LogoArea, LogoImg, SearchButton, SearchContainer, SearchForm, SearchInput } from "./styles";
 import { ChevronDown, ChevronRight, SearchIcon } from "../Icons";
 import { SearchQueryShema } from "../../schemas/SearchQuerySchema";
 import MiraImage from "../../assets/logo.png"
+import { useNavigate } from "react-router-dom";
 
 interface SearchValues extends FormikValues{
     searchQuery: string
@@ -12,9 +12,14 @@ interface SearchValues extends FormikValues{
 
 const LogoSearchBar: React.FC = () => {
     const [dropDown, setDropDown] = useState<Boolean>(false);
+    const navigate = useNavigate();
 
     const onSearch = async (values: SearchValues, actions: FormikHelpers<SearchValues>) => {
-        console.log(values.searchQuery)
+        if(values.searchQuery.charAt(0) === '@')
+            navigate(`/users/?q=${values.searchQuery.substring(1, values.searchQuery.length)}`)
+        else
+            navigate(`/?q=${values.searchQuery}`)
+        navigate(0)
     }
 
     return(

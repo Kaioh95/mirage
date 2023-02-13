@@ -10,6 +10,7 @@ router.get("/user/:id", verifyToken, UserController.verUserPrivate);
 router.post("/auth/register", UserController.register);
 router.post("/auth/login", UserController.login);
 router.get("/select/:id", UserController.getUserById);
+router.get("/users-by-name/:name", UserController.getUsersByName);
 router.get("/allusers", UserController.getAllUsers);
 router.get("/checkuser", UserController.checkUser);
 router.patch(

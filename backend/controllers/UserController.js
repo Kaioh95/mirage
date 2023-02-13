@@ -134,8 +134,27 @@ module.exports = class UserController{
 
     }
 
+    static async getUsersByName(req, res){
+        const name = req.params.name
+        const skip = req.query.skip
+        const limit = req.query.limit
+
+        if(!name){
+            res.status(422).json({msg: "Invalid Text."})
+            return
+        }
+        const regexSrc = new RegExp(name.trim(), 'i')
+
+        const users = await User.find({name: {$regex: regexSrc}}).sort('-createdAt').skip(skip).limit(limit);
+
+        res.status(200).json({ users: users, msg: 'Users found!'})
+    }
+
     static async getAllUsers(req, res){
-        const users = await User.find().sort('-createdAt')
+        const skip = req.query.skip
+        const limit = req.query.limit
+
+        const users = await User.find().sort('-createdAt').skip(skip).limit(limit);
 
         res.status(200).json({ users: users, msg: 'Users found!'})
     }
@@ -181,6 +200,12 @@ module.exports = class UserController{
         }
 
         const user = await getUserByToken(token)
+        
+        if(!user){
+            res.status(422).json({ msg: 'User no found!' })
+            return
+        }
+
         const userToedit = await User.findById(id)
 
         if(userToedit.email !== user.email || !userToedit._id.equals(user._id)){

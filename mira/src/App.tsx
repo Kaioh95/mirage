@@ -16,6 +16,7 @@ import LoginOrRegister from './pages/LoginOrRegister';
 import { CommentContextProvider } from './contexts/CommentContext';
 import UserPage from './pages/UserPage';
 import { TabContextProvider } from './contexts/TabContext';
+import UsersPage from './pages/UsersPage';
 
 function App() {
 	return (
@@ -33,6 +34,7 @@ function App() {
 									<Route path='/login' element={<LoginOrRegister isLoginMode/>}></Route>
 									<Route path='/register' element={<LoginOrRegister/>}></Route>
 									<Route path='/user/:id' element={<UserPage/>}></Route>
+									<Route path='/users' element={<UsersPage/>}></Route>
 									<Route path='*' element={<Navigate to="/"/>}></Route>
 								</Routes>
 							</Router>

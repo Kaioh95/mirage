@@ -1,5 +1,7 @@
 import { Fragment, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { api_url } from "../../constants";
 import { CommentContext } from "../../contexts/CommentContext";
 import { calcPassedTime } from "../../utils/calcPassedTime";
 import { DeleteIcon, EditIcon, UserIcon } from "../Icons"
@@ -17,6 +19,12 @@ interface CommentCardProps{
 function CommentCard(props: CommentCardProps){
     const { setCommentIdToEdit, setCommentTextToEdit, deleteComment, setHiddenCommentModal} = useContext(CommentContext);
     const loggedUserId = JSON.parse(localStorage.getItem('userId') || '1');
+    const navigate = useNavigate();
+
+    const redirectToOwnerPage = (to: string) => {
+        navigate(to)
+        navigate(0)
+    } 
 
     const onDelete = async () => {
         const token = localStorage.getItem('token');
@@ -58,14 +66,16 @@ function CommentCard(props: CommentCardProps){
                     </Fragment> : ""
             }
             <CommentHeader>
-                <CommentOwner to={`/user/${props.commentIdOwner}`}>
+                <CommentOwner onClick={e => redirectToOwnerPage(`/user/${props.commentIdOwner}`)}>
                     {	
                         props.commentOwnerAvatar ?
-                        <img src={`http://localhost:5000/images/users/${props.commentOwnerAvatar}`} alt='UserProfile'></img>
+                        <img src={`${api_url}/images/users/${props.commentOwnerAvatar}`} alt='UserProfile'></img>
                         : UserIcon
                     }
                 </CommentOwner>
-                <CommentOwner to={`/user/${props.commentIdOwner}`}>{props.commentOwnerName}</CommentOwner>
+                <CommentOwner onClick={e => redirectToOwnerPage(`/user/${props.commentIdOwner}`)}>
+                    {props.commentOwnerName}
+                </CommentOwner>
                 <span> &#9830; {calcPassedTime(props.createdAt)}</span>
             </CommentHeader>
             <CommentBody>

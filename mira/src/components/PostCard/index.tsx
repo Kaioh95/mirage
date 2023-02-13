@@ -16,7 +16,7 @@ function PostCard(props: PostCardProps){
         <PostContainer>
             <PostLink to={props.id ? `/post/${props.id}` : '#'}>
                 <ImgContainer>
-                    <PostImg width={300} src={props.src || 'http://localhost:5000/images/posts/1672953027051KaiohShin-300x300.png'}/>
+                    <PostImg width={300} src={props.src}/>
                 </ImgContainer>
                 <PostData>
                     <TituloPost>{props.title || 'Teste Título'}</TituloPost>

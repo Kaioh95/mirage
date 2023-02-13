@@ -1,5 +1,4 @@
-import { Dispatch, ReactNode, SetStateAction, useContext, useState } from "react";
-import { PostContext } from "../../contexts/PostContext";
+import { Dispatch, ReactNode, SetStateAction} from "react";
 import { CloseButton, ModalContainer, ModalContent } from "./styles";
 
 interface ModalProps{

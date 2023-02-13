@@ -14,6 +14,7 @@ import TabContent from "../../components/Tab/TabsContent/TabContent";
 import TabsHeader from "../../components/Tab/TabsHeader";
 import TabHeader from "../../components/Tab/TabsHeader/TabHeader";
 import UserImageForm from "../../components/UserImageForm";
+import { api_url } from "../../constants";
 import { CommentContext } from "../../contexts/CommentContext";
 import { PostContext } from "../../contexts/PostContext";
 import { TabContext } from "../../contexts/TabContext";
@@ -92,9 +93,9 @@ export default function UserPage(){
                                     <PostWrapper>
                                         { postsByUser?.map((post, index) => (
                                             <PostCard 
-                                                key={post._id} 
+                                                key={index} 
                                                 id={post._id} 
-                                                src={`http://localhost:5000/images/posts/${post.image}`}
+                                                src={`${api_url}/images/posts/${post.image}`}
                                                 title={post.title}
                                                 likes={post.likes}
                                                 comments={post.comments}
@@ -110,7 +111,7 @@ export default function UserPage(){
                                             <PostCard 
                                                 key={post._id} 
                                                 id={post._id} 
-                                                src={`http://localhost:5000/images/posts/${post.image}`}
+                                                src={`${api_url}/images/posts/${post.image}`}
                                                 title={post.title}
                                                 likes={post.likes}
                                                 comments={post.comments}
@@ -124,12 +125,12 @@ export default function UserPage(){
                                     <div>
                                         { commentsByUser?.map((comment, index) => (
                                             <Link
+                                                key={comment._id}
                                                 style={{textDecoration: "none"}} 
                                                 to={`/post/${comment.post_id}`}
                                                 reloadDocument
                                             >
                                                 <CommentCard
-                                                    key={comment._id}
                                                     id={comment._id}
                                                     commentIdOwner={comment.user._id}
                                                     commentOwnerAvatar={comment.user.image}

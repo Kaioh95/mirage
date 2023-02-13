@@ -74,6 +74,16 @@ interface PostContextType{
             error: undefined,
         }
     >
+    searchPostsByTitleOrTags: (query: string, searchMode: boolean) => Promise<
+        | {
+            success: undefined,
+            error: Error,
+        }
+        | {
+            success: {posts: Post[]}
+            error: undefined,
+        }
+    >
 }
 
 interface PostContextProviderProps{
@@ -249,6 +259,28 @@ export const PostContextProvider = ({ children }: PostContextProviderProps) => {
         return { success: response, error: undefined };
     }
 
+    const searchPostsByTitleOrTags = async (query: string, searchMode: boolean) => {
+        setGetPostsLoading(true);
+        const customErroMessage = 'Error fetching post.';
+
+        const response = await runRequest<{posts: Post[]}>(
+            `/posts/post-by-${searchMode ? "tag/" : "title/"}${query}`,
+            'get',
+            undefined,
+            undefined,
+            undefined,
+            customErroMessage
+        )
+
+        setGetPostsLoading(false);
+
+        if(response instanceof Error){
+            return { success: undefined, error: response }
+        }
+
+        return { success: response, error: undefined };
+    }
+
     const deletePost = async (id: string, headers: any) => {
         setIsDeletingPost(true);
         const customErrorMessage = 'Error deleting post.';
@@ -287,6 +319,7 @@ export const PostContextProvider = ({ children }: PostContextProviderProps) => {
             getPosts,
             getPostsByUser,
             getPostsUserLiked,
+            searchPostsByTitleOrTags,
         }}>
             {children}
         </PostContext.Provider>

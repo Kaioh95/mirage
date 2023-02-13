@@ -7,6 +7,7 @@ import { UserContext, UserResponse } from "../../contexts/UserContext";
 import { Link, useNavigate } from "react-router-dom";
 import usePersistedState from "../../hooks/usePersistedState";
 import { TabContext } from "../../contexts/TabContext";
+import { api_url } from "../../constants";
 
 const UserBar: React.FC = () => {
 	const navigate = useNavigate();
@@ -71,7 +72,7 @@ const UserBar: React.FC = () => {
 				onClick={e => menuDrop? setMenuDrop(false) : setMenuDrop(true)}
 				style={{ 
 					backgroundImage: user.image ? 
-						`url("http://localhost:5000/images/users/${user.image}")`
+						`url("${api_url}/images/users/${user.image}")`
 						: ''
 				}}
 			>
@@ -84,7 +85,7 @@ const UserBar: React.FC = () => {
 			<UserCard>
 				<AvatarA to={`/user/${user._id}`} reloadDocument>
 					{	user.image ?
-						<img src={`http://localhost:5000/images/users/${user.image}`} alt='UserProfile'></img>
+						<img src={`${api_url}/images/users/${user.image}`} alt='UserProfile'></img>
 						: UserIcon
 					}
 				</AvatarA>

@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const CommentContent = styled.div`
@@ -46,7 +45,7 @@ export const CommentHeader = styled.div`
         opacity: 0.6;
     }
 `;
-export const CommentOwner = styled(Link)`
+export const CommentOwner = styled.div`
     font-size: ${({ theme }) => theme.font.size.small};
     font-weight: ${({ theme }) => theme.font.weight.semiBold};
     color: ${({ theme }) => theme.colors.text};

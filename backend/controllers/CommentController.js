@@ -131,6 +131,12 @@ module.exports = class CommentController{
         }
 
         const comment = await Comment.findById(id)
+
+        if(!comment){
+            res.status(422).json({ msg: 'Comment not found!' })
+            return
+        }
+
         const commentUser = await User.findById(comment.user_id)
 
         if(commentUser.email !== user.email || !commentUser._id.equals(user._id)){
@@ -172,16 +178,18 @@ module.exports = class CommentController{
         }
 
         const comment = await Comment.findById({_id: id})
+        
+        if(!comment){
+            res.status(422).json({ msg: 'Comment not found!' })
+            return
+        }
+
         const commentUser = await User.findById(comment.user_id)
 
         if(commentUser.email !== user.email || !commentUser._id.equals(user._id)){
             return res.status(400).json({msg: "You do not have permission to delete this comment."})
         }
 
-        if(!comment){
-            res.status(422).json({ msg: 'Comment not found!' })
-            return
-        }
         if(!comment.user_id.equals(user._id)){
             res.status(422).json({ msg: 'No permission to delete this comment!' })
             return

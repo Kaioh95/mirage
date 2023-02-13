@@ -26,7 +26,7 @@ interface UserContextType{
             error: undefined;
         }
     >;
-    getAllUsers?: () => Promise<
+    getAllUsersOrByName: (name?: string) => Promise<
         | {
             success: undefined;
             error: Error
@@ -150,6 +150,28 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
         return{ success: response.user, error: undefined}
     }
 
+    const getAllUsersOrByName = async (name?: string) => {
+        const customErrorMsg = 'Error fetching users.'
+
+        const response = await runRequest<{users: User[]}>(
+            `/users/${name? `users-by-name/${name}` : "allusers"}`,
+            'get',
+            undefined,
+            undefined,
+            undefined,
+            customErrorMsg
+        )
+
+        if(response instanceof Error){
+            return {
+                success: undefined,
+                error: response,
+            }
+        }
+
+        return{ success: response, error: undefined}
+    }
+
     const editUserImage = async (id: string, data: UserEditRequest, headers: any) => {
         setIsEditingUser(true);
         const customErrorMessage = 'Error editing user.';
@@ -187,6 +209,7 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
             loginUser,
             signOut,
             getUserById,
+            getAllUsersOrByName,
             editUserImage,
         }}>
             {children}
