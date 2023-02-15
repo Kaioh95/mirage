@@ -5,7 +5,6 @@ import PostCard from '../../components/PostCard';
 import BugImg from '../../assets/bug-pixel.png';
 import FaceImg from '../../assets/face-pixel.png';
 import GameImg from '../../assets/game-pixel.png';
-import Img from '../../assets/imagen.png';
 import { useContext, useEffect, useState, Fragment } from "react";
 import { Post } from "../../models/Post";
 import { PostContext } from "../../contexts/PostContext";
@@ -16,9 +15,12 @@ import Modal from "../../components/Modal";
 import PostForm from "../../components/PostForm";
 import { api_url } from "../../constants";
 import { useLocation } from "react-router-dom";
+import LoadingRing from "../../components/LoadingRing";
+import PostsLayout from "../../components/PostsLayout";
 
 function MainPage(){
-    const { getPosts, getPostsLoading, hiddenPostModal, setHiddenPostModal, searchPostsByTitleOrTags } = useContext(PostContext);
+    const { getPosts, getPostsLoading, hiddenPostModal,
+        setHiddenPostModal, searchPostsByTitleOrTags } = useContext(PostContext);
     const [posts, setPosts] = useState<Post[]>();
 
     const useQuery = () => new URLSearchParams(useLocation().search);
@@ -67,12 +69,9 @@ function MainPage(){
             </TagsContainer>
             <PostsContainer>
                 <MainContainer>
-                    <PostCard id='123'/>
-                    <PostCard id='asd' src={BugImg}/>
-                    <PostCard id='125' src={FaceImg}/>
-                    <PostCard id='sds' src={GameImg}/>
-                    <PostCard id='fgd' src={Img}/>
-                    { posts?.map((post, index) => (
+                    <LoadingRing hide={getPostsLoading}/>
+                    <PostsLayout posts={posts}/>
+                    {/* posts?.map((post, index) => (
                         <PostCard 
                             key={index} 
                             id={post._id} 
@@ -82,7 +81,7 @@ function MainPage(){
                             comments={post.comments}
                             views={post.views}
                             />
-                    )) }
+                    )) */}
                 </MainContainer>
             </PostsContainer>
         </Fragment>

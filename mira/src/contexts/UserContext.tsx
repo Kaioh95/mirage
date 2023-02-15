@@ -13,6 +13,7 @@ interface UserContextType{
     isUserLogged: boolean;
     isUserLoginLoading: boolean;
     isEditingUser: boolean;
+    isLoadingUsers: boolean;
     registerUser: (data: UserRequest) => Promise<ResponseType>;
     loginUser: (data: UserLoginRequest) => Promise<ResponseType>;
     signOut: () => void;
@@ -55,6 +56,7 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
     const [isUserLogged, setIsUserLogged] = useState(false);
     const [isUserLoginLoading, setIsUserLoginLoading] = useState(false);
     const [isEditingUser, setIsEditingUser] = useState(false);
+    const [isLoadingUsers, setIsLoadingUsers] = useState(false);
 
     const registerUser = async (data: UserRequest) => {
         setIsUserLogged(false);
@@ -113,7 +115,17 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
 
         setToken(response.token);
         setUserId(response.userId);
-        await getUserById({id: response.userId});
+
+        const loggedUser = await getUserById({id: response.userId});
+        if(loggedUser.error){
+            console.log(loggedUser.error.message)
+
+            return {
+                success: undefined,
+                error: loggedUser.error,
+            }
+        }
+        await setUser(loggedUser.success)
 
         setIsUserLogged(true);
 
@@ -122,12 +134,14 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
 
     const signOut = () => {
         setIsUserLogged(false)
+        setUserId("-1")
         localStorage.removeItem('token')
         localStorage.removeItem('userId')
         localStorage.removeItem('user')
     }
 
     const getUserById = async (data: {id: string}) => {
+        setIsLoadingUsers(true);
         const customErrorMsg = 'Error fetching user'
 
         const response = await runRequest<{user: User}>(
@@ -138,6 +152,7 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
             undefined,
             customErrorMsg
         )
+        setIsLoadingUsers(false);
 
         if(response instanceof Error){
             return {
@@ -146,11 +161,11 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
             }
         }
 
-        await setUser(response.user)
         return{ success: response.user, error: undefined}
     }
 
     const getAllUsersOrByName = async (name?: string) => {
+        setIsLoadingUsers(true);
         const customErrorMsg = 'Error fetching users.'
 
         const response = await runRequest<{users: User[]}>(
@@ -161,6 +176,7 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
             undefined,
             customErrorMsg
         )
+        setIsLoadingUsers(false);
 
         if(response instanceof Error){
             return {
@@ -205,6 +221,7 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
             isUserLogged,
             isUserLoginLoading,
             isEditingUser,
+            isLoadingUsers,
             registerUser,
             loginUser,
             signOut,

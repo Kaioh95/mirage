@@ -4,6 +4,7 @@ import { CommentSchema } from "../../schemas/CommentSchema"
 import { useContext } from "react";
 import { CommentContext } from "../../contexts/CommentContext";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 interface CommentFormProps{
     isEdit?: boolean;
@@ -13,6 +14,7 @@ interface CommentFormProps{
 function CommentForm(props: CommentFormProps){
     const { isCreatingComment, commentIdToEdit, commentTextToEdit,
         createComment, editComment, setHiddenCommentModal } = useContext(CommentContext);
+    const navigate = useNavigate();
 
     const onSubmit = async (values: {text: string}, actions: FormikHelpers<{text: string}>) => {
         const token = localStorage.getItem('token');
@@ -29,11 +31,12 @@ function CommentForm(props: CommentFormProps){
             toast.error(error.message);
         }
 
+        setHiddenCommentModal(true);
+
         if(response){
+            navigate(0);
             toast.success(response);
         }
-
-        setHiddenCommentModal(true);
         actions.resetForm();
     }
 

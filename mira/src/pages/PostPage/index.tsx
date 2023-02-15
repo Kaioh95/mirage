@@ -6,6 +6,7 @@ import CommentCard from "../../components/CommentCard";
 import CommentForm from "../../components/CommentForm";
 import Header from "../../components/Header";
 import { DeleteIcon, HeartIcon, LinkIcon, SolidHeartIcon, UserIcon } from "../../components/Icons";
+import LoadingRing from "../../components/LoadingRing";
 import Modal from "../../components/Modal";
 import PostForm from "../../components/PostForm";
 import SmallPostCard from "../../components/SmallPostCard";
@@ -28,10 +29,11 @@ interface PostPageProps{
 }
 
 function PostPage(props: PostPageProps){
-    const { hiddenPostModal, isLoadingLike, getPostById, 
-        getPosts, setHiddenPostModal, registerViewLikePost,
-        deletePost } = useContext(PostContext);
-    const { hiddenCommentModal, getCommentsByPostId, setHiddenCommentModal} = useContext(CommentContext);
+    const { hiddenPostModal, isLoadingLike, getPostsLoading,
+        getPostById, getPosts, setHiddenPostModal,
+        registerViewLikePost, deletePost } = useContext(PostContext);
+    const { hiddenCommentModal, isFetchingComments,
+        getCommentsByPostId, setHiddenCommentModal} = useContext(CommentContext);
     const { id } = useParams();
 
     const [ post, setPost ] = useState<Post>();
@@ -177,6 +179,7 @@ function PostPage(props: PostPageProps){
                         </CommentCountInfo>
 
                         <ItensList>
+                            <LoadingRing hide={isFetchingComments}/>
                             {comments?.map((el, index) => (
                                 <CommentCard
                                     key={el._id}
@@ -188,13 +191,11 @@ function PostPage(props: PostPageProps){
                                     text={el.text}
                                 />
                             ))}
-                            <CommentCard id="" commentOwnerName="Sr. Kaio Shin" text="Apenas teste"/>
-                            <CommentCard id="" commentOwnerName="Sr. Kaio Shin" text="Apenas teste"/>
-                            <CommentCard id="" commentOwnerName="Sr. Kaio Shin" text="Apenas teste"/>
                         </ItensList>
                     </ContainerPost>
                     
                     <ContainerNewPosts className="NewPosts">
+                        <LoadingRing hide={getPostsLoading}/>
                         <ItensList style={{maxHeight: "300px", overflow: "hidden scroll"}}>
                             {posts?.map((el, index) => (
                                 <SmallPostCard id={el._id} key={el._id} image={el.image} title={el.title}/>    

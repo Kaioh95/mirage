@@ -37,11 +37,11 @@ function CommentCard(props: CommentCardProps){
 
         if(error){
             toast.error(error.message);
+            return
         }
 
-        if(response){
-            toast.success(response);
-        }
+        navigate(0)
+        toast.success(response);
     }
 
     return(

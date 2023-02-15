@@ -55,9 +55,5 @@ export const ContentArea = styled.div`
 export const PostWrapper = styled.div`
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
-
-    ${({ theme }) => theme.device.tablet()}{
-        justify-content: center;
-    }
+    justify-content: center;
 `;

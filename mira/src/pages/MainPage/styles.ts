@@ -72,13 +72,13 @@ export const PostsContainer = styled.div`
 export const MainContainer = styled.main`
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: center;
 
     width: 80%;
     padding: 40px 0px;
 
     ${({ theme }) => theme.device.tablet()}{
-        justify-content: space-between;
+        justify-content: center;
         width: 100%;
     };
 

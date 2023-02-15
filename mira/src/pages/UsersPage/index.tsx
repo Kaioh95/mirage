@@ -7,15 +7,16 @@ import Header from "../../components/Header";
 import AddButton from "../../components/AddButton";
 import Modal from "../../components/Modal";
 import PostForm from "../../components/PostForm";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { User } from "../../models/User";
 import { UserContext } from "../../contexts/UserContext";
 import { api_url } from "../../constants";
 import { UserIcon } from "../../components/Icons";
+import LoadingRing from "../../components/LoadingRing";
 
 function UsersPage(){
     const { hiddenPostModal, setHiddenPostModal } = useContext(PostContext);
-    const { getAllUsersOrByName } = useContext(UserContext)
+    const { getAllUsersOrByName, isLoadingUsers } = useContext(UserContext)
     const [users, setUsers] = useState<User[]>();
 
     const useQuery = () => new URLSearchParams(useLocation().search);
@@ -48,6 +49,7 @@ function UsersPage(){
             <Header/>
             <UsersContainer>
                 <MainContainer>
+                    <LoadingRing hide={false}/>
                     {users?.map((el, index) => (
                         <UserContainer key={index} to={`/user/${el._id}`}>
                             {el.image? 

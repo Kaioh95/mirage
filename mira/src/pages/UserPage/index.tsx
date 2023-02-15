@@ -5,9 +5,11 @@ import { toast } from "react-toastify";
 import AddButton from "../../components/AddButton";
 import CommentCard from "../../components/CommentCard";
 import Header from "../../components/Header";
+import LoadingRing from "../../components/LoadingRing";
 import Modal from "../../components/Modal";
 import PostCard from "../../components/PostCard";
 import PostForm from "../../components/PostForm";
+import PostsLayout from "../../components/PostsLayout";
 import Tabs from "../../components/Tab/Tabs";
 import TabsContent from "../../components/Tab/TabsContent";
 import TabContent from "../../components/Tab/TabsContent/TabContent";
@@ -23,7 +25,8 @@ import { Post } from "../../models/Post";
 import { ContentArea, ContentAreaContainer, MainArea, PostWrapper, UserArea, UserAreaContainer } from "./styles";
 
 export default function UserPage(){
-    const { hiddenPostModal, setHiddenPostModal, getPostsByUser, getPostsUserLiked } = useContext(PostContext)
+    const { hiddenPostModal, getPostsLoading, setHiddenPostModal,
+        getPostsByUser, getPostsUserLiked } = useContext(PostContext)
     const { getCommentsByUserId } = useContext(CommentContext)
     const { selected, selectTab, showTabs} = useContext(TabContext)
     const { id } = useParams();
@@ -91,7 +94,9 @@ export default function UserPage(){
                             <TabsContent>
                                 <TabContent id="postsTab">
                                     <PostWrapper>
-                                        { postsByUser?.map((post, index) => (
+                                        <LoadingRing hide={getPostsLoading}/>
+                                        <PostsLayout posts={postsByUser}/>
+                                        {/* postsByUser?.map((post, index) => (
                                             <PostCard 
                                                 key={index} 
                                                 id={post._id} 
@@ -101,13 +106,15 @@ export default function UserPage(){
                                                 comments={post.comments}
                                                 views={post.views}
                                                 />
-                                        )) }
+                                        )) */}
                                     </PostWrapper>
                                 </TabContent>
 
                                 <TabContent id="favTab">
                                     <PostWrapper>
-                                        { postsUserLiked?.map((post, index) => (
+                                        <LoadingRing hide={getPostsLoading}/>
+                                        <PostsLayout posts={postsUserLiked}/>
+                                        {/* postsUserLiked?.map((post, index) => (
                                             <PostCard 
                                                 key={post._id} 
                                                 id={post._id} 
@@ -117,11 +124,12 @@ export default function UserPage(){
                                                 comments={post.comments}
                                                 views={post.views}
                                                 />
-                                        )) }
+                                        )) */}
                                     </PostWrapper>
                                 </TabContent>
 
                                 <TabContent id="commentsTab">
+                                    <LoadingRing hide={getPostsLoading}/>
                                     <div>
                                         { commentsByUser?.map((comment, index) => (
                                             <Link
