@@ -1,6 +1,7 @@
 import { Post } from "../models/Post";
 import { ResponseType, useRequest } from '../hooks/useRequest'
 import { createContext, ReactNode, Dispatch, SetStateAction, useState } from "react";
+import { PostAndUser } from "../models/PostAndUser";
 
 export type PostCreateRequest = Omit<Post, '_id' | 'createdAt' | 'updatedAt' | 'user'>;
 
@@ -9,8 +10,10 @@ interface PostContextType{
     isDeletingPost: boolean;
     getPostsLoading: boolean;
     hiddenPostModal: boolean;
+    hiddenDeletePostModal: boolean;
     isLoadingLike: boolean;
     setHiddenPostModal: Dispatch<SetStateAction<boolean>>;
+    setHiddenDeletePostModal: Dispatch<SetStateAction<boolean>>;
     getLike: (post_id: string, headers: any) => Promise<
         | {
             success: undefined,
@@ -40,7 +43,7 @@ interface PostContextType{
             error: Error;
         }
         | {
-            success: {post: Post},
+            success: {post: PostAndUser},
             error: undefined,
         }
     >;
@@ -98,6 +101,7 @@ export const PostContextProvider = ({ children }: PostContextProviderProps) => {
     const [isDeletingPost, setIsDeletingPost] = useState(false);
     const [getPostsLoading, setGetPostsLoading] = useState(false);
     const [hiddenPostModal, setHiddenPostModal] = useState(true);
+    const [hiddenDeletePostModal, setHiddenDeletePostModal] = useState<boolean>(true);
     const [isLoadingLike, setIsLoadingLike] = useState(false);
 
     const getLike = async (post_id: string, headers: any) => {
@@ -174,7 +178,7 @@ export const PostContextProvider = ({ children }: PostContextProviderProps) => {
         setGetPostsLoading(true);
         const customErroMessage = 'Error fetching post.';
 
-        const response = await runRequest<{post: Post}>(
+        const response = await runRequest<{post: PostAndUser}>(
             `/posts/post/${id}`,
             'get',
             undefined,
@@ -309,12 +313,14 @@ export const PostContextProvider = ({ children }: PostContextProviderProps) => {
             isDeletingPost,
             getPostsLoading,
             hiddenPostModal,
+            hiddenDeletePostModal,
             isLoadingLike,
             getLike,
             registerViewLikePost,
             createPost,
             deletePost,
             setHiddenPostModal,
+            setHiddenDeletePostModal,
             getPostById,
             getPosts,
             getPostsByUser,

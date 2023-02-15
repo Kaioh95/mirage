@@ -1,6 +1,30 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
+export const DeleteModal = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 95%;
+
+    &>p{
+        color: ${({ theme }) => theme.colors.lightText};
+        font-size: ${({ theme }) => theme.font.size.xLarge};
+    }
+`;
+export const OptionButton = styled.button`
+    float: right;
+    width: 30px;
+    margin: 0 4px;
+
+    border: none;
+    background-color: transparent;
+    color: ${({ theme }) => theme.colors.lightText};
+    font-size: ${({ theme }) => theme.font.size.large};
+
+    &:hover{
+        opacity: 0.3;
+    }
+`;
 export const PageWrapper = styled.div`
     display: flex;
     justify-content: center;

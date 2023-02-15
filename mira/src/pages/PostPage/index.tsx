@@ -1,5 +1,5 @@
 import { Fragment, useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import AddButton from "../../components/AddButton";
 import CommentCard from "../../components/CommentCard";
@@ -15,8 +15,9 @@ import { CommentContext } from "../../contexts/CommentContext";
 import { PostContext } from "../../contexts/PostContext";
 import { Comment } from "../../models/Comment";
 import { Post } from "../../models/Post";
+import { PostAndUser } from "../../models/PostAndUser";
 import { calcPassedTime } from "../../utils/calcPassedTime";
-import { ContainerPage, ContainerPost, ContainerNewPosts, PageWrapper, HeaderPost, PostTitle, AvatarA, PostAuthor, AuthorNameAndViews, AuthorName, PostViews, PostImg, LikesContainer, LikeButton, LikesInfo, CommentCountInfo, ItensList} from "./styles";
+import { ContainerPage, ContainerPost, ContainerNewPosts, PageWrapper, HeaderPost, PostTitle, AvatarA, PostAuthor, AuthorNameAndViews, AuthorName, PostViews, PostImg, LikesContainer, LikeButton, LikesInfo, CommentCountInfo, ItensList, DeleteModal, OptionButton} from "./styles";
 
 interface PostPageProps{
     id?: string;
@@ -29,17 +30,18 @@ interface PostPageProps{
 }
 
 function PostPage(props: PostPageProps){
-    const { hiddenPostModal, isLoadingLike, getPostsLoading,
-        getPostById, getPosts, setHiddenPostModal,
-        registerViewLikePost, deletePost } = useContext(PostContext);
+    const { hiddenPostModal, hiddenDeletePostModal, isLoadingLike,
+        getPostsLoading, getPostById, getPosts, setHiddenPostModal,
+        setHiddenDeletePostModal, registerViewLikePost, deletePost } = useContext(PostContext);
     const { hiddenCommentModal, isFetchingComments,
         getCommentsByPostId, setHiddenCommentModal} = useContext(CommentContext);
     const { id } = useParams();
 
-    const [ post, setPost ] = useState<Post>();
+    const [ post, setPost ] = useState<PostAndUser>();
     const [ comments, setComments ] = useState<Comment[]>();
     const [ posts, setPosts ] = useState<Post[]>();
     const [ likeInfo, setLikeInfo ] = useState<boolean>(false);
+    const navigate = useNavigate();
 
     const handleGetPost = async () => {
         const { success: response, error } = await getPostById(id ? id : '123');
@@ -104,6 +106,7 @@ function PostPage(props: PostPageProps){
         }
 
         toast.success(response)
+        navigate('/')
     }
     
     useEffect(() => {
@@ -121,6 +124,17 @@ function PostPage(props: PostPageProps){
             <Modal hidden={hiddenCommentModal} setHidden={setHiddenCommentModal}>
                 <CommentForm postId={id || '1'} isEdit />
             </Modal>
+            <Modal hidden={hiddenDeletePostModal} setHidden={setHiddenDeletePostModal}>
+                <DeleteModal>
+                    <p>
+                        Delete this post?
+                    </p>
+                    <div>
+                        <OptionButton onClick={e => setHiddenDeletePostModal(true)}>No</OptionButton>
+                        <OptionButton onClick={e => handleDeletePost()}>Yes</OptionButton>
+                    </div>
+                </DeleteModal>
+            </Modal>
             <AddButton/>
             
             <Header/>
@@ -128,7 +142,7 @@ function PostPage(props: PostPageProps){
                 <ContainerPage>
                     <ContainerPost className="Post">
                         <HeaderPost>
-                            <button onClick={() => handleDeletePost()}>
+                            <button onClick={() => setHiddenDeletePostModal(false)}>
                                 {DeleteIcon}
                             </button>
                             <button 

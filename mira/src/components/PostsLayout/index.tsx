@@ -27,30 +27,30 @@ export default function PostsLayout(props: PostsLayoutProps){
 
     }, [width])
 
-
     return(
         <React.Fragment>
-            {[...Array(numColumns)].map((e, i) => {
-
-                return(
-                    <ColumnContainer id={`postColumn${i}`} key={i}>
-                        {props.posts?.filter((el, postI) => postI%numColumns === i)
-                            .map((post, index) => {
-                                return(
-                                    <PostCard
-                                        key={post._id} 
-                                        id={post._id} 
-                                        src={`${api_url}/images/posts/${post.image}`}
-                                        title={post.title}
-                                        likes={post.likes}
-                                        comments={post.comments}
-                                        views={post.views}
-                                    />
-                                )
-                        })}
-                    </ColumnContainer>
-                )
-            })}
+            {props.posts ?
+                [...Array(numColumns)].map((e, i) => {
+                    return(
+                        <ColumnContainer id={`postColumn${i}`} key={i}>
+                            {props.posts?.filter((el, postI) => postI%numColumns === i)
+                                .map((post, index) => {
+                                    return(
+                                        <PostCard
+                                            key={post._id} 
+                                            id={post._id} 
+                                            src={`${api_url}/images/posts/${post.image}`}
+                                            title={post.title}
+                                            likes={post.likes}
+                                            comments={post.comments}
+                                            views={post.views}
+                                        />
+                                    )
+                            })}
+                        </ColumnContainer>
+                    )
+                })
+            : null}
         </React.Fragment>
     )
 }

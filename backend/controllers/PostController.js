@@ -135,6 +135,26 @@ module.exports = class PostController{
 
         const postsIds = await PostInfo.find({user_id: id, like: true}).sort('-updatedAt').skip(skip).limit(limit);
 
+        if(!postsIds){
+            res.status(422).json({msg: "Posts not found!"});
+            return;
+        }
+
+        /*const postsLiked = postsIds.reduce(async (result, pInfo) => {
+                const postLiked = await Post.findById(pInfo.post_id)
+                const views = await PostInfo.find({post_id: pInfo._id}).count()
+                const likes = await PostInfo.find({post_id: pInfo._id, like: true}).count()
+                const comments = await Comment.find({post_id: pInfo._id}).count()
+
+                const resultA = await result;
+                if(!postLiked)
+                    return resultA
+
+                    resultA.push({...postLiked.toObject(), views, likes, comments});
+                return result;
+        }, []);
+        const postsN = await postsLiked.then(result => result)*/
+
         const postsLiked = postsIds.map(async (pInfo) => {
             const postLiked = await Post.findById(pInfo.post_id)
             const views = await PostInfo.find({post_id: pInfo._id}).count()
@@ -153,13 +173,18 @@ module.exports = class PostController{
         const limit = req.query.limit
         
         const posts = await Post.find().sort('-createdAt').skip(skip).limit(limit)
+        
+        if(!posts){
+            res.status(422).json({msg: "Posts not found!"});
+            return;
+        }
+
         const postsInfo = posts.map(async (post) => {
-            const user = await User.findById(post.user_id);
             const views = await PostInfo.find({post_id: post._id}).count()
             const likes = await PostInfo.find({post_id: post._id, like: true}).count()
             const comments = await Comment.find({post_id: post._id}).count()
             
-            return {...post.toObject(), user, views, likes, comments}
+            return {...post.toObject(), views, likes, comments}
         })
         const postsN = await Promise.all(postsInfo)
 
@@ -193,14 +218,7 @@ module.exports = class PostController{
         const regexSrc = new RegExp(text.trim(), 'i')
         const posts = await Post.find({title: {$regex: regexSrc}}).sort('-createdAt').skip(skip).limit(limit)
 
-        const postsInfo = posts.map(async (post) => {
-            const user = await User.findById(post.user_id);
-            
-            return {...post.toObject(), user}
-        })
-        const postsN = await Promise.all(postsInfo)
-
-        res.status(200).json({ posts: postsN, msg: 'Posts found!'})
+        res.status(200).json({ posts: posts, msg: 'Posts found!'})
     }
 
     static async searchPostByTag(req, res){
@@ -216,14 +234,7 @@ module.exports = class PostController{
         const regexSrc = new RegExp(tag.trim(), 'i')
         const posts = await Post.find({tags: {$regex: regexSrc}}).sort('-createdAt').skip(skip).limit(limit)
 
-        const postsInfo = posts.map(async (post) => {
-            const user = await User.findById(post.user_id);
-            
-            return {...post.toObject(), user}
-        })
-        const postsN = await Promise.all(postsInfo)
-
-        res.status(200).json({ posts: postsN, msg: 'Posts found!'})
+        res.status(200).json({ posts: posts, msg: 'Posts found!'})
     }
 
     static async deletePost(req, res){
@@ -253,6 +264,18 @@ module.exports = class PostController{
 
         if(postUser.email !== user.email || !postUser._id.equals(user._id)){
             return res.status(400).json({msg: "You do not have permission to delete this post."})
+        }
+
+        try{
+            await PostInfo.deleteMany({post_id: post._id, user_id: post.user_id})
+        } catch(error){
+            console.log(error)
+        }
+
+        try{
+            await Comment.deleteMany({post_id: post._id})
+        } catch(error){
+            console.log(error)
         }
 
         try{

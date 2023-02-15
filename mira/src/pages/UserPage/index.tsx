@@ -7,7 +7,6 @@ import CommentCard from "../../components/CommentCard";
 import Header from "../../components/Header";
 import LoadingRing from "../../components/LoadingRing";
 import Modal from "../../components/Modal";
-import PostCard from "../../components/PostCard";
 import PostForm from "../../components/PostForm";
 import PostsLayout from "../../components/PostsLayout";
 import Tabs from "../../components/Tab/Tabs";
@@ -16,7 +15,6 @@ import TabContent from "../../components/Tab/TabsContent/TabContent";
 import TabsHeader from "../../components/Tab/TabsHeader";
 import TabHeader from "../../components/Tab/TabsHeader/TabHeader";
 import UserImageForm from "../../components/UserImageForm";
-import { api_url } from "../../constants";
 import { CommentContext } from "../../contexts/CommentContext";
 import { PostContext } from "../../contexts/PostContext";
 import { TabContext } from "../../contexts/TabContext";
@@ -96,17 +94,6 @@ export default function UserPage(){
                                     <PostWrapper>
                                         <LoadingRing hide={getPostsLoading}/>
                                         <PostsLayout posts={postsByUser}/>
-                                        {/* postsByUser?.map((post, index) => (
-                                            <PostCard 
-                                                key={index} 
-                                                id={post._id} 
-                                                src={`${api_url}/images/posts/${post.image}`}
-                                                title={post.title}
-                                                likes={post.likes}
-                                                comments={post.comments}
-                                                views={post.views}
-                                                />
-                                        )) */}
                                     </PostWrapper>
                                 </TabContent>
 
@@ -114,17 +101,6 @@ export default function UserPage(){
                                     <PostWrapper>
                                         <LoadingRing hide={getPostsLoading}/>
                                         <PostsLayout posts={postsUserLiked}/>
-                                        {/* postsUserLiked?.map((post, index) => (
-                                            <PostCard 
-                                                key={post._id} 
-                                                id={post._id} 
-                                                src={`${api_url}/images/posts/${post.image}`}
-                                                title={post.title}
-                                                likes={post.likes}
-                                                comments={post.comments}
-                                                views={post.views}
-                                                />
-                                        )) */}
                                     </PostWrapper>
                                 </TabContent>
 

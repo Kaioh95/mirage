@@ -1,12 +1,8 @@
 import styled from "styled-components";
 
 export const Loader = styled.div`
-    position: relative;
-    top: 50%;
-    left: 50%;
-    translate: -50% -50%;
 
-    margin: 10px;
+    margin: auto;
     border: 12px solid ${({ theme }) => theme.colors.secondary};
     border-radius: 50%;
     border-top: 12px solid ${({ theme }) => theme.colors.tertiary};

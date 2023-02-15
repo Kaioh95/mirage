@@ -1,7 +1,5 @@
 import { MainContainer, PostsContainer, Tag, TagsAside, TagsContainer, TagTitle } from "./styles"
 
-import PostCard from '../../components/PostCard';
-
 import BugImg from '../../assets/bug-pixel.png';
 import FaceImg from '../../assets/face-pixel.png';
 import GameImg from '../../assets/game-pixel.png';
@@ -13,7 +11,6 @@ import Header from "../../components/Header";
 import AddButton from "../../components/AddButton";
 import Modal from "../../components/Modal";
 import PostForm from "../../components/PostForm";
-import { api_url } from "../../constants";
 import { useLocation } from "react-router-dom";
 import LoadingRing from "../../components/LoadingRing";
 import PostsLayout from "../../components/PostsLayout";
@@ -71,21 +68,10 @@ function MainPage(){
                 <MainContainer>
                     <LoadingRing hide={getPostsLoading}/>
                     <PostsLayout posts={posts}/>
-                    {/* posts?.map((post, index) => (
-                        <PostCard 
-                            key={index} 
-                            id={post._id} 
-                            src={`${api_url}/images/posts/${post.image}`}
-                            title={post.title}
-                            likes={post.likes}
-                            comments={post.comments}
-                            views={post.views}
-                            />
-                    )) */}
                 </MainContainer>
             </PostsContainer>
         </Fragment>
     )
 }
 
-export default MainPage
+export default MainPage;

@@ -5,7 +5,7 @@ import { api_url } from "../../constants";
 import { CommentContext } from "../../contexts/CommentContext";
 import { calcPassedTime } from "../../utils/calcPassedTime";
 import { DeleteIcon, EditIcon, UserIcon } from "../Icons"
-import { CommentBody, CommentContent, CommentHeader, CommentOwner } from "./styles"
+import { CommentBody, CommentContent, CommentHeader, CommentOwner} from "./styles"
 
 interface CommentCardProps{
     id: string;
@@ -17,7 +17,8 @@ interface CommentCardProps{
 }
 
 function CommentCard(props: CommentCardProps){
-    const { setCommentIdToEdit, setCommentTextToEdit, deleteComment, setHiddenCommentModal} = useContext(CommentContext);
+    const { setCommentIdToEdit, setCommentTextToEdit,
+        deleteComment, setHiddenCommentModal} = useContext(CommentContext);
     const loggedUserId = JSON.parse(localStorage.getItem('userId') || '1');
     const navigate = useNavigate();
 
@@ -32,7 +33,7 @@ function CommentCard(props: CommentCardProps){
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${JSON.parse(token || JSON.stringify("TOKEN_MISSING"))}`,
         }
-
+        console.log(props.text, props.id)
         const { success: response , error} = await deleteComment(props.id, headers);
 
         if(error){

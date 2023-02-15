@@ -1,5 +1,6 @@
+import { User } from "./User";
 
-export interface Post{
+export interface PostAndUser{
     _id: string;
     title: string;
     tags: Array<string> | string;
@@ -7,6 +8,7 @@ export interface Post{
     image: string;
     createdAt: string;
     updatedAt: string;
+    user: User;
     likes?: number;
     comments?: number;
     views?: number;

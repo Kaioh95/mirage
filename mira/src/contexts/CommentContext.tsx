@@ -9,11 +9,13 @@ interface CommentContextType{
     isFetchingComments: boolean;
     isDeletingComment: boolean;
     hiddenCommentModal: boolean;
+    hiddenDeleteCommentModal: boolean;
     commentIdToEdit: string;
     commentTextToEdit: string;
     setCommentIdToEdit: Dispatch<SetStateAction<string>>;
     setCommentTextToEdit: Dispatch<SetStateAction<string>>;
     setHiddenCommentModal: Dispatch<SetStateAction<boolean>>;
+    setHiddenDeleteCommentModal: Dispatch<SetStateAction<boolean>>;
     createComment: (id: string, data: CommentCreatePost, headers: any) => Promise<ResponseType>;
     getCommentsByPostId: (id: string) => Promise<
         | {
@@ -50,6 +52,7 @@ export const CommentContextProvider = ({children}: CommentContextProviderProps) 
     const [isFetchingComments, setIsFetchingComments] = useState<boolean>(false);
     const [isDeletingComment, setIsDeletingComment] = useState<boolean>(false);
     const [hiddenCommentModal, setHiddenCommentModal] = useState<boolean>(true);
+    const [hiddenDeleteCommentModal, setHiddenDeleteCommentModal] = useState<boolean>(true);
     const [commentIdToEdit, setCommentIdToEdit] = useState<string>('');
     const [commentTextToEdit, setCommentTextToEdit] = useState<string>('');
 
@@ -168,11 +171,13 @@ export const CommentContextProvider = ({children}: CommentContextProviderProps) 
             isDeletingComment,
             isFetchingComments,
             hiddenCommentModal,
+            hiddenDeleteCommentModal,
             commentIdToEdit,
             commentTextToEdit,
             setCommentIdToEdit,
             setCommentTextToEdit,
             setHiddenCommentModal,
+            setHiddenDeleteCommentModal,
             createComment,
             getCommentsByPostId,
             getCommentsByUserId,
