@@ -140,30 +140,30 @@ module.exports = class PostController{
             return;
         }
 
-        /*const postsLiked = postsIds.reduce(async (result, pInfo) => {
+        const postsLiked = postsIds.reduce(async (result, pInfo) => {
                 const postLiked = await Post.findById(pInfo.post_id)
-                const views = await PostInfo.find({post_id: pInfo._id}).count()
-                const likes = await PostInfo.find({post_id: pInfo._id, like: true}).count()
-                const comments = await Comment.find({post_id: pInfo._id}).count()
+                const views = await PostInfo.find({post_id: pInfo.post_id}).count()
+                const likes = await PostInfo.find({post_id: pInfo.post_id, like: true}).count()
+                const comments = await Comment.find({post_id: pInfo.post_id}).count()
 
                 const resultA = await result;
                 if(!postLiked)
                     return resultA
 
-                    resultA.push({...postLiked.toObject(), views, likes, comments});
+                resultA.push({...postLiked.toObject(), views, likes, comments});
                 return result;
         }, []);
-        const postsN = await postsLiked.then(result => result)*/
+        const postsN = postsLiked.length !==0 ? await postsLiked.then(result => result) : postsLiked;
 
-        const postsLiked = postsIds.map(async (pInfo) => {
+        /*const postsLiked = postsIds.map(async (pInfo) => {
             const postLiked = await Post.findById(pInfo.post_id)
-            const views = await PostInfo.find({post_id: pInfo._id}).count()
-            const likes = await PostInfo.find({post_id: pInfo._id, like: true}).count()
-            const comments = await Comment.find({post_id: pInfo._id}).count()
+            const views = await PostInfo.find({post_id: pInfo.post_id}).count()
+            const likes = await PostInfo.find({post_id: pInfo.post_id, like: true}).count()
+            const comments = await Comment.find({post_id: pInfo.post_id}).count()
 
             return {...postLiked.toObject(), views, likes, comments};
         })
-        const postsN = await Promise.all(postsLiked)
+        const postsN = await Promise.all(postsLiked)*/
 
         res.status(200).json({ posts: postsN, msg: 'Posts found!'})
     }
