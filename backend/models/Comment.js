@@ -11,7 +11,10 @@ const Comment = mongoose.model('Comment',
             type: mongoose.Types.ObjectId,
             require: true,
         },
-        user: Object,
+        user_id: {
+            type: mongoose.Types.ObjectId,
+            require: true,
+        },
     }, {timestamps: true}),
 );
 

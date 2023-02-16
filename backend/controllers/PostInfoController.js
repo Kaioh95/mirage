@@ -31,8 +31,11 @@ module.exports = class PostIndoController{
         const userExists = await PostInfo.findOne({post_id: post_id, user_id: user._id})
 
         if(userExists){
-            res.status(422).json({msg: 'Usuário já visualizou o post'})
-            return
+            res.status(200).json({
+                msg: 'User has already viewed the post!',
+                data: userExists
+            });
+            return;
         }
 
         try{
@@ -43,7 +46,7 @@ module.exports = class PostIndoController{
             })
             await newPostInfo.save()
 
-            res.status(201).json({msg: 'Informações de post atualizadas!'})
+            res.status(200).json({msg: 'Updated post information!'})
         }catch(error){
             res.status(500).json({msg: error})
         }
@@ -53,7 +56,7 @@ module.exports = class PostIndoController{
         const post_id = req.params.id
 
         if(!ObjectId.isValid(post_id)){
-            res.status(422).json({msg: "ID inválido"})
+            res.status(422).json({msg: "Invalid Id!"})
             return
         }
 
@@ -69,7 +72,7 @@ module.exports = class PostIndoController{
         const user_id = req.params.id
 
         if(!ObjectId.isValid(user_id)){
-            res.status(422).json({msg: "ID inválido"})
+            res.status(422).json({msg: "Invalid Id!"})
             return
         }
 
@@ -78,6 +81,7 @@ module.exports = class PostIndoController{
         res.status(200).json({
             views: viewsCount,
             likes: likesCount,
+            msg: 'Count of views and likes of a post!'
         })
     }
 
@@ -85,7 +89,7 @@ module.exports = class PostIndoController{
         const post_id = req.params.id
 
         if(!ObjectId.isValid(post_id)){
-            res.status(422).json({msg: "ID inválido"})
+            res.status(422).json({msg: "Invalid Id!"})
             return
         }
 
@@ -93,7 +97,7 @@ module.exports = class PostIndoController{
         try{
             const decoded = jwt.verify(token, 'nossosecret')
         } catch(error){
-            return res.status(400).json({msg: "Token inválido!"});
+            return res.status(400).json({msg: "Invalid Token!"});
         }
 
         const user = await getUserByToken(token)
@@ -109,7 +113,7 @@ module.exports = class PostIndoController{
         try{
             const decoded = jwt.verify(token, 'nossosecret')
         } catch(error){
-            return res.status(400).json({msg: "Token inválido!"});
+            return res.status(400).json({msg: "Invalid Token!"});
         }
 
         const user = await getUserByToken(token)
@@ -117,13 +121,13 @@ module.exports = class PostIndoController{
         //const like = req.body.like
 
         if(!ObjectId.isValid(post_id)){
-            res.status(422).json({msg: "ID inválido"})
+            res.status(422).json({msg: "Invalid Id!"})
             return
         }
 
         const postInfo = await PostInfo.findOne({user_id: user._id, post_id: post_id})
         if(!postInfo){
-            res.status(422).json({msg: "informações de Post não encontradas!"})
+            res.status(422).json({msg: "Post information not found!"})
         }
         if(postInfo.like){
             postInfo.like = false
@@ -151,13 +155,13 @@ module.exports = class PostIndoController{
         const post_id = req.params.id
 
         if(!ObjectId.isValid(post_id)){
-            res.status(422).json({msg: "ID inválido"})
+            res.status(422).json({msg: "Invalid Id!"})
             return
         }
 
         try{
             await PostInfo.deleteMany({ post_id: post_id })
-            res.status(200).json({ msg: 'Post Info removido com sucesso!' })
+            res.status(200).json({ msg: 'Post Info removed!' })
         } catch(error){
             res.status(500).json({ error: error })
         }

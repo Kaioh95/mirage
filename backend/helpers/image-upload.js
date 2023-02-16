@@ -24,7 +24,7 @@ const imageUpload = multer({
     storage: imageStorage,
     fileFilter(req, file, cb){
         if(!file.originalname.match(/\.(png|jpg|jpeg|gif)$/)) {
-            return cb(new Error("Por favor, envie apenas png, jpg ou gif!"));
+            return cb(new Error("Please send only png, jpg or gif!"));
         }
         cb(undefined, true);
     },

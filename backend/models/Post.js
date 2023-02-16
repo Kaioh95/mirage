@@ -17,7 +17,10 @@ const Post = mongoose.model('Post',
             type: String,
             require: true,
         },
-        user: Object,
+        user_id: {
+            type: mongoose.Types.ObjectId,
+            require: true,
+        },
     }, {timestamps: true}),
 ); // View e Likes serão modelos com id do usuário que visualizou ou deu like
 
