@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon ./index.js localhost 5000",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "pm2 start ./index.js --name mirage-backend"
+    "start": "node ./index.js"
   },
   "keywords": [],
   "author": "",

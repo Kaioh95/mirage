@@ -1,3 +1,4 @@
+import { api_url } from "../../constants";
 import { ImgZoom, SmallPostContainer } from "./styles";
 
 interface SmallPostCardProps{
@@ -12,7 +13,7 @@ function SmallPostCard(props: SmallPostCardProps){
         <SmallPostContainer to={`/post/${props.id}`} reloadDocument>
             <ImgZoom>
                 <img 
-                    src={`http://localhost:5000/images/posts/${props.image}`}
+                    src={`${api_url}/images/posts/${props.image}`}
                     alt={`Last Post ${props.id}`}/>
             </ImgZoom>
             <p>
